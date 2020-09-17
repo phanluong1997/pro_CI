@@ -56,4 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 //dashboard
 $route['dashboard'] = 'dashboard/home';
 
+//admin
+$route['cpanel'] = 'cpanel/home';
+
 

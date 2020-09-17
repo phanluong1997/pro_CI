@@ -13,7 +13,6 @@
 		<!-- Title -->
 		<title>SmartQ Admin Template - Quick Dashboard</title>
 
-
 		<!-- *************
 			************ Common Css Files *************
 		************ -->
