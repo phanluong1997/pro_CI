@@ -1,18 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends MY_Controller {
+class Home extends Dashboard_Controller {
 
 	/**
 	Controller main giao diện người dùng
 	 */
+	//Main action
 	public function index()
 	{
+
 		$data = array(
 			'data_index'	=> $this->get_index(),
-			'title'		=>	'Home Page',
-			'template' 	=> 	'frontend/home/index'
+			'title'		=>	'Dashboard',
+			'template' 	=> 	'cpanel/home/index'
 		);
-		$this->load->view('frontend/default/index', isset($data)?$data:NULL);
+		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 }

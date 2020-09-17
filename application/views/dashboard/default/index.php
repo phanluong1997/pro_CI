@@ -14,8 +14,8 @@
 </head>
 
 <body>
+    <!-- /#wrapper -->
     <div id="wrapper">
-        <!-- Top Navigation -->
         <?php $this->load->view('dashboard/layout/header'); ?>
         <div id="page-wrapper">
             <div class="container-fluid">
