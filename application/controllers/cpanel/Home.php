@@ -1,11 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends Dashboard_Controller {
+class Home extends Admin_Controller {
 
-	/**
-	Controller main giao diện người dùng
-	 */
 	//Main action
 	public function index()
 	{

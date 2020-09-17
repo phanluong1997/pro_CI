@@ -58,5 +58,6 @@ $route['dashboard'] = 'dashboard/home';
 
 //admin
 $route['cpanel'] = 'cpanel/home';
+$route['(cpanel/login).html'] = 'cpanel/auths/login';
 
 

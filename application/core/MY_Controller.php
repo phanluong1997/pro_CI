@@ -24,7 +24,7 @@ class MY_Controller extends CI_Controller {
 }
 
 
-//My_Controller for module backend
+//My_Controller for module admin
 class Admin_Controller extends CI_Controller {
 	public function __construct(){
 		error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
