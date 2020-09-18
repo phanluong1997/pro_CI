@@ -55,18 +55,31 @@
 	<!-- Row end -->
 </div>
 <script>
-	//del ajax
+	//del ajax - Luong
 	function del(id) {
-		$('.delete'+id).parent().parent().fadeOut();
-		var control = $('.delete'+id).attr('data-control');
-		if(id != '')
-		{
-			$.ajax
-			({
-				method: "POST",
-				url: "cpanel/"+control+"/delete",
-				data: { id:id},
-			});
-		}
+		// alert("lkj");
+		swal({title: "Are you sure?",showCancelButton: true, }
+		, function(isConfirm){
+			if (isConfirm) {
+				// alert("as");
+				$('.delete'+id).parent().parent().fadeOut();
+				var control = $('.delete'+id).attr('data-control');
+				if(id != '')
+				{
+					$.ajax
+					({
+						method: "POST",
+						url: "cpanel/"+control+"/delete",
+						data: { id:id},
+						success : function (result){
+							$('#test').html(result);
+						}
+					});
+				}	
+			}
+			else{
+				swal("Data not Delete!!");
+			}
+    	});	
 	}
 </script>
