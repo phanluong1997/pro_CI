@@ -161,4 +161,17 @@ class Admin extends Admin_Controller {
 		$this->UserModel->del('tbl_admin',array('id' => $id));
 
 	}
+
+	//Add admin - Thao
+	public function changepass()
+	{
+		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Change Password',
+			'template' 		=> 	'cpanel/admin/changepass',
+			'path_url'  	=>  'cpanel/admin'
+		);
+		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
+	}
 }

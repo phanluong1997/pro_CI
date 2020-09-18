@@ -60,6 +60,7 @@
 										<td class="text-center">
 											<a onclick="del(<?php echo $val['id'];?>);" id="delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
 											<a href="<?php echo $path_url;?>edit/<?php echo $val['id'];?>" class="btn btn-info text-white"><i class="icon-edit"></i></a>
+											<a href="<?php echo $path_url;?>changepass" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 										</td>
 									</tr>
 								<?php } ?>
