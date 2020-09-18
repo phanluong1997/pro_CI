@@ -10,74 +10,33 @@
     <link rel="icon" type="image/png" sizes="16x16" href="public/otadmin/images/favicon.png">
     <title><?php echo $title;?></title>
     <!-- Css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="stylesheet" href="public/dashboard/css/style.css">
+    <!-- Latest compiled and minified CSS -->
     <!-- Js -->
+    <script src="public/dashboard/js/jquery-3.5.1.min.js"></script>
+    <!-- End Js -->
 </head>
-
 <body>
     <div id="main">
-        <header id="header">
-            <div class="header-pc">
-                <div class="logo">
-                    <a href="" class="logo-icon router-link-active">
-                        <img src="https://bc.game/img/mainlogo.5b57169a.svg" alt="" class="main-logo">
-                    </a>
-                </div>
-                <div class="nav">
-                    <ul>
-                        <li><a href="">Home</a></li>
-                        <li><a href="">Game</a></li>
-                        <li><a href="">Bonus</a></li>
-                    </ul>
-                </div>
-                
-                <div class="right">
-                    <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap">
-                        <i class="fas fa-wallet" aria-hidden="true"></i>
-                    </button>
-                    <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
-                    </button>
-                    <a class="xbutton login-button">
-                        <span class="login-icon">
-                            <i class="fas fa-user-alt" aria-hidden="true"></i>
-                        </span>
-                        <span class="login-label">SIGN IN</span>
-                    </a>
-                </div>
-            </div>
-            <div class="sub-header">
-                <div class="sub-header-wrap">
-                    <div id="broadcast">
-                        <img src="https://bc.game/img/horn.ec3d01d0.svg" alt="" class="hron-img">
-                        <div class="msg">
-                            <div class="text">WELCOME <i>Betepoonimma</i> JOIN THE GAME</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <!-- load modal -->
+        <?php $this->load->view('dashboard/modals/loginModal'); ?>
+        <!-- end load modal -->
+        <?php $this->load->view('dashboard/layout/header'); ?>
+        <?php
+            if(isset($template) && !empty($template)){
+                $this->load->view($template, isset($data)?$data:NULL);
+            }
+        ?>
     </div>
     <div id="sidebar">
         <div class="content">
+            <?php $this->load->view('dashboard/layout/sidebar'); ?>
         </div>
     </div>
-    <!-- /#wrapper -->
-    <div id="wrapper">
-        <?php $this->load->view('dashboard/layout/header'); ?>
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <?php
-                    if(isset($template) && !empty($template)){
-                        $this->load->view($template, isset($data)?$data:NULL);
-                    }
-                ?>
-            </div>
-            <?php $this->load->view('dashboard/layout/footer'); ?>
-        </div>
-    </div>
-    <!-- /#wrapper -->
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-
 </html>

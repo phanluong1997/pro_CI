@@ -57,7 +57,6 @@ a{
     background-color: #2a3946;
 }
 #main #header .header-pc {
-    height: 3.75rem;
     background-color: #1c2932;
 }
 #main #header .logo {
@@ -76,22 +75,22 @@ a{
     display: inline-block;
     vertical-align: top;
 }
-#main #header .nav {
+#main #header .navmt7 {
     margin: 0 auto 0 230px;
     width: 500px;
     white-space: nowrap;
     font-size: 14px;
     line-height: 54px;
 }
-#main #header .nav ul{
+#main #header .navmt7 ul{
 	list-style: none;
 	padding: 0px;
 	margin: 0px;
 }
-#main #header .nav ul li{
+#main #header .navmt7 ul li{
 	float: left;
 }
-#main #header .nav ul li a{
+#main #header .navmt7 ul li a{
 	color: #FFF;
 	text-transform: uppercase;
 	font-weight: 700;
@@ -101,7 +100,7 @@ a{
 #main #header .right {
     position: absolute;
     right: 0;
-    top: .75rem;
+    top: 15px;
     z-index: 10;
     height: 2.25rem;
     padding: 0 1.25rem;
@@ -115,8 +114,8 @@ a{
 #main #header .head-button {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    height: 2rem;
-    width: 2rem;
+    height: 3rem;
+    width: 3rem;
     padding: .375rem;
     margin-left: .3125rem;
     border: 2px solid #2d3e4c;
@@ -133,17 +132,15 @@ a{
 #main #header .login-button {
     text-align: left;
     border-radius: .1875rem;
-    height: 2rem;
     line-height: 2rem;
     width: auto;
-    font-size: .75rem;
     background-image: linear-gradient(264deg,#f7da42,#ffbc34,#f7da42);
-    padding: 0;
+    padding: 5px 10px !important;
     margin: 0 .9375rem 0 1.875rem;
     color: #fff;
-    padding: 0 .875rem;
     position: relative;
     cursor: pointer;
+    float: left;
 }
 #header .login-button .login-icon {
     display: inline-block;
@@ -170,7 +167,6 @@ a{
     text-align: left;
     box-sizing: border-box;
     padding-left: 3.4375rem;
-    font-size: .75rem;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -189,7 +185,6 @@ a{
     display: inline-block;
     max-width: 95%;
     cursor: pointer;
-    font-size: .8125rem;
 }
 #header .sub-header #broadcast .hron-img {
     width: 1.25rem;
@@ -212,6 +207,180 @@ a{
     align-items: center;
     width: 1010px;
     margin: 0 1.125rem 0 1.125rem;
+}
+/*------- modal sign in ---- */
+.modalLogin{
+    border-radius: 3px;
+    -webkit-transition: width .5s cubic-bezier(.36,.66,.04,1),height .5s cubic-bezier(.36,.66,.04,1);
+    transition: width .5s cubic-bezier(.36,.66,.04,1),height .5s cubic-bezier(.36,.66,.04,1);
+    will-change: transform;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    width: 560px !important;
+}
+.modalLogin .modal-content{
+	background-color: #22303b !important;
+}
+.modalLogin .modal-body {
+    padding: 1.875rem 2.5rem !important;
+}
+.modalLogin .boxTitle{
+	text-align: center;
+}
+.modalLogin .boxTitle a{
+	color: #FFF;
+	position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 26%;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 25px;
+}
+.modalLogin .boxTitle a.active{
+	color: #ffe22b;
+}
+.modalLogin .logo{
+	margin: 3.5rem 0;
+}
+.modalLogin .logo img{
+    margin: 3.75rem auto .625rem;
+    display: block;
+    width: 25rem;
+}
+.modalLogin .slogn {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    color: #6e8899;
+}
+.modalLogin .login__form{
+	width: 70%;
+    margin: 1.875rem auto;
+}
+.modalLogin .login__form .form-item{
+	margin-bottom: 3rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    min-height: 2.75rem;
+    border-radius: .2rem;
+    overflow: hidden;
+    background-color: #273642;
+    border-color: #273642;
+}
+.modalLogin .login__form .form-item.btn-box{
+	background-color: transparent;
+    border-color: transparent;
+}
+.modalLogin .login__form .form-item input{
+	-webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 1rem 1.375rem;
+    border: none;
+    outline: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    background: transparent;
+}
+.modalLogin .login__form .form-item input::valid{
+	background: transparent;
+	background-color: transparent;
+}
+.modalLogin .login__form .form-item .check_show_pass{
+    -ms-flex-item-align: center;
+    align-self: center;
+    padding-right: 1.375rem;
+    cursor: pointer;
+}
+.modalLogin .login__form .form-item .check_show_pass i{
+	font-size: 15px;
+	color: #6e8899;
+}
+.modalLogin .login__form .form-item button{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    vertical-align: top;
+    color: rgb(255, 255, 255);
+    background-size: 200%;
+    background-color: transparent;
+    background-image: linear-gradient(264deg, rgb(247, 218, 66), rgb(255, 188, 52), rgb(247, 218, 66));
+    white-space: nowrap;
+    padding: 0px;
+    user-select: none;
+    border: none;
+    transition: background-position 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    line-height: 2.75rem;
+    height: 4rem;
+    border-radius: .125rem;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+.modalLogin .forget{
+	display: block;
+    margin: 10px auto 0;
+    color: #ffe22b;
+    text-align: center;
+    cursor: pointer;
+}
+.modalLogin .other-login {
+    height: 6.25rem;
+    padding-top: .625rem;
+}
+.modalLogin .other-login .box-title {
+    border-top: 1px solid rgba(60,77,91,.5);
+    line-height: 0;
+    margin-bottom: 1.625rem;
+    text-align: center;
+}
+.modalLogin .other-login .box-title span {
+    background-color: #22303b;
+    font-size: 12px;
+    padding: 0 .4375rem;
+    color: #6e8899;
+}
+.modalLogin .social{
+	display: table;
+	margin: 0 auto 30px;
+}
+.modalLogin .social a{
+	cursor: pointer;
+	float: left;
+	width: 35px;
+	height: 35px;
+	border-radius: 100%;
+	line-height: 35px;
+	text-align: center;
+	margin: 0px 10px;
+}
+.modalLogin .social a.fb{
+	background-color: #227AEE;
+}
+.modalLogin .social a.google{
+	background-color: #FA455E;
+}
+.modalLogin .social a img{
+	width: 28px;
 }
 /*------- sidebar ---- */
 #sidebar{
