@@ -26,30 +26,27 @@
 								<th>Tools</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>0xAA2E58c22b04452ab07e60020629c282926EA4d3</td>
-								<td>23/09/2020</td>
-								<td class="text-center">
-									<span class="badge badge-pill badge-danger">Used</span>
-								</td>
-								<td class="text-center">
-									<a class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
-									<a class="btn btn-info text-white"><i class="icon-edit"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td>0xAA2E58c22b04452ab07e60020629c282926EA4d3</td>
-								<td>23/09/2020</td>
-								<td class="text-center">
-									<span class="badge badge-pill badge-success">New</span>
-								</td>
-								<td class="text-center">
-									<a class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
-									<a class="btn btn-info text-white"><i class="icon-edit"></i></a>
-								</td>
-							</tr>
-						</tbody>
+						<?php if(isset($datas) && $datas != NULL){ ?>
+							<tbody>
+								<?php foreach ($datas as $key => $val) { ?>
+									<tr>
+										<td><?php echo $val['wallet'];?></td>
+										<td><?php echo $val['date'];?></td>
+										<td class="text-center">
+											<?php if($val['status'] == 1){ ?> 
+												<span  class="badge badge-pill badge-success">New</span>
+											<?php }else{ ?>
+												<span   class="badge badge-pill badge-danger">Used</span>
+											<?php } ?>	
+										</td>
+										<td class="text-center">
+											<a onclick="del(<?php echo $val['id'];?>);" class="btn btn-danger text-white delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>"><i class="icon-trash-2"></i></a>
+											<a class="btn btn-info text-white" href="cpanel/wallet/edit	/<?php echo $val['id'];?>"><i class="icon-edit"></i></a>
+										</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						<?php } ?>
 					</table>
 				</div>
 			</div>
@@ -57,3 +54,19 @@
 	</div>
 	<!-- Row end -->
 </div>
+<script>
+	//del ajax
+	function del(id) {
+		$('.delete'+id).parent().parent().fadeOut();
+		var control = $('.delete'+id).attr('data-control');
+		if(id != '')
+		{
+			$.ajax
+			({
+				method: "POST",
+				url: "cpanel/"+control+"/delete",
+				data: { id:id},
+			});
+		}
+	}
+</script>
