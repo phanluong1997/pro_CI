@@ -194,7 +194,7 @@ h3.styled {
   color: #1b1b1b !important; }
 
 .text-success {
-  color: #57772b !important; }
+  color: #4DAE51 !important; }
 
 .text-info {
   color: #0a3a75 !important; }
@@ -877,8 +877,8 @@ ul.header-tasks:last-child {
     display: flex;
     align-items: center;
     font-size: .825rem;
-    color: #777b82;
-    background: #f6f8fa;
+    color: #ffffff;
+    background: #af772a;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
@@ -4696,7 +4696,7 @@ button:focus {
   -moz-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid transparent;
-  font-size: .825rem; }
+  font-size: .7rem; }
   .btn .badge {
     top: 0; }
   .btn i {
@@ -4899,8 +4899,8 @@ button:focus {
 
 .btn-success {
   color: #ffffff;
-  background-color: #57772b;
-  border-color: #57772b;
+  background-color: #4DAE51;
+  border-color: #4DAE51;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
   .btn-success:hover {
     color: #ffffff;

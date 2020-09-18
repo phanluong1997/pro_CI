@@ -32,9 +32,9 @@
 		<!-- jQcloud Keywords css -->
 		<link rel="stylesheet" href="public/cpanel/vendor/jqcloud/jqcloud.css" />	
 		<!-- Data Tables -->
-		<link rel="stylesheet" href="vendor/datatables/dataTables.bs4.css" />
-		<link rel="stylesheet" href="vendor/datatables/dataTables.bs4-custom.css" />
-		<link href="vendor/datatables/buttons.bs.css" rel="stylesheet" />
+		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4.css" />
+		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4-custom.css" />
+		<link href="public/cpanel/vendor/datatables/buttons.bs.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -102,8 +102,12 @@
 		<script src="public/cpanel/vendor/apex/crm/compare-sales1.js"></script>
 
 		<!-- Data Tables -->
-		<script src="vendor/datatables/dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="public/cpanel/vendor/datatables/dataTables.min.js"></script>
+		<script src="public/cpanel/vendor/datatables/dataTables.bootstrap.min.js"></script>
+
+		<!-- Custom Data tables -->
+		<script src="public/cpanel/vendor/datatables/custom/custom-datatables.js"></script>
+		<script src="public/cpanel/vendor/datatables/custom/fixedHeader.js"></script>
 
 		<!-- jQcloud Keywords -->
 		<script src="public/cpanel/vendor/jqcloud/jqcloud-1.0.4.min.js"></script>

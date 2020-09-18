@@ -23,33 +23,33 @@
 				</a>
 			</li>
 			<li class="sidebar-dropdown">
-				<a href="#">
+				<a href="javascript:void(0)">
 					<i class="icon-wallet"></i>
 					<span class="menu-text">Wallet</span>
 				</a>
 				<div class="sidebar-submenu">
 					<ul>
 						<li>
-							<a href="calendar.html">Deposite</a>
+							<a href="cpanel/deposit">Deposite</a>
 						</li>
 						<li>
-							<a href="calendar-external-draggable.html">Withdraw</a>
+							<a href="cpanel/withdraw">Withdraw</a>
 						</li>
 						<li>
-							<a href="calendar-google.html">Internal Transfer</a>
+							<a href="cpanel/transfer">Internal Transfer</a>
 						</li>
 					</ul>
 				</div>
 			</li>
 			<li class="sidebar-dropdown">
-				<a href="#">
+				<a href="javascript:void(0)">
 					<i class="icon-documents"></i>
 					<span class="menu-text">Orther</span>
 				</a>
 				<div class="sidebar-submenu">
 					<ul>
 						<li>
-							<a href="default-layout.html">Wallet List</a>
+							<a href="cpanel/wallet">Wallet List</a>
 						</li>
 					</ul>
 				</div>
