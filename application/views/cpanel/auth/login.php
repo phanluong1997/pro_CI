@@ -29,8 +29,7 @@
 
 		<!-- Container start -->
 		<div class="container">
-			
-			<form action="index.html">
+			<form class="form-horizontal form-material" id="loginform" action="" method="post">
 				<div class="row justify-content-md-center">
 					<div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
 						<div class="login-screen">
@@ -39,10 +38,10 @@
 									<img src="public/cpanel/img/logo.png" alt="SmartQ Admin Dashboard" />
 								</a>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Email Address" />
+									<input type="text" name="email" class="form-control" placeholder="Email Address" />
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control" placeholder="Password" />
+									<input type="password" name="password" class="form-control" placeholder="Password" />
 								</div>
 								<div class="forgot-pwd">
 									<a class="link" href="forgot-pwd.html">Forgot password?</a>
@@ -60,7 +59,6 @@
 					</div>
 				</div>
 			</form>
-
 		</div>
 		<!-- Container end -->
 	</body>
