@@ -14,32 +14,34 @@
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
-				<div class="card-body">
-					<div class="form-group">
-						<label for="inputName">Fullname</label>
-						<input type="text" class="form-control" id="inputName">
+				<form action="" data-toggle="validator" novalidate="true" method="post">
+					<div class="card-body">
+						<div class="form-group">
+							<label for="inputName">Fullname</label>
+							<input type="text" name="fullname" class="form-control" id="inputName">
+						</div>
+						<div class="form-group">
+							<label for="inputName">Phone</label>
+							<input type="text" name="phone" class="form-control" id="inputName">
+						</div>
+						<div class="form-group">
+							<label for="inputName">Email</label>
+							<input type="text" name="email" class="form-control" id="inputName">
+						</div>
+						<div class="form-group">
+							<label for="inputName">Password</label>
+							<input type="text" name="password" class="form-control" id="inputName">
+						</div>
+						<div class="custom-control custom-switch">
+							<input type="checkbox" name="active" class="custom-control-input" checked id="customSwitch3">
+							<label class="custom-control-label" for="customSwitch3">Active</label>
+						</div>
+						<div class="row gutters justify-content-center">
+							<button type="submit" class="btn btn-success btn-rounded">Save</button>
+							<button type="submit" class="btn btn-primary btn-rounded">Reset</button>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="inputName">Phone</label>
-						<input type="text" class="form-control" id="inputName">
-					</div>
-					<div class="form-group">
-						<label for="inputName">Email</label>
-						<input type="text" class="form-control" id="inputName">
-					</div>
-					<div class="form-group">
-						<label for="inputName">Password</label>
-						<input type="text" class="form-control" id="inputName">
-					</div>
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" checked id="customSwitch3">
-						<label class="custom-control-label" for="customSwitch3">Active</label>
-					</div>
-					<div class="row gutters justify-content-center">
-						<button type="button" class="btn btn-success btn-rounded">Save</button>
-						<button type="button" class="btn btn-primary btn-rounded">Reset</button>
-					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
