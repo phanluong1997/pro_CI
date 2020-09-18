@@ -23,6 +23,9 @@
 		<!-- Main css -->
 		<link rel="stylesheet" href="public/cpanel/css/main.css">
 
+		<!-- sweetalert css -->
+		<link rel="stylesheet" href="public/cpanel/js/sweetalert/sweetalert.css">
+
 
 		<!-- *************
 			************ Vendor Css Files *************
@@ -35,6 +38,10 @@
 		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4.css" />
 		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4-custom.css" />
 		<link href="public/cpanel/vendor/datatables/buttons.bs.css" rel="stylesheet" />
+		<!-- file style Thảo tạo -->
+		<link href="public/cpanel/css/style.css" rel="stylesheet" />
+		<!-- Jquery -->
+		<script src="public/cpanel/js/jquery.min.js"></script>
 	</head>
 
 	<body>
@@ -77,7 +84,7 @@
 		</div>
 		<!-- Page wrapper end -->
 		<!-- Required jQuery first, then Bootstrap Bundle JS -->
-		<script src="public/cpanel/js/jquery.min.js"></script>
+		
 		<script src="public/cpanel/js/bootstrap.bundle.min.js"></script>
 		<script src="public/cpanel/js/moment.js"></script>
 
@@ -112,8 +119,12 @@
 		<!-- jQcloud Keywords -->
 		<script src="public/cpanel/vendor/jqcloud/jqcloud-1.0.4.min.js"></script>
 		<script src="public/cpanel/vendor/jqcloud/custom-jqcloud.js"></script>
+		<!-- sweetalert JS -->
+		<script src="public/cpanel/js/sweetalert/sweetalert.min.js"></script>
 
 		<!-- Main JS -->
 		<script src="public/cpanel/js/main.js"></script>
+		<!-- cpanel JS --THAO TAO -->
+		
 	</body>
 </html>
