@@ -66,7 +66,7 @@
 					<div class="header-profile-actions">
 						<a href="user-profile.html"><i class="icon-user1"></i> My Profile</a>
 						<a href="account-settings.html"><i class="icon-settings1"></i> Account Settings</a>
-						<a href="login.html"><i class="icon-log-out1"></i> Sign Out</a>
+						<a href="cpanel/logout.html"><i class="icon-log-out1"></i> Sign Out</a>
 					</div>
 				</div>
 			</li>

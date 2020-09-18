@@ -11,6 +11,7 @@
 	</ul>
 </div>
 <div class="col-12">
+	<?php echo "test edit ??" ?>
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
@@ -18,18 +19,13 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="inputName">Fullname</label>
-							<input type="text" name="fullname" class="form-control" id="inputName" value="<?php echo set_value('fullname'); echo $datas['fullname'];?>">
+							<input type="text" name="fullname" class="form-control" id="inputName" value="<?php echo $datas['fullname'];?>">
 							<div class="has-error"><?php echo form_error('fullname') ?></div>
 						</div>
 						<div class="form-group">
 							<label for="inputName">Phone</label>
-							<input type="text" name="phone" class="form-control" id="inputName" value="<?php echo set_value('phone'); echo $datas['phone']; ?>" >
+							<input type="text" name="phone" class="form-control" id="inputName" value="<?php echo $datas['phone']; ?>" >
 							<div class="has-error"><?php echo form_error('phone') ?></div>
-						</div>
-						<div class="form-group">
-							<label for="inputName">Email</label>
-							<input type="text" name="email" class="form-control" id="inputName" value="<?php echo set_value('email');echo $datas['email']; ?>" >
-							<div class="has-error"><?php echo form_error('email') ?></div>
 						</div>
 						<div class="form-group">
 							<label for="inputName">Password</label>
@@ -42,7 +38,7 @@
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
-							<a href="cpanel/admin/add" ><button type="button" class="btn btn-primary btn-rounded">Reset</button></a>
+							<a href="cpanel/admin/edit/<?php echo $datas['id']; ?>" ><button type="button" class="btn btn-primary btn-rounded">Reset</button></a>
 						</div>
 					</div>
 				</form>
