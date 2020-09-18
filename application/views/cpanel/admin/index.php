@@ -58,7 +58,7 @@
 											</div>
 										</td>
 										<td class="text-center">
-											<a onclick="del(<?php echo $val['id'];?>);" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+											<a onclick="del(<?php echo $val['id'];?>);" id="delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
 											<a href="<?php echo $path_url;?>edit/<?php echo $val['id'];?>" class="btn btn-info text-white"><i class="icon-edit"></i></a>
 										</td>
 									</tr>
@@ -102,7 +102,8 @@ function del(id) {
 	swal({title: "Are you sure?",showCancelButton: true, }
     , function(isConfirm){
         if (isConfirm) {
-            var control = $('#active'+id).attr('data-control');
+        	$('#delete'+id).parent().parent().fadeOut();
+            var control = $('#delete'+id).attr('data-control');
 		    if(id != '')  
 		    { 
 		        $.ajax

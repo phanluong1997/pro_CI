@@ -42,7 +42,7 @@
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
-							<button type="submit" class="btn btn-primary btn-rounded">Reset</button>
+							<a href="cpanel/admin/add" ><button type="button" class="btn btn-primary btn-rounded">Reset</button></a>
 						</div>
 					</div>
 				</form>

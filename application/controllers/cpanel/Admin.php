@@ -92,7 +92,9 @@ class Admin extends Admin_Controller {
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	public function edit($id=0){
+		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		//edit data
 		if($this->input->post()){
 			//validation
 			$this->form_validation->set_rules('password','Password', 'required|min_length[3]');
@@ -157,6 +159,6 @@ class Admin extends Admin_Controller {
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$id = $_POST['id'];
 		$this->UserModel->del('tbl_admin',array('id' => $id));
-		
+
 	}
 }
