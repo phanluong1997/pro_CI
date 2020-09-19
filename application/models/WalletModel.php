@@ -46,6 +46,21 @@ class WalletModel extends CI_Model {
 	//delete model-luong
 	function del($table = '', $where = NULL){
 		$this->db->delete($table, $where);
+		$flag = $this->db->affected_rows();
+		if($flag > 0){
+			return array(
+				'type'		=> 'successful',
+				'message'	=> 'Delete data success!',
+			);
+		}
+		else
+		{
+			return array(
+				'type'		=> 'error',
+				'message'	=> 'Delete data unsuccess!',
+			);
+		}
+
 	}
 	
 	//select arr - in Table wallet.-luong
@@ -63,7 +78,7 @@ class WalletModel extends CI_Model {
 		$result = $this->db->get()->result_array();
 		return $result;
 	}
-	//select row -> get value.
+	//select row -> get value. - Luong
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){

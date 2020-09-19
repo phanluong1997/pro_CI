@@ -10,6 +10,22 @@
 		</li>
 	</ul>
 </div>
+<!-- Info Submit -->
+<?php $message_flashdata = $this->session->flashdata('message_flashdata');
+if(isset($message_flashdata) && count($message_flashdata)){ ?>
+    <div id="alerttopfix" class="myadmin-alert alert-success myadmin-alert-top-right" style="display: block;">
+        <?php if($message_flashdata['type'] == 'sucess'){
+          ?> 
+          <i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
+          <?php
+      }else if($message_flashdata['type'] == 'error'){
+          ?>
+          <i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
+          <?php
+      } ?>
+  </div>
+<?php } ?> 
+
 <div class="main-container">
 	<!-- Row start -->
 	<div class="row gutters">
@@ -55,10 +71,9 @@
 	<!-- Row end -->
 </div>
 <script>
-	//del ajax - Luong
+	//delete use ajax - Luong
 	function del(id) {
-		// alert("lkj");
-		swal({title: "Are you sure?",showCancelButton: true, }
+		swal({title: "Are you sure Delete?",showCancelButton: true, }
 		, function(isConfirm){
 			if (isConfirm) {
 				// alert("as");

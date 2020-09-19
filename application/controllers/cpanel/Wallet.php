@@ -8,10 +8,12 @@ class Wallet extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('walletmodel');
 	}
-	//List action
+	//List action - Luong
 	public function index()
 	{
+		// Check login
 		// if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
+		
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Wallet Manager',
@@ -22,7 +24,7 @@ class Wallet extends Admin_Controller {
 
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	//function check wallet validate !
+	//function check duplicate wallet ! - Luong
 	public function check_wallet(){
 		$wallet = $this->input->post('wallet');
 		$where = array('wallet' => $wallet);
@@ -35,11 +37,11 @@ class Wallet extends Admin_Controller {
 		}
 		return true;
 	} 
-	//Add action
+	//Add action -Luong
 	public function add()
 	{
+		//Check login
 		// if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		
 		//check validate wallet
 		$this->load->library('form_validation');
 		$this->load->helper('form');
@@ -75,14 +77,17 @@ class Wallet extends Admin_Controller {
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Add New',
-			'template' 	=> 	$this->template.'form'
+			'template' 	=> 	$this->template.'add'
 		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
-	//Edit actions
-	public function edit($id = 0) {
+	//Edit actions -Luong
+	public function edit($id = 0)
+	{
+		//Check login
 		// if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		//Check validate wallet
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 		if($this->input->post()){
@@ -115,16 +120,18 @@ class Wallet extends Admin_Controller {
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Edit Wallet',
-			'template' 	=> 	$this->template.'form'
+			'template' 	=> 	$this->template.'edit'
 		);
 		$data['datas'] = $this->walletmodel->select_row('tbl_wallet','*',array('id' =>$id));
 
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	//delete
+	//delete Luong
 	public function delete()
 	{
+		//Check login
 		// if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		// processed delete.
 		$id = $_POST['id'];
 		$this->walletmodel->del('tbl_wallet',array('id' => $id));
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
