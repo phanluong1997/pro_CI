@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 19, 2020 lúc 03:36 AM
+-- Thời gian đã tạo: Th9 19, 2020 lúc 05:28 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 5.6.36
 
@@ -47,9 +47,8 @@ CREATE TABLE `tbl_user` (
 --
 
 INSERT INTO `tbl_user` (`id`, `email`, `password`, `text_pass`, `type`, `fullname`, `phone`, `salt`, `active`, `created_at`, `updated_at`) VALUES
-(23, 'hieu.optech@gmail.com', 'be40c1f656ac1b727e1340d3f3bd9f628333512f', '123456', 'admin', 'Đặng Lê Phúc Thảo', '0768033984', 'w?SLwKCq', 1, '2020-09-18 17:25:32', '2020-09-18 17:25:32'),
-(24, 'vdhuyqng@gmail.com', '794f6940e1a00d83be856f8e53941c9faf0fed99', '123456', 'admin', 'Quỳnh Hương', '0768033984', 'MJ?V5cRw', 1, '2020-09-18 17:30:20', '2020-09-19 08:24:31'),
-(26, 'phucthao205@gmail.com', '2dca15908e4b7f64d6976cd6a4fbd21959d37184', '123456', 'admin', 'Nguyễn Quỳnh Hương', '0768033984', 'YXkgvZXN', 1, '2020-09-19 08:33:46', '2020-09-19 08:33:46');
+(23, 'hieu.optech@gmail.com', '6c38f9ebed8db9d281263f2eb400917c86b55df2', '123456', 'admin', 'Đặng Lê Phúc Thảo', '0768033984', 'aQdXYx&8', 1, '2020-09-18 17:25:32', '2020-09-19 08:44:19'),
+(26, 'phucthao205@gmail.com', '4590361f9b32a751dc6591a170677ac7c59e766f', '123456', 'admin', 'Nguyễn Quỳnh Hương', '0768033984', 'XrUsLmX8', 1, '2020-09-19 08:33:46', '2020-09-19 10:15:42');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -69,7 +68,7 @@ ALTER TABLE `tbl_user`
 -- AUTO_INCREMENT cho bảng `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
