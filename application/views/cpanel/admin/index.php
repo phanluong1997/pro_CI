@@ -60,7 +60,7 @@
 										<td class="text-center">
 											<a onclick="del(<?php echo $val['id'];?>);" id="delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
 											<a href="<?php echo $path_url;?>edit/<?php echo $val['id'];?>" class="btn btn-info text-white"><i class="icon-edit"></i></a>
-											<a href="<?php echo $path_url;?>changepass" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
+											<a href="<?php echo $path_url;?>changepass/<?php echo $val['id'];?>" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 										</td>
 									</tr>
 								<?php } ?>
@@ -74,54 +74,50 @@
 	<!-- Row end -->
 </div>
 <script>
-	$(document).ready(function() {
-	
-});
+	//check Active - Thao
+	function checkActive(id){
+	    var control = $('#active'+id).attr('data-control');
+	    var active = 0;
+	    if($('#active' + id).is(':checked')){ active = 1; }
+	    if(id != '')  
+	    { 
+	        $.ajax
+	        ({
+	            method: "POST",
+	            url: "cpanel/"+control+"/active",
+	            data: { id:id,active:active},
+	            success : function (result){
+	                $('#boxNotify').html('ok');
+	                setTimeout(function(){ $('#boxNotify').hide(); }, 2000);
+	            }
+	        });
+	    }
+	}
 
-//check Active - Thao
-function checkActive(id){
-    var control = $('#active'+id).attr('data-control');
-    var active = 0;
-    if($('#active' + id).is(':checked')){ active = 1; }
-    if(id != '')  
-    { 
-        $.ajax
-        ({
-            method: "POST",
-            url: "cpanel/"+control+"/active",
-            data: { id:id,active:active},
-            success : function (result){
-                $('#boxNotify').html('ok');
-                setTimeout(function(){ $('#boxNotify').hide(); }, 2000);
-            }
-        });
-    }
-}
-
-//del - THAO
-function del(id) {
-	swal({title: "Are you sure?",showCancelButton: true, }
-    , function(isConfirm){
-        if (isConfirm) {
-        	$('#delete'+id).parent().parent().fadeOut();
-            var control = $('#delete'+id).attr('data-control');
-		    if(id != '')  
-		    { 
-		        $.ajax
-		        ({
-		            method: "POST",
-		            url: "cpanel/"+control+"/delete",
-		            data: { id:id},
-		            success : function (result){
-		                $('#test').html(result);
-		            }
-		        });
-		    }
-        }
-        else{
-            swal("Dữ liệu của bạn đã không bị xóa!");
-        }
-    });
-}
+	//del - THAO
+	function del(id) {
+		swal({title: "Are you sure?",showCancelButton: true, }
+	    , function(isConfirm){
+	        if (isConfirm) {
+	        	$('#delete'+id).parent().parent().fadeOut();
+	            var control = $('#delete'+id).attr('data-control');
+			    if(id != '')  
+			    { 
+			        $.ajax
+			        ({
+			            method: "POST",
+			            url: "cpanel/"+control+"/delete",
+			            data: { id:id},
+			            success : function (result){
+			                $('#test').html(result);
+			            }
+			        });
+			    }
+	        }
+	        else{
+	            swal("Dữ liệu của bạn đã không bị xóa!");
+	        }
+	    });
+	}
 
 </script>

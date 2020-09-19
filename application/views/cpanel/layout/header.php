@@ -64,8 +64,7 @@
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSettings">
 					<div class="header-profile-actions">
-						<a href="user-profile.html"><i class="icon-user1"></i> My Profile</a>
-						<a href="account-settings.html"><i class="icon-settings1"></i> Account Settings</a>
+						<a ><i class="icon-user1"></i> <?php echo $data_index['info_admin']['fullname'];?></a>
 						<a href="cpanel/logout.html"><i class="icon-log-out1"></i> Sign Out</a>
 					</div>
 				</div>

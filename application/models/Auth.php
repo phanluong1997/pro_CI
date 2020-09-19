@@ -12,7 +12,7 @@ class Auth extends CI_Model {
 		$email = $login_array_input[0];
 		$password = $login_array_input[1];
 		$type = $login_array_input[2];
-		$query = $this->db->query("SELECT * FROM tbl_admin WHERE email= '".$email."' AND  type= '".$type."'  AND active = 1 LIMIT 1");
+		$query = $this->db->query("SELECT * FROM tbl_user WHERE email= '".$email."' AND  type= '".$type."'  AND active = 1 LIMIT 1");
 		if ($query->num_rows() > 0)
 		{
 			$row = $query->row();
@@ -35,7 +35,7 @@ class Auth extends CI_Model {
 		return ($this->check_logged())?$this->session->userdata('logged_user'):'';
 	}
 	function logged_info(){
-		return $this->UserModel->getAdmin('tbl_admin', '*', array('id' => $this->session->userdata('logged_user')));
+		return $this->UserModel->getAdmin('tbl_user', '*', array('id' => $this->session->userdata('logged_user')));
 	}
 
 

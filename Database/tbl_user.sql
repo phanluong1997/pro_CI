@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 18, 2020 lúc 12:42 PM
+-- Thời gian đã tạo: Th9 19, 2020 lúc 03:36 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 5.6.36
 
@@ -25,10 +25,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `tbl_admin`
+-- Cấu trúc bảng cho bảng `tbl_user`
 --
 
-CREATE TABLE `tbl_admin` (
+CREATE TABLE `tbl_user` (
   `id` int(20) UNSIGNED NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -43,21 +43,22 @@ CREATE TABLE `tbl_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `tbl_admin`
+-- Đang đổ dữ liệu cho bảng `tbl_user`
 --
 
-INSERT INTO `tbl_admin` (`id`, `email`, `password`, `text_pass`, `type`, `fullname`, `phone`, `salt`, `active`, `created_at`, `updated_at`) VALUES
+INSERT INTO `tbl_user` (`id`, `email`, `password`, `text_pass`, `type`, `fullname`, `phone`, `salt`, `active`, `created_at`, `updated_at`) VALUES
 (23, 'hieu.optech@gmail.com', 'be40c1f656ac1b727e1340d3f3bd9f628333512f', '123456', 'admin', 'Đặng Lê Phúc Thảo', '0768033984', 'w?SLwKCq', 1, '2020-09-18 17:25:32', '2020-09-18 17:25:32'),
-(24, 'vdhuyqng@gmail.com', 'ae8e86a82cbbd50f74b89587f4d274ec413ffdc5', '123456', 'admin', 'Quỳnh Hương', '0768033984', 'jKXFvCGG', 1, '2020-09-18 17:30:20', '2020-09-18 17:42:28');
+(24, 'vdhuyqng@gmail.com', '794f6940e1a00d83be856f8e53941c9faf0fed99', '123456', 'admin', 'Quỳnh Hương', '0768033984', 'MJ?V5cRw', 1, '2020-09-18 17:30:20', '2020-09-19 08:24:31'),
+(26, 'phucthao205@gmail.com', '2dca15908e4b7f64d6976cd6a4fbd21959d37184', '123456', 'admin', 'Nguyễn Quỳnh Hương', '0768033984', 'YXkgvZXN', 1, '2020-09-19 08:33:46', '2020-09-19 08:33:46');
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Chỉ mục cho bảng `tbl_admin`
+-- Chỉ mục cho bảng `tbl_user`
 --
-ALTER TABLE `tbl_admin`
+ALTER TABLE `tbl_user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -65,10 +66,10 @@ ALTER TABLE `tbl_admin`
 --
 
 --
--- AUTO_INCREMENT cho bảng `tbl_admin`
+-- AUTO_INCREMENT cho bảng `tbl_user`
 --
-ALTER TABLE `tbl_admin`
-  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE `tbl_user`
+  MODIFY `id` int(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
