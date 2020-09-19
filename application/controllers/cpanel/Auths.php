@@ -6,10 +6,6 @@ class Auths extends Admin_Controller {
 	//Login action
 	public function login()
 	{
-
-		$data = array(
-			'title'		=>	'Login System'
-		);
 		if($this->Auth->check_logged() === true){
 			redirect(base_url().'cpanel/admin');
 		}else{
@@ -21,15 +17,20 @@ class Auths extends Admin_Controller {
 				$login_array = array($email, $password, $type);
 				if($this->Auth->process_login($login_array))
 				{
-					//Check active
+					//get data info user
 					$user = $this->Auth->logged_info();
+					
 					redirect(base_url().'cpanel/admin');
 				}
 			}
+			$data = array(
+				'title'			=>	'Login System',
+			);
 			$this->load->view('cpanel/auth/login', isset($data)?$data:NULL);
 		}
 
 	}
+	//Logout action
 	function logout(){
 		$this->session->unset_userdata('logged_user');
 		redirect(base_url().'cpanel/login.html');

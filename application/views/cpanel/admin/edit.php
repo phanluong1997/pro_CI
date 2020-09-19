@@ -11,7 +11,6 @@
 	</ul>
 </div>
 <div class="col-12">
-	<?php echo "test edit ??" ?>
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
@@ -27,18 +26,19 @@
 							<input type="text" name="phone" class="form-control" id="inputName" value="<?php echo $datas['phone']; ?>" >
 							<div class="has-error"><?php echo form_error('phone') ?></div>
 						</div>
-						<div class="form-group">
-							<label for="inputName">Password</label>
-							<input type="password" name="password" class="form-control" id="inputName">
-							<div class="has-error"><?php echo form_error('password') ?></div>
-						</div>
 						<div class="custom-control custom-switch">
+							<input 
+							<?php if($datas['active'] == 1){ ?> checked <?php } ?> name="active"
+							type="checkbox" class="custom-control-input" id="active<?php echo $datas['id'];?>">
+							<label class="custom-control-label" for="active<?php echo $datas['id'];?>">Active</label>
+						</div>
+						<!-- <div class="custom-control custom-switch">
 							<input type="checkbox" name="active" class="custom-control-input" checked id="customSwitch3">
 							<label class="custom-control-label" for="customSwitch3">Active</label>
-						</div>
+						</div> -->
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
-							<a href="cpanel/admin/edit/<?php echo $datas['id']; ?>" ><button type="button" class="btn btn-primary btn-rounded">Reset</button></a>
+							<button type="reset" class="btn btn-primary btn-rounded">Reset</button>
 						</div>
 					</div>
 				</form>

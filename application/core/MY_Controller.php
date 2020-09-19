@@ -33,7 +33,16 @@ class Admin_Controller extends CI_Controller {
 	}
 	//Main Function
 	protected function get_index(){
+		$data['info_admin'] = $this->get_admin();
 		return $data;
+	}
+
+	protected function get_admin(){
+		if($this->Auth->check_logged()){
+			$id_user = $this->Auth->logged_id();
+			$data = $this->db->select('*')->from('tbl_user')->where('id', $id_user)->get()->row_array();
+			return $data;
+		}
 	}
 }
 

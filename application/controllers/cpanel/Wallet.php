@@ -12,7 +12,7 @@ class Wallet extends Admin_Controller {
 	public function index()
 	{
 		// Check login
-		// if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
+		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 		
 		$data = array(
 			'data_index'	=> $this->get_index(),
@@ -41,7 +41,7 @@ class Wallet extends Admin_Controller {
 	public function add()
 	{
 		//Check login
-		// if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
+		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 		//check validate wallet
 		$this->load->library('form_validation');
 		$this->load->helper('form');
@@ -86,7 +86,7 @@ class Wallet extends Admin_Controller {
 	public function edit($id = 0)
 	{
 		//Check login
-		// if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		//Check validate wallet
 		$this->load->library('form_validation');
 		$this->load->helper('form');
@@ -130,7 +130,7 @@ class Wallet extends Admin_Controller {
 	public function delete()
 	{
 		//Check login
-		// if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// processed delete.
 		$id = $_POST['id'];
 		$this->walletmodel->del('tbl_wallet',array('id' => $id));

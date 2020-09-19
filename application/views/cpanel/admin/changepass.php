@@ -18,12 +18,11 @@
 					<div class="card-body">
 						<div class="form-group">
 							<label for="inputName">New Password</label>
-							<input type="password" name="fullname" class="form-control" id="inputName" value="<?php echo set_value('fullname'); echo $datas['fullname'];?>">
-							<div class="has-error"><?php echo form_error('fullname') ?></div>
+							<input type="password" name="password" class="form-control" id="inputName">
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
-							<a href="cpanel/admin/add" ><button type="button" class="btn btn-primary btn-rounded">Reset</button></a>
+							<button type="reset" class="btn btn-primary btn-rounded">Reset</button>
 						</div>
 					</div>
 				</form>

@@ -45,7 +45,7 @@ class UserModel extends CI_Model {
 	//checkValidate_Email - Thao
 	function check_exists($where = array()){
 		$this->db->where($where);
-		$query = $this->db->get('tbl_admin');
+		$query = $this->db->get('tbl_user');
 		if($query->num_rows() > 0){
 			return TRUE;
 		}else{
