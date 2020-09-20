@@ -17,13 +17,11 @@
 	if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	    <div id="alerttopfix" class="myadmin-alert alert-success myadmin-alert-top-right" style="display: block;">
 	        <?php if($message_flashdata['type'] == 'sucess'){?> 
-	          <i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
-	          <?php
-	      }else if($message_flashdata['type'] == 'error'){?>
-	          <i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
-	          <?php
-	      } ?>
-	  </div>
+	          	<i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
+	        <?php }else if($message_flashdata['type'] == 'error'){?>
+	          	<i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
+	        <?php } ?>
+	  	</div>
 	<?php } ?> 
 	<!-- Row start -->
 	<div class="row gutters">
@@ -87,8 +85,8 @@
 	            url: "cpanel/"+control+"/active",
 	            data: { id:id,active:active},
 	            success : function (result){
-	                $('#boxNotify').html('ok');
-	                setTimeout(function(){ $('#boxNotify').hide(); }, 2000);
+	                $('#boxNotify').show().html('<i class="icon-check"></i> Change status success.');
+	                setTimeout(function(){ $('#boxNotify').hide(); }, 1000);
 	            }
 	        });
 	    }

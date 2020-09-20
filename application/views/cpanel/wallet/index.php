@@ -13,17 +13,13 @@
 <!-- Info Submit -->
 <?php $message_flashdata = $this->session->flashdata('message_flashdata');
 if(isset($message_flashdata) && count($message_flashdata)){ ?>
-    <div id="alerttopfix" class="myadmin-alert alert-success myadmin-alert-top-right" style="display: block;">
-        <?php if($message_flashdata['type'] == 'sucess'){
-          ?> 
-          <i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
-          <?php
-      }else if($message_flashdata['type'] == 'error'){
-          ?>
-          <i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
-          <?php
-      } ?>
-  </div>
+    <div id="alerttopfix" class="myadmin-alert <?php if($message_flashdata['type'] == 'sucess'){ ?> alert-success <?php }else{ ?> alert-danger <?php } ?>">
+        <?php if($message_flashdata['type'] == 'sucess'){ ?> 
+          	<i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
+          <?php }else if($message_flashdata['type'] == 'error'){ ?>
+          	<i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
+        <?php } ?>
+  	</div>
 <?php } ?> 
 
 <div class="main-container">

@@ -249,3 +249,9 @@ jQuery(function ($) {
 
 
 });
+
+
+// setTimeout hiden .myadmin-alert
+$(function () {
+	setTimeout(function(){ $('.myadmin-alert').hide() }, 2000);
+});

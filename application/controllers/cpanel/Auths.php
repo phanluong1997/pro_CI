@@ -20,7 +20,7 @@ class Auths extends Admin_Controller {
 					//get data info user
 					$user = $this->Auth->logged_info();
 					
-					redirect(base_url().'cpanel/admin');
+					redirect(base_url().'cpanel');
 				}
 			}
 			$data = array(
