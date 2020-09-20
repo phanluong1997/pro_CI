@@ -8,8 +8,8 @@ class Home extends MY_Controller {
 	 */
 	public function index()
 	{
-		//redirect to cpanel user
-		redirect('cpanel');
+		//redirect to dashboard for user
+		redirect('dashboard');
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Home Page',

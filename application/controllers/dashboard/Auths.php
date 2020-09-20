@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends Dashboard_Controller {
+class Auths extends Dashboard_Controller {
 	//Login action
 	public function login()
 	{
@@ -38,16 +38,16 @@ class Auth extends Dashboard_Controller {
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Change Password',
-			'template' 		=> 	'dashboard/home/changePass'
+			'template' 		=> 	'dashboard/auth/changePass'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 	//Profile action
-	public function profile{
+	public function profile(){
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Profile',
-			'template' 		=> 	'dashboard/home/profile'
+			'template' 		=> 	'dashboard/auth/profile'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}

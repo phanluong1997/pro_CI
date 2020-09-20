@@ -40,8 +40,8 @@
 								<td>Done</td>
 								<td>23/09/2020</td>
 								<td class="text-center">
-									<a class="btn btn-success btn-rounded text-white">Apprive</a>
-									<a class="btn btn-danger btn-rounded text-white">Destroy</a>
+									<a onclick="changeStatus(1,1)" class="btn btn-success btn-rounded text-white">Apprive</a>
+									<a onclick="changeStatus(1,2)" class="btn btn-danger btn-rounded text-white">Destroy</a>
 								</td>
 							</tr>
 							<tr>
@@ -80,3 +80,39 @@
 	</div>
 	<!-- Row end -->
 </div>
+<!-- model for change status -->
+<div class="modal fade" id="myModalChangeStatus" tabindex="-1" role="dialog" aria-labelledby="footerCenterIconsModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="" method="">
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Note</label>
+						<textarea class="form-control" id="note" rows="3"></textarea>
+						<input type="hidden" id="divID" value="">
+						<input type="hidden" id="divStatus" value="">
+					</div>
+				</div>
+				<div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="icon-close"></i></button>
+					<button type="submit" class="btn btn-primary"><i class="icon-check2"></i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- END model for change status -->
+
+<script type="text/javascript">
+	function changeStatus(id, status){
+		/*---
+		if(type == 1) => approve
+		if(type == 2) => destroy
+		---*/
+		//open modal
+		$("#myModalChangeStatus").modal('show');
+		//assign value for input hidden (id, status)
+		$('#divID').val(id);
+		$('#divStatus').val(status);
+	}
+</script>

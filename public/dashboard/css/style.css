@@ -5,6 +5,7 @@ body{
 	font-weight: 400;
 	margin: 0px;
 	padding: 0px;
+    background-color: #1c2933;
 }
 .clear{
 	clear: both;
@@ -28,7 +29,7 @@ body{
 a{
 	text-decoration: none;
 }
-/*------- main ---- */
+/*------- otMain -  main ---- */
 #main {
     margin-right: 400px;
     -webkit-transition-duration: .5s;
@@ -52,7 +53,6 @@ a{
     top: 0;
     left: 0;
     z-index: 111;
-    height: 6.5rem;
     padding-top: 0;
     background-color: #2a3946;
 }
@@ -62,10 +62,9 @@ a{
 #main #header .logo {
     position: absolute;
     left: 27px;
-    top: 7px;
+    top: 2px;
     text-align: center;
     margin: 4px 0;
-    height: 30px;
 }
 #main #header .logo a {
     display: block;
@@ -208,7 +207,7 @@ a{
     width: 1010px;
     margin: 0 1.125rem 0 1.125rem;
 }
-/*------- modal sign in ---- */
+/*------- otMain - modal sign in and sign up ---- */
 .modalLogin{
     border-radius: 3px;
     -webkit-transition: width .5s cubic-bezier(.36,.66,.04,1),height .5s cubic-bezier(.36,.66,.04,1);
@@ -382,7 +381,118 @@ a{
 .modalLogin .social a img{
 	width: 28px;
 }
-/*------- sidebar ---- */
+.modalLogin .form-item.no-bg {
+    background-color: transparent;
+}
+.modalLogin .form-item.checkbox{
+    cursor: pointer;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-height: unset;
+    margin-bottom: 3rem;
+    line-height: 1rem;
+}
+.modalLogin .form-item.checkbox .argument{
+    color: #ffe22b;
+    margin: 0 .125rem;
+}
+.modalLogin .form-item .fa-check-square{
+    color: #ffe22b;
+    position: unset;
+    left: unset;
+    top: unset;
+    margin-top: unset;
+    margin-right: .5rem;
+    margin-left: .5rem;
+    border-radius: .1875rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #ffe22b;
+    font-size: 2rem;
+    padding: .0625rem .0625rem .0625rem .125rem;
+    color: transparent;
+}
+.modalLogin .form-item .label{
+    text-align: left;
+    white-space: normal;
+    font-size: 90%;
+}
+/*------- otMain -  profile css ---- */
+.profileBox {
+    width: 450px !important;
+    margin: 100px auto;
+}
+.profileBox .contents {
+    background-color: #22303b !important;
+    padding: 25px 0px;
+    border-radius: 3px;
+}
+.profileBox .contents .title{
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 25px;
+    color: #ffe22b;
+    text-align: center;
+    font-weight: 700
+}
+.profileBox .login__form {
+    width: 80%;
+    margin: 1.875rem auto;
+}
+.profileBox .login__form .form-item {
+    margin-bottom: 3rem;
+    overflow: hidden;
+    width: 100%;
+}
+.profileBox .login__form .form-item label{
+    color: #6e8899;
+}
+.profileBox .login__form .form-item input {
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 1rem 1.375rem;
+    border: none;
+    outline: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    background: transparent;
+    background-color: #273642;
+    border-color: #273642;
+    min-height: 2.75rem;
+    border-radius: .2rem;
+}
+.profileBox .login__form .form-item button {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    vertical-align: top;
+    background-size: 200%;
+    background-color: transparent;
+    background-image: linear-gradient(264deg, rgb(247, 218, 66), rgb(255, 188, 52), rgb(247, 218, 66));
+    white-space: nowrap;
+    padding: 0px;
+    user-select: none;
+    border: none;
+    transition: background-position 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    line-height: 2.75rem;
+    height: 4rem;
+    border-radius: .125rem;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+/*------- otMain -  sidebar ---- */
 #sidebar{
 	position: fixed;
     right: 0px;
@@ -404,3 +514,4 @@ a{
     background-image: linear-gradient(90deg, rgb(42, 58, 71), rgb(33, 47, 59));
     height: 100vh;
 }
+

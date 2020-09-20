@@ -50,6 +50,10 @@
               <input type="password" name="password" placeholder="Password" id="password" value="">
               <a class="check_show_pass"><i class="far fa-eye"></i></a>
             </div>
+            <div class="form-item no-bg checkbox">
+              <i class="far fa-check-square"></i>
+              <div class="label">I agree with <a class="argument">user agreement</a>, and confirm that I am at least 18 years old</div>
+            </div>
             <div class="form-item btn-box">
               <button type="submit">Sign Up</button>
               <a class="forget">Forgot password?</a>
