@@ -23,7 +23,6 @@
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
-							<button type="reset"  class="btn btn-primary btn-rounded">Reset</button>
 						</div>
 					</div>
 				</form>	

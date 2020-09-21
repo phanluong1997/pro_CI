@@ -67,7 +67,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	<!-- Row end -->
 </div>
 <script>
-	//delete use ajax - Luong
+	//delete use ajax - OT2
 	function del(id) {
 		swal({title: "Are you sure Delete?",showCancelButton: true, }
 		, function(isConfirm){

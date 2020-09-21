@@ -8,7 +8,7 @@ class Wallet extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('walletmodel');
 	}
-	//List action - Luong
+	//List action - OT2
 	public function index()
 	{
 		// Check login
@@ -24,7 +24,7 @@ class Wallet extends Admin_Controller {
 
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	//function check duplicate wallet ! - Luong
+	//function check duplicate wallet ! - OT2
 	public function check_wallet(){
 		$wallet = $this->input->post('wallet');
 		$where = array('wallet' => $wallet);
@@ -37,7 +37,7 @@ class Wallet extends Admin_Controller {
 		}
 		return true;
 	} 
-	//Add action -Luong
+	//Add action -OT2
 	public function add()
 	{
 		//Check login
@@ -82,7 +82,7 @@ class Wallet extends Admin_Controller {
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
-	//Edit actions -Luong
+	//Edit actions -OT2
 	public function edit($id = 0)
 	{
 		//Check login
@@ -126,7 +126,7 @@ class Wallet extends Admin_Controller {
 
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	//delete Luong
+	//delete OT2
 	public function delete()
 	{
 		//Check login
