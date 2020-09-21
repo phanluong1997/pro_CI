@@ -2,13 +2,6 @@
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><?php echo $title;?></li>
 	</ol>
-	<ul class="app-actions">
-		<li>
-			<a href="cpanel/wallet/add">
-				<i class="icon-add-to-list"></i> Add New
-			</a>
-		</li>
-	</ul>
 </div>
 <div class="main-container">
 	<!-- Row start -->
@@ -27,26 +20,23 @@
 								<th>Status</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>dangsinh79</td>
-								<td>dangsinh79</td>
-								<td class="text-right">$300</td>
-								<td>23/09/2020</td>
-								<td class="text-center">
-									<span class="text-success">Success</span>
-								</td>
-							</tr>
-							<tr>
-								<td>dangsinh79</td>
-								<td>dangsinh79</td>
-								<td class="text-right">$300</td>
-								<td>23/09/2020</td>
-								<td class="text-center">
-									<span class="text-success">Success</span>
-								</td>
-							</tr>
-						</tbody>
+						<?php if(isset($datas) && $datas != NULL){ ?>
+							<tbody>
+								<?php foreach($datas as $key => $val) {?>
+									<tr>
+										<td><?php echo $val['user_nameSender']; ?></td>
+										<td><?php echo $val['user_nameReceived']; ?></td>	
+										<td class="text-right">$<?php echo $val['amount']; ?></td>
+										<td><?php echo $val['date']; ?></td>
+										<td class="text-center">
+											<?php if($val['status'] == 1){ ?>
+												<span class="text-success">Success</span>
+											<?php } ?>
+										</td>
+									</tr>
+								<?php } ?>	
+							</tbody>
+						<?php } ?>	
 					</table>
 				</div>
 			</div>

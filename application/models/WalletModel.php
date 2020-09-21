@@ -5,7 +5,7 @@ class WalletModel extends CI_Model {
 	{
 		parent::__construct();
 	}
-	//add model - Luong
+	//add model - OT2
 	public function add($table='',$data = NULL){
 		$this->db->insert($table, $data);
 		$flag = $this->db->affected_rows(); 
@@ -25,7 +25,7 @@ class WalletModel extends CI_Model {
 			);
 		}
 	}
-	//edit model-luong
+	//edit model-OT2
 	function edit($table = '', $data = NULL, $where = NULL){
 		$this->db->where($where)->update($table, $data);
 		$flag = $this->db->affected_rows();
@@ -43,7 +43,7 @@ class WalletModel extends CI_Model {
 			);
 		}
 	}
-	//delete model-luong
+	//delete model-OT2
 	function del($table = '', $where = NULL){
 		$this->db->delete($table, $where);
 		$flag = $this->db->affected_rows();
@@ -63,7 +63,7 @@ class WalletModel extends CI_Model {
 
 	}
 	
-	//select arr - in Table wallet.-luong
+	//select arr - in Table wallet.-OT2
 	function select_array($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -78,7 +78,7 @@ class WalletModel extends CI_Model {
 		$result = $this->db->get()->result_array();
 		return $result;
 	}
-	//select row -> get value. - Luong
+	//select row -> get value. - OT2
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -91,7 +91,7 @@ class WalletModel extends CI_Model {
 		return $result;
 	}
 
-	//check validate field wallet - Luong
+	//check validate field wallet - OT2
 	function check_exists($where = array())
 	{
 		$this->db->where($where);
