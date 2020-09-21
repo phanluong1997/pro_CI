@@ -13,7 +13,7 @@
             <img src="https://bc.game/img/mainlogo.5c3409cd.svg" alt="Logo">
           </div>
           <div class="slogn">Game of Boosting your Cryptocurrency</div>
-          <form class="login__form">
+          <form method="post" class="login__form">
             <div class="form-item">
               <input type="text" name="email" placeholder="Email" id="email" value="">
             </div>
@@ -42,12 +42,13 @@
             <img src="https://bc.game/img/mainlogo.5c3409cd.svg" alt="Logo">
           </div>
           <div class="slogn">Game of Boosting your Cryptocurrency</div>
-          <form class="login__form">
+          <form action="dashboard/home/SignUp" method="post" class="login__form">
+            <div id="message" class="text-danger"></div>
             <div class="form-item">
-              <input type="text" name="email" placeholder="Registered Email Address." id="email" value="">
+              <input type="email" name="email" required="" placeholder="Registered Email Address." id="emailSignUp" value="" >
             </div>
             <div class="form-item">
-              <input type="password" name="password" placeholder="Password" id="password" value="">
+              <input type="password" name="password" required="" pattern=".{8,}" placeholder="Password" id="password" value="">
               <a class="check_show_pass"><i class="far fa-eye"></i></a>
             </div>
             <div class="form-item no-bg checkbox">
@@ -55,7 +56,7 @@
               <div class="label">I agree with <a class="argument">user agreement</a>, and confirm that I am at least 18 years old</div>
             </div>
             <div class="form-item btn-box">
-              <button type="submit">Sign Up</button>
+              <button type="submit" id="ButtonSignUp">Sign Up</button>
               <a class="forget">Forgot password?</a>
             </div>
             <div class="other-login">
@@ -68,31 +69,52 @@
           </form>
         </div>
         <!-- end signup content -->
-
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
   $(function(){
-    //hieu - hidden box sign up
+    //OtMain - hidden box sign up
     $('#box-signup').hide();
-    //hieu - reset input value
+    //OtMain - reset input value
     $('#email').val('');
     $('#password').val('');
   });
-  //hieu - show box sign up
+  //OtMain - show box sign up
   function showSignUp(){
     $('#box-signin').hide();
     $('#box-signup').show();
     $('.signinName').removeClass('active');
     $('.signupName').addClass('active');
   }
-  //hieu - show box sign in
+  //OtMain - show box sign in
   function showSignIn(){
     $('#box-signin').show();
     $('#box-signup').hide();
     $('.signinName').addClass('active');
     $('.signupName').removeClass('active');
   }
+
+  //check ValidateEmail - OT1
+  $(document).ready(function(){
+    $("#emailSignUp").keyup(function() {
+      var email = $(this).val();
+      if(email != ''){
+        $.post('dashboard/home/checkEmail',{email:email},function(data){
+          $('#message').html(data);
+          if(data != ''){
+            $('#ButtonSignUp').attr('disabled','disabled');
+          }
+          else{
+            $('#ButtonSignUp').removeAttr('disabled');
+          }
+        });
+      }
+    }); 
+  });
+
+  //Sign in - OT1
+  
+
 </script>

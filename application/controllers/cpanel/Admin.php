@@ -10,9 +10,10 @@ class Admin extends Admin_Controller {
 	public function __destruct(){
 	}
 
-	//List admin -Thao
+	//List admin -Ot1
 	public function index()
 	{
+		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$data = array(
 			'data_index'	=>  $this->get_index(),
@@ -24,19 +25,19 @@ class Admin extends Admin_Controller {
 		$data['datas'] = $this->UserModel->getAll('tbl_user','*',array('type' => 'admin'),'id desc');
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	//check_Email - Thao
+	//check_Email - Ot1
 	public function check_Email(){
 		$Email = $this->input->post('email');
 		$where = array('email' => $Email);
 		if($this->UserModel->check_exists($where)){
 			//trả về thông báo lỗi
-			$this->form_validation->set_message(__FUNCTION__,'Email này đã tồn tại');
+			$this->form_validation->set_message(__FUNCTION__,'Email already exists !');
 			return false;
 		}
 		return true;
 	}
 
-	//Add admin - Thao
+	//Add admin - Ot1
 	public function add()
 	{
 		//check login
@@ -161,7 +162,7 @@ class Admin extends Admin_Controller {
 
 	}
 
-	//ChangePassword - Thao
+	//ChangePassword - Ot1
 	public function changepass($id=0)
 	{
 		//check login

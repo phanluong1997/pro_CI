@@ -56,7 +56,7 @@
 			</li>
 			<li class="dropdown">
 				<a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
-					<span class="user-name">Zyan Ferris</span>
+					<span class="user-name"><?php echo $data_index['info_admin']['fullname'];?></span>
 					<span class="avatar">
 						<img src="public/cpanel/img/user22.png" alt="avatar">
 						<span class="status busy"></span>

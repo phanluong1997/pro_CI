@@ -7,7 +7,7 @@ class UserModel extends CI_Model {
 		parent::__construct();
 	}
 
-	//checklogin(Auth.php) -Thao
+	//checklogin(Auth.php) -Ot1
 	function getAdmin($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -20,7 +20,7 @@ class UserModel extends CI_Model {
 		return $result;
 	}
 
-	//add - Thao
+	//add - Ot1
 	function add($table = '', $data = NULL){
 		$this->db->insert($table, $data);
 		$flag = $this->db->affected_rows();
@@ -42,7 +42,7 @@ class UserModel extends CI_Model {
 		
 	}
 
-	//checkValidate_Email - Thao
+	//checkValidate_Email - Ot1
 	function check_exists($where = array()){
 		$this->db->where($where);
 		$query = $this->db->get('tbl_user');
@@ -52,7 +52,7 @@ class UserModel extends CI_Model {
 			return FALSE;
 		}
 	}
-	//getAll- Thao
+	//getAll- Ot1
 	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc'){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -96,5 +96,14 @@ class UserModel extends CI_Model {
 	}
 	function del($table = '', $where = NULL){
 		$this->db->delete($table, $where);
+	}
+
+	function total($table,$where = NULL){
+		$result = $this->db->from($table);
+		if($where != NULL){
+			$result = $this->db->where($where);
+		}
+		$result = $this->db->count_all_results();
+		return $result;
 	}
 }
