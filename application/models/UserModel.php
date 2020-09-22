@@ -76,7 +76,7 @@ class UserModel extends CI_Model {
 		$result = $this->db->get()->row_array();
 		return $result;
 	}
-
+	//edit user
 	function edit($table = '', $data = NULL, $where = NULL){
 		$this->db->where($where)->update($table, $data);
 		$flag = $this->db->affected_rows();
@@ -94,6 +94,7 @@ class UserModel extends CI_Model {
 			);
 		}
 	}
+	//delete user
 	function del($table = '', $where = NULL){
 		$this->db->delete($table, $where);
 	}
@@ -105,5 +106,19 @@ class UserModel extends CI_Model {
 		}
 		$result = $this->db->count_all_results();
 		return $result;
+	}
+	//fetch data users -OT2
+	public function fetch_data($query){
+		$type = 'user';
+		$this->db->select('*');
+		$this->db->from('tbl_user');
+		if($query!=''){
+			 $this->db->like('email',$query);
+			 $this->db->or_like('phone',$query);
+		}
+		$this->db->where('type',$type);
+		$this->db->order_by('id','DES');
+		return $this->db->get();
+		
 	}
 }

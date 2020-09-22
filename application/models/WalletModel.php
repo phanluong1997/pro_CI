@@ -62,7 +62,6 @@ class WalletModel extends CI_Model {
 		}
 
 	}
-	
 	//select arr - in Table wallet.-OT2
 	function select_array($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){
 		$result = $this->db->select($data)->from($table);

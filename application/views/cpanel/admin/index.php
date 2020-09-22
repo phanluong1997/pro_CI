@@ -10,6 +10,7 @@
 		</li>
 	</ul>
 </div>
+
 <div id="boxNotify" class="alert alert-success"></div>
 <div class="main-container">
 	<!-- Info Submit -->
