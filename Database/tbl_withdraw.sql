@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 21, 2020 lúc 12:51 PM
+-- Thời gian đã tạo: Th9 22, 2020 lúc 03:44 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 5.6.36
 
@@ -45,7 +45,9 @@ CREATE TABLE `tbl_withdraw` (
 --
 
 INSERT INTO `tbl_withdraw` (`id`, `userID`, `amount`, `amount_receive`, `amount_eth`, `wallet`, `note`, `status`, `date`) VALUES
-(3, 23, 250, 230, 2.4, 'FDHGFJNGH', 'TAO', 0, '2020-09-21 00:00:00');
+(3, 23, 250, 230, 2.4, 'FDHGFJNGH', '123', 1, '2020-09-21 00:00:00'),
+(4, 26, 170, 150, 2.4, 'phanluong', 'destroy', 2, '2020-09-22 00:00:00'),
+(6, 30, 2500, 2400, 2.4, '9635411', '123', 0, '2020-09-22 00:00:00');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -65,7 +67,7 @@ ALTER TABLE `tbl_withdraw`
 -- AUTO_INCREMENT cho bảng `tbl_withdraw`
 --
 ALTER TABLE `tbl_withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

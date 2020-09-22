@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 21, 2020 lúc 12:52 PM
+-- Thời gian đã tạo: Th9 22, 2020 lúc 03:32 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 5.6.36
 
@@ -43,7 +43,7 @@ CREATE TABLE `tbl_transfer` (
 
 INSERT INTO `tbl_transfer` (`id`, `userID_sender`, `userID_received`, `amount`, `date`, `status`) VALUES
 (1, 23, 26, 1200, '2020-09-21 00:00:00', 1),
-(2, 1, 2, 250, '2020-09-21 00:00:00', 1);
+(3, 26, 30, 2500, '2020-09-22 00:00:00', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -63,7 +63,7 @@ ALTER TABLE `tbl_transfer`
 -- AUTO_INCREMENT cho bảng `tbl_transfer`
 --
 ALTER TABLE `tbl_transfer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -7,7 +7,7 @@ class Transfer extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('transfermodel');
 	}
-	//List action
+	//List action -OT2
 	public function index()
 	{
 		// Check login

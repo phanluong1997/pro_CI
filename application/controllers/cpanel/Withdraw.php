@@ -40,15 +40,13 @@ class Withdraw extends Admin_Controller {
 
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		
+		//get data modal in file index.php
 		$id = $_POST['id'];
 		$status = $_POST['status'];
 		$note = $_POST['note'];	
-		// echo $id;
-		// die;
+		//get data
 		$data['datas']=$this->withdrawmodel->select_row('tbl_withdraw','*',array('id' => $id));
-		// var_dump($data['datas']);
-		// die;
+		
 		if($this->input->post()){
 			$data_update = array(
 				'id' 		=> 	$id,
