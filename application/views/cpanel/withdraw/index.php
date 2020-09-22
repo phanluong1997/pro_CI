@@ -35,8 +35,8 @@
 										<td><?php echo $val['date']; ?></td>
 										<td class="text-center">
 											<?php if($val['status'] == 0){ ?>
-												<a onclick="changeStatus(1,1)" class="btn btn-success btn-rounded text-white">Apprive</a>
-												<a onclick="changeStatus(1,2)" class="btn btn-danger btn-rounded text-white">Destroy</a>
+												<a onclick="changeStatus(<?php echo $val['id']; ?>,1)" class="btn btn-success btn-rounded text-white">Apprive</a>
+												<a onclick="changeStatus(<?php echo $val['id']; ?>,2)" class="btn btn-danger btn-rounded text-white">Destroy</a>
 												<?php } ?>
 												<?php if($val['status'] == 1){ ?>	
 													<span class="text-success">Apprive</span>
