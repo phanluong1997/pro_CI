@@ -4,7 +4,7 @@
 	</ol>
 	<ul class="app-actions">
 		<li>
-			<a href="cpanel/admin/index">
+			<a href="cpanel/user/index">
 				<i class="icon-arrow_back"></i> Back
 			</a>
 		</li>
@@ -14,11 +14,11 @@
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
-				<form action="" data-toggle="validator" novalidate="true" method="post">
+				<form action="" class="form" data-toggle="validator" novalidate="true" method="POST">
 					<div class="card-body">
 						<div class="form-group">
 							<label for="inputName">New Password</label>
-							<input type="password" name="password" class="form-control" id="inputName">
+							<input type="password" name="password" class="form-control" id="inputName" value="<?php echo $datas['text_pass'];?>">
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
