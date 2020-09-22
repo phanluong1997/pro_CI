@@ -86,6 +86,7 @@ class Auths extends Dashboard_Controller {
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$result = $this->UserModel->add('tbl_user', $data_insert);
+
 				if($result>0){
 					//send mail (to active account) -OT1
 					$this->load->library('email');
@@ -93,14 +94,17 @@ class Auths extends Dashboard_Controller {
 					$subject = 'Mail active account';
 					$message = 'Test message';
 
-					$giatri =1;
+					$id =$result['id_insert'];
+					$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
+					$token = base64_encode($token);
+					
 					// Get full html:
-					$body = "Vui lòng click vào <a href='".base_url()."dashboard/active-user.html/".$giatri."'>link này</a> để kích hoạt tài khoản";
+					$body = "Vui lòng click vào <a href='".base_url()."dashboard/active-account-notify.html/".$token."'>link này</a> để kích hoạt tài khoản";
 					// $body = "Vui lòng click vào <a href='".base_url()."dashboard/auths/activeUser'>link này</a> để kích hoạt tài khoản";
 					$result = $this->email
 					    ->from('sentemail.optech@gmail.com')
 					    ->reply_to('sentemail.optech@gmail.com')    
-					    ->to('phucthao205@gmail.com')
+					    ->to(trim($this->input->post('email')))
 					    ->subject($subject)
 					    ->message($body)
 					    ->send();
@@ -109,15 +113,15 @@ class Auths extends Dashboard_Controller {
 					//message sucess
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
-						'message'	=> 'Add user successful!!',
+						'message'	=> 'SignUp successful!!',
 					));
-					redirect('cpanel/admin/index',$data);
+					redirect('dashboard/notify.html',$data);
 				}else{
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'error',
-						'message'	=> 'Add user error!!',
+						'message'	=> 'SignUp error!!',
 					));
-					redirect('cpanel/admin/index',$data);
+					redirect('dashboard/notify.html',$data);
 				}
 			}
 		}
@@ -130,11 +134,6 @@ class Auths extends Dashboard_Controller {
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 
-	public function activeUser()
-	{
-		echo 
-		echo "test kích hoạt mail"; die;
-	}
 
 	//Forger Password action
 	public function forgerPass()
@@ -162,6 +161,29 @@ class Auths extends Dashboard_Controller {
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Profile',
 			'template' 		=> 	'dashboard/auth/profile'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Notify action
+	public function notify(){
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Notify',
+			'template' 		=> 	'dashboard/auth/notify'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Notify active account action
+	public function activeNotify(){
+		$token = $this->uri->segment(3);
+		$encode = base64_decode($token);
+		$string = explode("*", $encode);
+		$id = $string[7];
+		$result = $this->UserModel->edit('tbl_user', array('active' => 1), array('id' => $id));
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Notify',
+			'template' 		=> 	'dashboard/auth/activeNotify'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}

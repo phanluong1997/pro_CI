@@ -3,6 +3,17 @@
 		<li class="breadcrumb-item"><?php echo $title;?></li>
 	</ol>
 </div>
+<!-- Info Submit -->
+<?php $message_flashdata = $this->session->flashdata('message_flashdata');
+if(isset($message_flashdata) && count($message_flashdata)){ ?>
+    <div id="alerttopfix" class="myadmin-alert <?php if($message_flashdata['type'] == 'sucess'){ ?> alert-success <?php }else{ ?> alert-danger <?php } ?>">
+        <?php if($message_flashdata['type'] == 'sucess'){ ?> 
+          	<i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
+          <?php }else if($message_flashdata['type'] == 'error'){ ?>
+          	<i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
+        <?php } ?>
+  	</div>
+<?php } ?> 
 <div class="main-container">
 	<!-- Row start -->
 	<div class="row gutters">
@@ -35,8 +46,8 @@
 										<td><?php echo $val['date']; ?></td>
 										<td class="text-center">
 											<?php if($val['status'] == 0){ ?>
-												<a onclick="changeStatus(1,1)" class="btn btn-success btn-rounded text-white">Apprive</a>
-												<a onclick="changeStatus(1,2)" class="btn btn-danger btn-rounded text-white">Destroy</a>
+												<a onclick="changeStatus(<?php echo $val['id']; ?>,1)" class="btn btn-success btn-rounded text-white">Apprive</a>
+												<a onclick="changeStatus(<?php echo $val['id']; ?>,2)" class="btn btn-danger btn-rounded text-white">Destroy</a>
 												<?php } ?>
 												<?php if($val['status'] == 1){ ?>	
 													<span class="text-success">Apprive</span>

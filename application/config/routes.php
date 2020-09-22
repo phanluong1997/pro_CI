@@ -69,8 +69,14 @@ $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
 $route['(dashboard/checkEmail).html'] = 'dashboard/auths/checkEmail';
 $route['(dashboard/login).html'] = 'dashboard/auths/login';
 $route['(dashboard/checklogin).html'] = 'dashboard/auths/checklogin';
-//dashboard activeUser  - OT1
-$route['(dashboard/active-user).html/(:num)'] = 'dashboard/auths/activeUser';
+
+
+//dashboard notify - OTMain
+$route['(dashboard/notify).html'] = 'dashboard/auths/notify';
+$route['(dashboard/active-account-notify).html/(:any)'] = 'dashboard/auths/activeNotify';
+
+
+
 
 
 

@@ -24,4 +24,5 @@ class Encrypts extends CI_Model {
 	function encryptUserPwd($pwd, $salt) {
 		return sha1(md5($pwd) . $salt);
 	}
+
 }

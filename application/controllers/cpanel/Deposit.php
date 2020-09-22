@@ -19,7 +19,7 @@ class Deposit extends Admin_Controller {
 		);
 		//get data
 		$data['datas']= $this->depositmodel->select_array('tbl_deposit','*',NULL,'id desc');
-		//get fullname in table tbl_user
+		//get fullname in table tbl_user -OT2
 		if($data['datas'] != NULL){
 			foreach ($data['datas'] as $key => $val) {
 				$user_name = '';
@@ -30,7 +30,6 @@ class Deposit extends Admin_Controller {
 				$data['datas'][$key]['user_name'] = $user_name;
 			}
 		}
-
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
