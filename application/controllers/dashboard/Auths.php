@@ -31,17 +31,27 @@ class Auths extends Dashboard_Controller {
 				$password = $this->input->post('password');
 				$type = 'user';
 				$login_array = array($email, $password, $type);
-				if($this->Auth->signUser($login_array))
+				if($this->Auth->signUser($login_array) === true)
 				{
-					//get data info user
-					$user = $this->Auth->getInfoUser();
 					redirect(base_url().'dashboard');
 				}
-
+				else
+				{
+					$result = $this->UserModel->select_row('tbl_user', '*', array('email' => $email));
+					$id = $result['id'];
+					if($result['active'] == 0){
+						echo "email not activated"; die;
+					}
+					else if($result['fullname'] ==  NULL OR $result['phone'] == NULL)
+					{
+						$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
+						$token = base64_encode($token);
+						redirect(base_url().'dashboard/profile.html/'.$token);
+					}
+					redirect(base_url().'dashboard'); //TEST email or password incorrect -OT1;
+				}
 			}
-			redirect(base_url().'dashboard');
 		}
-
 	}
 
 	//checkemail(ajax) - Ot1
@@ -59,7 +69,7 @@ class Auths extends Dashboard_Controller {
 		$Email = $this->input->post('email');
 		$where = array('email' => $Email);
 		if($this->UserModel->check_exists($where)){
-			//trả về thông báo lỗi
+			//return message error
 			$this->form_validation->set_message(__FUNCTION__,'Email already exists !');
 			return false;
 		}
@@ -100,11 +110,10 @@ class Auths extends Dashboard_Controller {
 					
 					// Get full html:
 					$body = "Vui lòng click vào <a href='".base_url()."dashboard/active-account-notify.html/".$token."'>link này</a> để kích hoạt tài khoản";
-					// $body = "Vui lòng click vào <a href='".base_url()."dashboard/auths/activeUser'>link này</a> để kích hoạt tài khoản";
 					$result = $this->email
 					    ->from('sentemail.optech@gmail.com')
 					    ->reply_to('sentemail.optech@gmail.com')    
-					    ->to(trim($this->input->post('email')))
+					    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
 					    ->subject($subject)
 					    ->message($body)
 					    ->send();
@@ -148,6 +157,7 @@ class Auths extends Dashboard_Controller {
 	//Change Password action
 	public function changePass()
 	{
+		//echo $data_index['info_user']['fullname']; die;
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Change Password',
@@ -155,13 +165,45 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	//Profile action
+	//Profile action -OT1
 	public function profile(){
+		$token = $this->uri->segment(3);
+		$encode = base64_decode($token);
+		$string = explode("*", $encode);
+		echo $id = $string[7];
+		//edit data
+		if($this->input->post()){
+			//validation
+			$this->form_validation->set_rules('fullname','Fullname', 'required|min_length[2]');
+			$this->form_validation->set_rules('phone','Phone', 'required|numeric|min_length[9]');
+			if($this->form_validation->run()){
+				$data_update = array(
+					'fullname' 			=> 	trim($this->input->post('fullname')),
+					'phone' 			=> 	trim($this->input->post('phone')),
+					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+				);
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				if($result>0){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Update admin successful!!',
+					));
+					redirect(base_url().'dashboard');
+				}else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Update admin error!!',
+					));
+					redirect(base_url().'dashboard');
+				}
+			}
+		}
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Profile',
 			'template' 		=> 	'dashboard/auth/profile'
 		);
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 	//Notify action
@@ -173,7 +215,7 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	//Notify active account action
+	//Notify active account action - OT1
 	public function activeNotify(){
 		$token = $this->uri->segment(3);
 		$encode = base64_decode($token);
@@ -186,5 +228,11 @@ class Auths extends Dashboard_Controller {
 			'template' 		=> 	'dashboard/auth/activeNotify'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+
+	//logout user - OT1
+	function logout(){
+		$this->session->unset_userdata('userID');
+		redirect(base_url().'dashboard');
 	}
 }

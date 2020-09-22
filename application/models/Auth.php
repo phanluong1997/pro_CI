@@ -46,7 +46,7 @@ class Auth extends CI_Model {
 			$email = $login_array_input[0];
 			$password = $login_array_input[1];
 			$type 	  = $login_array_input[2];
-			$query = $this->db->query("SELECT * FROM tbl_user WHERE email= '".$email."' AND  type= '".$type."'  AND active = 1 LIMIT 1");
+			$query = $this->db->query("SELECT * FROM tbl_user WHERE email= '".$email."' AND  type= '".$type."' LIMIT 1");
 			if ($query->num_rows() > 0)
 			{
 				$row = $query->row();
@@ -76,8 +76,17 @@ class Auth extends CI_Model {
 				$user_pass = $row->password;
 				$user_salt = $row->salt;
 				if($this->Encrypts->encryptUserPwd($password,$user_salt) === $user_pass){
-					$this->session->set_userdata('userID', $user_id);
-					return true;
+					//check null fullname and phone - OT1
+					if($row->fullname == NULL OR $row->phone == NULL OR $row->active == 0)
+					{
+						return false;
+					}
+					else
+					{
+						$this->session->set_userdata('userID', $user_id);
+						return true;
+					}
+					
 				}
 				return false;
 			}

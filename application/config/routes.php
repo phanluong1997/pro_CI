@@ -62,18 +62,18 @@ $route['translate_uri_dashes'] = FALSE;
 
 //dashboard
 $route['dashboard'] = 'dashboard/home';
-$route['(dashboard/profile).html'] = 'dashboard/auths/profile';
+$route['(dashboard/profile).html/(:any)'] = 'dashboard/auths/profile';
 $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 //dashboard (SignUp + checkEmail - Login + checkLogin) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
 $route['(dashboard/checkEmail).html'] = 'dashboard/auths/checkEmail';
 $route['(dashboard/login).html'] = 'dashboard/auths/login';
 $route['(dashboard/checklogin).html'] = 'dashboard/auths/checklogin';
-
-
 //dashboard notify - OTMain
 $route['(dashboard/notify).html'] = 'dashboard/auths/notify';
 $route['(dashboard/active-account-notify).html/(:any)'] = 'dashboard/auths/activeNotify';
+//dashboard logout - OT1
+$route['(dashboard/logout).html'] = 'dashboard/auths/logout';
 
 
 
