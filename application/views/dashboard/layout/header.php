@@ -34,7 +34,7 @@
             <div id="broadcast">
                 <img src="https://bc.game/img/horn.ec3d01d0.svg" alt="" class="hron-img">
                 <div class="msg">
-                    <div class="text">WELCOME <i>Betepoonimma</i> JOIN THE GAME</div>
+                    <div class="text">WELCOME <i><?php echo $data_index['info_user']['fullname'];?></i> JOIN THE GAME</div>
                 </div>
             </div>
         </div>

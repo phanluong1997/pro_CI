@@ -9,7 +9,7 @@ class Auths extends Admin_Controller {
 		if($this->Auth->check_logged() === true){
 			redirect(base_url().'cpanel/admin');
 		}else{
-			$data['title'] = 'Đăng nhập';
+			$data['title'] = 'Login';
 			if($this->input->post()){
 				$email = $this->input->post('email');
 				$password = $this->input->post('password');

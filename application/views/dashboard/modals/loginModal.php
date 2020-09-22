@@ -13,12 +13,13 @@
             <img src="https://bc.game/img/mainlogo.5c3409cd.svg" alt="Logo">
           </div>
           <div class="slogn">Game of Boosting your Cryptocurrency</div>
-          <form method="post" class="login__form">
+          <form name="info" onsubmit="return checkLogin();" action="dashboard/login.html" id="myFormLogin"  method="post" class="login__form"><!--  -->
+            <div id="messageSignIn" class="text-danger"></div>
             <div class="form-item">
-              <input type="text" name="email" placeholder="Email" id="email" value="">
+              <input type="text" name="email" placeholder="Email" id="emailSignIn" value="">
             </div>
             <div class="form-item">
-              <input type="password" name="password" placeholder="Password" id="password" value="">
+              <input type="password" name="password" placeholder="Password" id="passwordSignIn" value="">
               <a class="check_show_pass"><i class="far fa-eye"></i></a>
             </div>
             <div class="form-item btn-box">
@@ -42,8 +43,8 @@
             <img src="https://bc.game/img/mainlogo.5c3409cd.svg" alt="Logo">
           </div>
           <div class="slogn">Game of Boosting your Cryptocurrency</div>
-          <form action="dashboard/home/SignUp" method="post" class="login__form">
-            <div id="message" class="text-danger"></div>
+          <form action="dashboard/SignUp.html" method="post" class="login__form">
+            <div id="messageSignUp" class="text-danger"></div>
             <div class="form-item">
               <input type="email" name="email" required="" placeholder="Registered Email Address." id="emailSignUp" value="" >
             </div>
@@ -101,8 +102,8 @@
     $("#emailSignUp").keyup(function() {
       var email = $(this).val();
       if(email != ''){
-        $.post('dashboard/home/checkEmail',{email:email},function(data){
-          $('#message').html(data);
+        $.post('dashboard/checkEmail.html',{email:email},function(data){
+          $('#messageSignUp').html(data);
           if(data != ''){
             $('#ButtonSignUp').attr('disabled','disabled');
           }
@@ -114,7 +115,29 @@
     }); 
   });
 
+
   //Sign in - OT1
-  
+  function checkLogin(){
+    var emailSignIn = $('#emailSignIn').val();
+    var passwordSignIn = $('#passwordSignIn').val();
+    if(emailSignIn == "" || passwordSignIn == "" ){
+      $('#messageSignIn').html('Email or password is null');
+      return false;
+    }
+    if(emailSignIn != "" || passwordSignIn != "" )
+    {
+      $.ajax({
+        url: 'dashboard/checklogin.html',
+        type: 'POST',
+        dataType: 'json',
+        data: {email:emailSignIn, password:passwordSignIn},
+        success: function(data) {
+          $('#messageSignIn').html(data.message);
+          alert(data.message);
+        }
+      });
+      // return false;
+    }
+  }
 
 </script>

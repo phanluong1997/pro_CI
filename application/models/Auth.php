@@ -39,21 +39,43 @@ class Auth extends CI_Model {
 	}
 
 
+	//checkEmail+Password User - OT1
+	function checkInfoUser($login_array_input = NULL){
+		if(!isset($login_array_input) OR count($login_array_input) != 3)
+			return false;
+			$email = $login_array_input[0];
+			$password = $login_array_input[1];
+			$type 	  = $login_array_input[2];
+			$query = $this->db->query("SELECT * FROM tbl_user WHERE email= '".$email."' AND  type= '".$type."'  AND active = 1 LIMIT 1");
+			if ($query->num_rows() > 0)
+			{
+				$row = $query->row();
+				$user_id = $row->id;
+				$user_pass = $row->password;
+				$user_salt = $row->salt;
+				if($this->Encrypts->encryptUserPwd($password,$user_salt) === $user_pass){
+					return true;
+				}
+				return false;
+			}
+		return false;
+	}
+
 	//Login user
 	function signUser($login_array_input = NULL){
-		if(!isset($login_array_input) OR count($login_array_input) != 2)
+		if(!isset($login_array_input) OR count($login_array_input) != 3)
 			return false;
-			//Connect db AU
-			$autokendb = $this->load->database('autokendb', TRUE);
-			$username = $login_array_input[0];
+			$email = $login_array_input[0];
 			$password = $login_array_input[1];
-			$result = $autokendb->select('id,password,salt')->from('tbl_user')->where(array('username' => $username,'active >' => 0))->get()->row_array();
-			if ($result != NULL)
+			$type 	  = $login_array_input[2];
+			$query = $this->db->query("SELECT * FROM tbl_user WHERE email= '".$email."' AND  type= '".$type."'  AND active = 1 LIMIT 1");
+			if ($query->num_rows() > 0)
 			{
-				$user_id = $result['id'];
-				$user_pass = $result['password'];
-				$user_salt = $result['salt'];
-				if($this->CI_encrypts->encryptUserPwd($password,$user_salt) === $user_pass){
+				$row = $query->row();
+				$user_id = $row->id;
+				$user_pass = $row->password;
+				$user_salt = $row->salt;
+				if($this->Encrypts->encryptUserPwd($password,$user_salt) === $user_pass){
 					$this->session->set_userdata('userID', $user_id);
 					return true;
 				}
@@ -68,7 +90,6 @@ class Auth extends CI_Model {
 		return ($this->checkSignin())?$this->session->userdata('userID'):'';
 	}
 	function getInfoUser(){
-		$autokendb = $this->load->database('autokendb', TRUE);
-		return $autokendb->select('*')->from('tbl_user')->where(array('id' => $this->session->userdata('userID')))->get()->row_array();
+		return $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
 	}
 }

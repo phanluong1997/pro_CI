@@ -20,6 +20,19 @@ class UserModel extends CI_Model {
 		return $result;
 	}
 
+	//checklogin(Auth.php) -Ot1
+	function getUser($table = '', $data = NULL, $where = NULL, $order = ''){
+		$result = $this->db->select($data)->from($table);
+		if($where != NULL){
+			$result = $this->db->where($where);
+		}
+		if($order!=''){
+			$result = $this->db->order_by($order);
+		}
+		$result = $this->db->get()->row_array();
+		return $result;
+	}
+
 	//add - Ot1
 	function add($table = '', $data = NULL){
 		$this->db->insert($table, $data);

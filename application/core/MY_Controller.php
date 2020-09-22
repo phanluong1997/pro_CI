@@ -55,6 +55,15 @@ class Dashboard_Controller extends CI_Controller {
 	}
 	//Main Function
 	protected function get_index(){
+		$data['info_user'] = $this->get_user();
 		return $data;
+	}
+
+	protected function get_user(){
+		if($this->Auth->checkSignin()){
+			$id_user = $this->Auth->userID();
+			$data = $this->db->select('*')->from('tbl_user')->where('id', $id_user)->get()->row_array();
+			return $data;
+		}
 	}
 }
