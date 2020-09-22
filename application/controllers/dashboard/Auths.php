@@ -51,4 +51,22 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
+	//Notify action
+	public function notify(){
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Notify',
+			'template' 		=> 	'dashboard/auth/notify'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Notify active account action
+	public function activeNotify(){
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Notify',
+			'template' 		=> 	'dashboard/auth/activeNotify'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
 }
