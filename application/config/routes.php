@@ -64,6 +64,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['dashboard'] = 'dashboard/home';
 $route['(dashboard/profile).html'] = 'dashboard/auths/profile';
 $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
+$route['(dashboard/notify).html'] = 'dashboard/auths/notify';
+$route['(dashboard/active-account-notify).html'] = 'dashboard/auths/activeNotify';
 
 //admin
 $route['cpanel'] = 'cpanel/home';
