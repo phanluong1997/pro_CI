@@ -20,24 +20,26 @@
             <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap">
                 <i class="fa fa-bell" aria-hidden="true"></i>
             </button>
-            <?php 
-                if(!$data_index['info_user']['fullname']){
-                    echo"<a class='xbutton login-button' data-toggle='modal' data-target='#myModalLogin'>";
-                        echo"<span class='login-icon'>";
-                            echo"<i class='fas fa-user-alt' aria-hidden='true'></i>";
-                        echo"</span>";
-                        echo"<span class='login-label'>SIGN IN</span>";
-                    echo"</a>";
-                }else{
-                    echo"<a href='dashboard/logout.html' class='xbutton login-button'>";
-                        echo"<span class='login-icon'>";
-                            echo"<i class='fas fa-user-alt' aria-hidden='true'></i>";
-                        echo"</span>";
-                        echo"<span class='login-label'>LOGOUT</span>";
-                    echo"</a>";
-                }
-
-            ?>
+            <?php if(!$data_index['info_user']['fullname']){ ?>
+                <a class='xbutton login-button' data-toggle='modal' data-target='#myModalLogin'>
+                    <span class='login-icon'>
+                        <i class='fas fa-user-alt' aria-hidden='true'></i>
+                    </span>
+                    <span class='login-label'>SIGN IN</span>
+                </a>
+            <?php }else{ ?>
+                <div class="dropdown myAccount">
+                    <a class="dropdown-toggle fullname" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-shield"></i>
+                        Nguyen Huynh
+                        <i class="fas fa-caret-down"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item account" href="dashboard/profile.html"><i class="fas fa-user-cog"></i> Profile</a>
+                        <a class="dropdown-item" href="dashboard/logout.html"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
     <div class="clear"></div>

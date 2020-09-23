@@ -508,6 +508,32 @@ a{
     width: 100px;
     margin-bottom: 20px;
 }
+/* dropdown account - otMain */
+.myAccount .fullname{
+    cursor: pointer;
+    color: #FCC438;
+    font-weight: 700;
+    line-height: 30px;
+}
+.myAccount .fullname:hover, .myAccount .fullname:focus{
+    color: #FCC438;
+}
+.myAccount .dropdown-menu{
+    padding: 5px 15px;
+    right: 0px;
+    left: auto;
+}
+.myAccount .dropdown-menu a{
+    display: block;
+    line-height: 30px;
+    color: #333;
+    width: 100%;
+}
+.myAccount .dropdown-menu a.account{
+    border-bottom: 1px solid #ddd;
+}
+/* END dropdown account - otMain */
+
 /*------- otMain -  sidebar ---- */
 #sidebar{
 	position: fixed;
