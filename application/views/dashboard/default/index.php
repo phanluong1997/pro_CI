@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- loginGoogle - OT1 -->
+    <meta name="google-signin-client_id" content="44392542747-1m64j0mv7ai4rv53bsvffteg5g997t3p.apps.googleusercontent.com">
     <link rel="icon" type="image/png" sizes="16x16" href="public/otadmin/images/favicon.png">
     <title><?php echo $title;?></title>
     <!-- Css -->

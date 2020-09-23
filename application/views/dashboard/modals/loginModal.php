@@ -31,7 +31,7 @@
             </div>
             <div class="social">
               <a class="fb"><img src="public/dashboard/images/ic-facebook.png" alt="Facebook"></a>
-              <a href="dashboard/login-google.html" class="google"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
+              <a class="g-signin2 google " data-onsuccess="onSignIn"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
             </div>
           </form>
         </div>
@@ -74,6 +74,28 @@
     </div>
   </div>
 </div>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+  //loginGoogle - OT1
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    $.ajax({
+      url: 'dashboard/login-google.html',
+      type: 'POST',
+      dataType: 'html',
+      data: {email:profile.getEmail()},
+      success: function(data) {
+        // $('#messageSignIn').html(data);
+        alert(data);
+      }
+    });
+  }
+</script>
+
 <script type="text/javascript">
   $(function(){
     //OtMain - hidden box sign up

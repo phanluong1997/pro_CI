@@ -55,10 +55,15 @@ class Auths extends Dashboard_Controller {
 	}
 
 	//login with google - OT1
-
 	public function loginGoogle()
 	{
-		
+		$type_account = 'google';
+		$email = $_POST['email'];
+		$check = $this->UserModel->total('tbl_user', array('email' =>$email, 'type_account' =>$type_account ));
+		if($check == 0)
+		{
+			redirect(base_url().'dashboard/profile.html/');
+		}
 	}
 
 	//checkemail(ajax) - Ot1
