@@ -31,7 +31,7 @@
             </div>
             <div class="social">
               <a class="fb"><img src="public/dashboard/images/ic-facebook.png" alt="Facebook"></a>
-              <a class="google"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
+              <a href="dashboard/login-google.html" class="google"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
             </div>
           </form>
         </div>
