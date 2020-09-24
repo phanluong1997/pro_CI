@@ -89,8 +89,7 @@
       dataType: 'html',
       data: {email:profile.getEmail()},
       success: function(data) {
-        // $('#messageSignIn').html(data);
-        alert(data);
+        // alert(data);
       }
     });
   }

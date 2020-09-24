@@ -14,6 +14,10 @@ class Home extends Dashboard_Controller {
 	//Main action
 	public function index()
 	{
+		//check login
+		// if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		//check status
+		
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Dashboard',

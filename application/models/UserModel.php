@@ -95,6 +95,7 @@ class UserModel extends CI_Model {
 		$flag = $this->db->affected_rows();
 		if($flag > 0){
 			return array(
+				'id_insert'	=> $insert_id,
 				'type'		=> 'successful',
 				'message'	=> 'Update success!',
 			);

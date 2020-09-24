@@ -9,10 +9,12 @@
 	        <div class="form-item">
 	        	<label>Fullname</label>
 	          	<input type="text" required="" name="fullname" placeholder="Fullname" id="fullname" value="">
+	          	<div class="has-error text-warning"><?php echo form_error('fullname') ?></div>
 	        </div>
 	        <div class="form-item">
 	        	<label>Phone</label>
 	          	<input type="text" required="" name="phone" placeholder="Phone" id="phone" value="">
+	          	<div class="has-error text-warning"><?php echo form_error('phone') ?></div>
 	        </div>
 	        <div class="form-item btn-box">
               	<button type="submit">Save</button>

@@ -18,6 +18,14 @@ class Auths extends Dashboard_Controller {
 		{
 			echo json_encode(array('message' => 'Email or password incorrect!'));
 		}
+		else
+		{
+			$result = $this->UserModel->select_row('tbl_user', '*', array('email' => $email));
+			if($result['active'] == 0)
+			{
+				echo json_encode(array('message' => 'Account not activated, please check email!'));
+			}
+		}
 	}
 
 	//login user - OT1
@@ -32,38 +40,34 @@ class Auths extends Dashboard_Controller {
 				$type = 'user';
 				$login_array = array($email, $password, $type);
 				if($this->Auth->signUser($login_array) === true)
-				{
-					redirect(base_url().'dashboard');
-				}
-				else
-				{
+				{ 
 					$result = $this->UserModel->select_row('tbl_user', '*', array('email' => $email));
 					$id = $result['id'];
-					if($result['active'] == 0){
-						echo "email not activated"; die;
-					}
-					else if($result['fullname'] ==  NULL OR $result['phone'] == NULL)
+					if($result['status'] == 0)
 					{
 						$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
 						$token = base64_encode($token);
-						redirect(base_url().'dashboard/profile.html/'.$token);
+						redirect(base_url().'dashboard/update-profile.html/'.$token);
 					}
 					redirect(base_url().'dashboard'); //TEST email or password incorrect -OT1;
 				}
 			}
+			redirect(base_url().'dashboard');
 		}
 	}
 
 	//login with google - OT1
 	public function loginGoogle()
 	{
-		$type_account = 'google';
-		$email = $_POST['email'];
-		$check = $this->UserModel->total('tbl_user', array('email' =>$email, 'type_account' =>$type_account ));
-		if($check == 0)
-		{
-			redirect(base_url().'dashboard/profile.html/');
-		}
+		echo $email;
+		// $type_account = 'google';
+		// $email = $_POST['email'];
+		// $check = $this->UserModel->total('tbl_user', array('email' =>$email, 'type_account' =>$type_account ));
+		// if($check == 0)
+		// {
+		// 	echo $email."++++ check:".$check;
+		// 	// redirect(base_url().'dashboard/update-profile.html/');
+		// }
 	}
 
 	//checkemail(ajax) - Ot1
@@ -103,6 +107,7 @@ class Auths extends Dashboard_Controller {
 					'password' 			=> 	$encrypt_pass,
 					'type'				=>	'user',
 					'salt' 				=>  $rand_salt,
+					'status'			=>	0,
 					'active'			=>	0,
 					'created_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
@@ -177,12 +182,31 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	//Profile action -OT1
+
+	//Profile - OT1
 	public function profile(){
+		echo "this is page profile - OTMain"; die;
+		// $data = array(
+		// 	'data_index'	=> $this->get_index(),
+		// 	'title'			=>	'Profile',
+		// 	'template' 		=> 	''
+		// );
+		// $this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//testSession  (Dont' delete) - OT1
+	public function testSession()
+	{
+		echo '<pre>'; print_r($this->session->all_userdata());
+		echo "</br>";
+		echo "This is session userID: ".$this->session->userdata('userID');die;
+	}
+
+	//Update Profile action -OT1
+	public function updateProfile(){
 		$token = $this->uri->segment(3);
 		$encode = base64_decode($token);
 		$string = explode("*", $encode);
-		echo $id = $string[7];
+		$id = $string[7];
 		//edit data
 		if($this->input->post()){
 			//validation
@@ -192,10 +216,12 @@ class Auths extends Dashboard_Controller {
 				$data_update = array(
 					'fullname' 			=> 	trim($this->input->post('fullname')),
 					'phone' 			=> 	trim($this->input->post('phone')),
+					'status'			=>  1,
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
 				if($result>0){
+					//$id = $result['id_insert'];
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
 						'message'	=> 'Update admin successful!!',
@@ -218,6 +244,7 @@ class Auths extends Dashboard_Controller {
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
+
 	//Notify action
 	public function notify(){
 		$data = array(
