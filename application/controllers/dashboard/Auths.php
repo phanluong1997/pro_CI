@@ -54,6 +54,13 @@ class Auths extends Dashboard_Controller {
 		}
 	}
 
+	//login with google - OT1
+
+	public function loginGoogle()
+	{
+		
+	}
+
 	//checkemail(ajax) - Ot1
 	public function checkEmail(){
 		$email = $_POST['email'];
