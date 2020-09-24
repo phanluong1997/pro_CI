@@ -85,35 +85,25 @@ class Auth extends CI_Model {
 	}
 	function checkSignin(){
 		return ($this->session->userdata('userID'))?TRUE:FALSE;
-		// //checkSignIn - OT1
-		// if($this->session->userdata('userID')){
-		// 	$result = $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
-		// 	if($result != NULL){
-		// 		if($result['status'] == 0)
-		// 		{
-		// 			return FALSE;
-		// 		}else{
-		// 			return TRUE;
-		// 		}
-		// 	}
-		// }else{
-		// 	return FALSE;
-		// }
 	}
 	function checkStatus(){
-		// if($this->session->userdata('userID')){
-		// 	$result = $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
-		// 	if($result != NULL){
-		// 		if($result['status'] == 0)
-		// 		{
-		// 			return FALSE;
-		// 		}else{
-		// 			return TRUE;
-		// 		}
-		// 	}
-		// }else{
-		// 	return FALSE;
-		// }
+		if($this->session->userdata('userID')){
+			$result = $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
+			if($result != NULL){
+				if($result['status'] == 0)
+				{
+					return TRUE;
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	function userID(){

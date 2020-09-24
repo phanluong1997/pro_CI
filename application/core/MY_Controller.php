@@ -56,19 +56,18 @@ class Dashboard_Controller extends CI_Controller {
 	//Main Function
 	protected function get_index(){
 		$data['info_user'] = $this->get_user();
-		$this->check_StatusUser();
 		return $data;
 	}
 
 	//get_user - OT1	
-	protected function check_StatusUser(){
-		$id_user = $this->Auth->userID();
-		$data = $this->db->select('*')->from('tbl_user')->where(array('id' => $id_user))->get()->row_array();
-		if($data['status'] == 0)
-		{
-			$this->session->unset_userdata('userID');
-		}
-	}
+	// protected function check_StatusUser(){
+	// 	$id_user = $this->Auth->userID();
+	// 	$data = $this->db->select('*')->from('tbl_user')->where(array('id' => $id_user))->get()->row_array();
+	// 	if($data['status'] == 0)
+	// 	{
+	// 		$this->session->unset_userdata('userID');
+	// 	}
+	// }
 
 	//get_user - OT1	
 	protected function get_user(){

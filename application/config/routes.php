@@ -69,15 +69,16 @@ $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 //dashboard (SignUp + checkEmail - Login + checkLogin...) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
 $route['(dashboard/checkEmail).html'] = 'dashboard/auths/checkEmail';
-$route['(dashboard/update-profile).html/(:any)'] = 'dashboard/auths/updateProfile';
+$route['(dashboard/update-profile).html'] = 'dashboard/auths/updateProfile';
 $route['(dashboard/login).html'] = 'dashboard/auths/login';
 $route['(dashboard/login-google).html'] = 'dashboard/auths/loginGoogle';
 $route['(dashboard/checklogin).html'] = 'dashboard/auths/checklogin';
 $route['(dashboard/logout).html'] = 'dashboard/auths/logout';
 //dashboard notify - OTMain
 $route['(dashboard/notify).html'] = 'dashboard/auths/notify';
-$route['(dashboard/active-account-notify).html/(:any)'] = 'dashboard/auths/activeNotify';
-// $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeNotify';
+$route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
+$route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
+
 
 
 
