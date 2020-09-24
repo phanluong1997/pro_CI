@@ -66,13 +66,16 @@ class UserModel extends CI_Model {
 		}
 	}
 	//getAll- Ot1
-	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc'){
+	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
 			$result = $this->db->where($where);
 		}
 		if($order != ''){
 			$result = $this->db->order_by($order);
+		}
+		if($limit != ''){
+			$result = $this->db->limit($limit, $start);
 		}
 		$result = $this->db->get()->result_array();
 		return $result;
@@ -134,4 +137,16 @@ class UserModel extends CI_Model {
 		return $this->db->get();
 		
 	}
+	//get all user
+	public function count_all() {
+		// $type = 'user';
+		// $this->db->select('*');
+		// $this->db->from('tbl_user');
+		// $this->db->where('type',$type);
+
+		// $query = $this->db->get();
+		// return $query->num_rows();
+		return $this->db->count_all('tbl_user');
+	}
+	
 }

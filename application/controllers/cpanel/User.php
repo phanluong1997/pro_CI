@@ -7,20 +7,47 @@ class User extends Admin_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
+		$this->load->library('pagination');
+		
 	}
 	//List action - OT2
 	public function index()
 	{	
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		$this->load->library('pagination');
+
+
+		//get all 
+		$totalRow = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
+		//get limit
+		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', 0, 5);
+		//get total page
+		$countPage = ceil(count($totalRow) / 5);
+
+
+		
+		
+		$config['base_url'] = base_url().'cpanel/user/index';
+		$total = $config['total_rows'] = $totalRow;
+		$config['per_page'] = $countPage;
+		$config['uri_segments'] = 4;
+		$config['num_links'] =2;
+		$config['use_page_numbers'] = TRUE;
+		$this->pagination->initialize($config);
+		// show pagination
+		$data['pagination'] = $this->pagination->create_links();
 
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'User Manager',
 			'control'		=>	'user',
+			'datas'		=>	$datas,
+			'countPage'		=>	$countPage,
 			'template' 	=> 	$this->template.'index'
 		);
-		$data['datas'] = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
+		
+		
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//Edit action -OT2
@@ -185,7 +212,7 @@ class User extends Admin_Controller {
 										</label>
 									</div>
 								</td>
-								<td><a onclick="del('.$row->id.');" id="delete'.$row->id.'" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+								<td><a onclick="del('.$row->id.');" id="delete'.$row->id.'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
 									<a href="cpanel/user/edit/'.$row->id.'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
 									<a href="cpanel/user/changepassword/'.$row->id.'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 								</td>
@@ -200,6 +227,7 @@ class User extends Admin_Controller {
 		}	
 		$output .= '</table>';
 		echo $output;
-	}			
+	}	
+	
 		
 }
