@@ -66,7 +66,7 @@ class UserModel extends CI_Model {
 		}
 	}
 	//getAll- Ot1
-	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){
+	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){ 
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
 			$result = $this->db->where($where);
@@ -125,28 +125,17 @@ class UserModel extends CI_Model {
 	}
 	//fetch data users -OT2
 	public function fetch_data($query){
-		$type = 'user';
-		$this->db->select('*');
-		$this->db->from('tbl_user');
-		if($query!=''){
-			 $this->db->like('email',$query);
-			 $this->db->or_like('phone',$query);
-		}
-		$this->db->where('type',$type);
-		$this->db->order_by('id','DES');
-		return $this->db->get();
 		
-	}
-	//get all user
-	public function count_all() {
-		// $type = 'user';
-		// $this->db->select('*');
-		// $this->db->from('tbl_user');
-		// $this->db->where('type',$type);
-
-		// $query = $this->db->get();
-		// return $query->num_rows();
-		return $this->db->count_all('tbl_user');
+		$this->db->select('*');
+		$this->db->from('tbl_user')->where('type','user');
+		if($query != ''){
+			$this->db->like('email',$query);
+			// $this->db->where("`phone` LIKE '%$query%'");
+		}
+		
+		$this->db->order_by('id','ASC');
+		return $this->db->get()->result_array();
+		
 	}
 	
 }

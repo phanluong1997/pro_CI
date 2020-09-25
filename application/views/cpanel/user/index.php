@@ -1,3 +1,4 @@
+
 <div class="page-header">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><?php echo $title;?></li>
@@ -10,7 +11,7 @@
 		</li>
 	</ul>
 </div>
-<div id="boxNotify" class="alert alert-success"></div>
+<div id="boxNotify" class="alert alert-success">123824</div>
 <!-- Info Submit -->
 <?php $message_flashdata = $this->session->flashdata('message_flashdata');
 if(isset($message_flashdata) && count($message_flashdata)){ ?>
@@ -27,11 +28,11 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="table-container">
-				<div style="float:right; margin-right:5px; margin-bottom:5px;" class="custom-search  " >
-					<input type="text" name="search_text" id="search_text" class="search-query" placeholder="Search here ...">
-					<i class="icon-search1"></i>
-				</div>
-					<div class="table-responsive" id="result">
+					<div class="table-responsive" >
+					<div style="float:right; margin-right:5px; margin-bottom:5px;" class="custom-search  " >
+						<input type="text" name="search_text" id="search_text" class="search-query" placeholder="Search User here ...">
+						<i class="icon-search1"></i>
+					</div>
 						<table id="employeeList" class="table custom-table">
 							<thead>
 								<tr>
@@ -45,7 +46,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 								</tr>
 							</thead>
 							<?php if(isset($datas) && $datas != NULL){ ?>
-								<tbody>
+								<tbody id="test"  >
 									<?php foreach ($datas as $key => $val) { ?>
 										<tr>
 											<td>
@@ -86,22 +87,21 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 								</tbody>
 							<?php } ?>
 						</table>	
-						<?php echo $pagination; ?>
-					<!-- <ul>
-						<?php for($i = 1; $i <= $countPage; $i ++){ ?>
-							<li>
-								<a onclick="loadPage(<?php echo $i;?>)"><?php echo $i;?></a>
-							</li>
-						<?php } ?>
-					</ul>	 -->
-					<div id="pagination"></div>	
+    					<ul class ="pagination pagination-sm" id =ajax>
+							<?php for($i = 1; $i <= $countPage; $i ++){ ?>
+								<li >
+									<a  onclick="loadPage(<?php echo $i;?>)" data-control="<?php echo $control;?>" id="pagination<?php echo $i;?>" class="btn btn-info text-white" ><i class="icon-trash-1"></i><?php echo $i;?></a>
+								</li>
+							<?php } ?>
+						</ul>
+					</div>		
 			</div>
 		</div>
 	</div>
 	<!-- Row end -->
 </div>
 <script>
-	//check Active - OT2
+	//check Active - OT1
 		function checkActive(id){
 			var control = $('#active'+id).attr('data-control');
 			var active = 0;
@@ -167,33 +167,49 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		}
 	//search user -OT2
 		$(document).ready(function(){
+			// load_data();
 			$('#search_text').keyup(function(){
 				var search = $(this).val();
-				
-				$.post('cpanel/user/fetch',{query:search},function(data){
-					$('#result').html(data);
-				});
+				if(search != ''){
+					$.ajax
+					({
+						url: "cpanel/user/fetch" ,
+						type: "POST",
+						dataType:'html',
+						data: {search:search},
+						success : function (result){
+							$('#test').html(result);
+						}
+					});
+					// $.post('cpanel/user/fetch',{search:search},function(data){ //search = query => push $query to User.php in func fetch.php.
+					// 	$('#test').html(data);
+					// });
+				}	
 			});
+
 		});	
+	
+
+
 	//pagination  -- OT2
-// 	$(document).ready(function() {
-// 	createPagination(0);
-// 	$('#pagination').on('click','a',function(e){
-// 		e.preventDefault(); 
-// 		var pageNum = $(this).attr('data-ci-pagination-page');
-// 		createPagination(pageNum);
-// 	});
-// 	function createPagination(pageNum){
-// 		$.ajax({
-// 			url: '<?=base_url()?>cpanel/user/loadData/'+pageNum,
-// 			type: 'get',
-// 			dataType: 'json',
-// 			success: function(responseData){
-// 				$('#pagination').html(responseData.pagination);
-// 				paginationData(responseData.empData);
-// 			}
-// 		});
-// 	}
+		function loadPage(i){
+			var control = $('#pagination'+i).attr('data-control');
+			if(i != '')
+			{
+				// alert(i);
+				$.ajax
+					({
+						url: "cpanel/"+control+"/pagination" ,
+						type: "POST",
+						dataType:'html',
+						data: {i:i},
+						success : function (result){
+							$('#test').html(result);
+						}
+					});
+
+			}	
+		}
 
 </script>
 

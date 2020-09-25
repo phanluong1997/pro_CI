@@ -7,37 +7,21 @@ class User extends Admin_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
-		$this->load->library('pagination');
 		
 	}
 	//List action - OT2
 	public function index()
 	{	
+
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
-		$this->load->library('pagination');
-
-
-		//get all 
-		$totalRow = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
+		// $this->load->library('pagination');
+		//get all
+		$totalRow = $config['total_rows'] = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
 		//get limit
 		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', 0, 5);
 		//get total page
 		$countPage = ceil(count($totalRow) / 5);
-
-
-		
-		
-		$config['base_url'] = base_url().'cpanel/user/index';
-		$total = $config['total_rows'] = $totalRow;
-		$config['per_page'] = $countPage;
-		$config['uri_segments'] = 4;
-		$config['num_links'] =2;
-		$config['use_page_numbers'] = TRUE;
-		$this->pagination->initialize($config);
-		// show pagination
-		$data['pagination'] = $this->pagination->create_links();
-
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'User Manager',
@@ -46,8 +30,6 @@ class User extends Admin_Controller {
 			'countPage'		=>	$countPage,
 			'template' 	=> 	$this->template.'index'
 		);
-		
-		
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//Edit action -OT2
@@ -163,71 +145,109 @@ class User extends Admin_Controller {
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	// ajax search fetch data
+	// ajax search fetch data -OT2
 	public function fetch()
 	{	
+		
 		$output = '';
-		$query = '';
+		$search = $_POST['search'];
 
-		if($this->input->post('query')){
-			$query = $this->input->post('query');
+		if($search != ''){
+			$datas= $this->UserModel->fetch_data($search);
+		}else{
+			$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', 0, 5);
+			// $data= $this->UserModel->fetch_data();
 		}
-		$data= $this->UserModel->fetch_data($query);
-				$output .='<table class="table custom-table">
-								<thead>
-									<tr>
-										<th>Fullname</th>
-										<th>Email</th>
-										<th>Phone</th>
-										<th>Wallet USD</th>
-										<th>Date</th>
-										<th>Status</th>
-										<th>Tools</th>
-									</tr>';
-		if($data->num_rows() > 0 ){	
-			foreach($data ->result() as $row){
+		if($datas != NULL ){
+			foreach($datas as $row){
 				$activeChecked = '';
 				$verifyChecked = '';
 				$control = $this->control;
-				if($row->active == 1){ $activeChecked = 'checked'; }	
-				if($row->verify == 1){ $verifyChecked = 'checked'; }	
+				if($row['active'] == 1){ $activeChecked = 'checked'; }	
+				if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
 				$output .= '<tr>
-								<td>'.$row->fullname.'</td>
-								<td>'.$row->email.'</td>
-								<td>'.$row->phone.'</td>
-								<td>'.$row->walletUSD.'</td>
-								<td>'.$row->created_at.'</td>
+								<td>'.$row['fullname'].'</td>
+								<td>
+									<p>'.$row['email'].'</p>
+									<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>
+								</td>
+								<td>'.$row['phone'].'</td>
+								<td>'.$row['walletUSD'].'</td>
+								<td>'.$row['created_at'].'</td>
 								<td>
 									<div class="custom-control custom-switch">
-										<input onclick="checkActive('.$row->id.')" '.$activeChecked.'
-										type="checkbox" class="custom-control-input" id="active'.$row->id.'" 
+										<input onclick="checkActive('.$row['id'].')" '.$activeChecked.'
+										type="checkbox" class="custom-control-input" id="active'.$row['id'].'" 
 										data-control="'.$control.'">
-										<label class="custom-control-label" for="active'.$row->id.'">Active</label>
+										<label class="custom-control-label" for="active'.$row['id'].'">Active</label>
 									</div>
 									<div class="custom-control custom-switch">
-										<input onclick="checkVerify('.$row->id.')" '.$verifyChecked.'
-										type="checkbox" class="custom-control-input" id="verify'.$row->id.'" data-control="'.$control.'">
-										<label class="custom-control-label" for="verify'.$row->id.'">
+										<input onclick="checkVerify('.$row['id'].')" '.$verifyChecked.'
+										type="checkbox" class="custom-control-input" id="verify'.$row['id'].'" data-control="'.$control.'">
+										<label class="custom-control-label" for="verify'.$row['id'].'">
 											Verify (<a href="" class="text-success">View Detail</a>)
 										</label>
 									</div>
 								</td>
-								<td><a onclick="del('.$row->id.');" id="delete'.$row->id.'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
-									<a href="cpanel/user/edit/'.$row->id.'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
-									<a href="cpanel/user/changepassword/'.$row->id.'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
+								<td><a onclick="del('.$row['id'].');" id="delete'.$row['id'].'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+									<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
+									<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 								</td>
 							</tr>';
 
 			}	
 		}
-		else{
-				$output .= '<tr>
-				<td colspan = 5>No data</td>	
-				</tr>';
-		}	
-		$output .= '</table>';
 		echo $output;
 	}	
-	
+	//Pagination --OT2
+	public function pagination(){
+		$number = 5;
+		$page = $_POST['i'];
+		$start = ($page - 1) * $number;
+		$limit = $page * $number;
+
+		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', $start, $limit);
+		// echo json_encode($datas);
+		// var_dump($datas);die;
+		$output = '' ;	
+			foreach($datas as $row){
+				$activeChecked = '';
+				$verifyChecked = '';
+				$control = $this->control;
+				if($row['active'] == 1){ $activeChecked = 'checked'; }	
+				if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
+				$output .= '<tr>
+								<td>'.$row['fullname'].'</td>
+								<td>
+									<p>'.$row['email'].'</p>
+									<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>
+								</td>
+								<td>'.$row['phone'].'</td>
+								<td>'.$row['walletUSD'].'</td>
+								<td>'.$row['created_at'].'</td>
+								<td>
+									<div class="custom-control custom-switch">
+										<input onclick="checkActive('.$row['id'].')" '.$activeChecked.'
+										type="checkbox" class="custom-control-input" id="active'.$row['id'].'" 
+										data-control="'.$control.'">
+										<label class="custom-control-label" for="active'.$row['id'].'">Active</label>
+									</div>
+									<div class="custom-control custom-switch">
+										<input onclick="checkVerify('.$row['id'].')" '.$verifyChecked.'
+										type="checkbox" class="custom-control-input" id="verify'.$row['id'].'" data-control="'.$control.'">
+										<label class="custom-control-label" for="verify'.$row['id'].'">
+											Verify (<a href="" class="text-success">View Detail</a>)
+										</label>
+									</div>
+								</td>
+								<td><a onclick="del('.$row['id'].');" id="delete'.$row['id'].'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+									<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
+									<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
+								</td>
+							</tr>';
+
+			}	
+		echo $output;
+	}
 		
 }
