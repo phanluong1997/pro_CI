@@ -118,25 +118,29 @@
 
   //Sign in - OT1
   function checkLogin(){
+    //Get value to input
     var emailSignIn = $('#emailSignIn').val();
     var passwordSignIn = $('#passwordSignIn').val();
+    //Check require
     if(emailSignIn == "" || passwordSignIn == "" ){
-      $('#messageSignIn').html('Email or password is null');
+      $('#messageSignIn').html('Email or password is empty');
       return false;
-    }
-    if(emailSignIn != "" || passwordSignIn != "" )
-    {
+    }else{
+      let result = 1;
       $.ajax({
+        async: false,
         url: 'dashboard/checklogin.html',
         type: 'POST',
         dataType: 'json',
         data: {email:emailSignIn, password:passwordSignIn},
         success: function(data) {
-          $('#messageSignIn').html(data.message);
-          alert(data.message);
+          if(data){
+            $('#messageSignIn').html(data.message);
+            result = 0;
+          }
         }
       });
-      // return false;
+      if(result == 0){ return false; }else{ return true; }
     }
   }
 
