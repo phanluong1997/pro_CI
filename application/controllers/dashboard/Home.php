@@ -14,6 +14,8 @@ class Home extends Dashboard_Controller {
 	//Main action
 	public function index()
 	{
+		//check signUser account -OT1
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Dashboard',
@@ -22,35 +24,4 @@ class Home extends Dashboard_Controller {
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 
-	//Test sendEmail (incomplete) - OT1
-	public function send()
-	{
-		$this->load->library('email');
-
-		$subject = 'This is a test';
-		$message = 'Test message';
-
-		// Get full html:
-		$body = 'Bằng một cách thần kỳ nào đó thì em đã gửi được cái mail rồi a ợ :v';
-		
-		// End attaching the logo.
-
-		$result = $this->email
-		    ->from('sentemail.optech@gmail.com')
-		    ->reply_to('sentemail.optech@gmail.com')    // Optional, an account where a human being reads.
-		    ->to('phucthao205@gmail.com')
-		    ->subject($subject)
-		    ->message($body)
-		    ->send();
-
-		var_dump($result);
-		echo '<br />';
-		echo $this->email->print_debugger();
-
-		exit;
-		// 
-	}
-
-	
-	
 }
