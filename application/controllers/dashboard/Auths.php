@@ -20,7 +20,7 @@ class Auths extends Dashboard_Controller {
 		}
 		else
 		{
-			$result = $this->UserModel->select_row('tbl_user', '*', array('email' => $email));
+			$result = $this->UserModel->select_row('tbl_user', 'active', array('email' => $email));
 			if($result['active'] == 0)
 			{
 				echo json_encode(array('message' => 'Account not activated, please check your email!'));
@@ -59,10 +59,16 @@ class Auths extends Dashboard_Controller {
 		$check = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
 		if($check == NULL)
 		{
+			$rand_pass = $this->Encrypts->genRndSalt();
+			$rand_salt = $this->Encrypts->genRndSalt();
+			$encrypt_pass = $this->Encrypts->encryptUserPwd($rand_pass,$rand_salt);
 			$data_insert = array(
 				'email' 			=> 	$email,
 				'fullname'			=>	$fullname,
+				'password' 			=> 	$encrypt_pass,
+				'text_pass' 		=> 	$rand_pass,
 				'type'				=>	'user',
+				'salt' 				=>  $rand_salt,
 				'type_account'		=>	1,
 				'status'			=>	0,
 				'active'			=>	1,
@@ -70,13 +76,33 @@ class Auths extends Dashboard_Controller {
 				'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
 			$result = $this->UserModel->add('tbl_user', $data_insert);
-			$this->session->set_userdata('userID', $result['id_insert']);
+			if($result>0)
+			{
+				$this->session->set_userdata('userID', $result['id_insert']);
+				$this->load->library('email');
+				$subject = 'mt7.com';
+				$message = 'Message';
+				// Get full html:
+				$body = "<p>Hello!<br/>
+						You have just registered successfully at MT7.<br />
+						Your password:".$rand_pass."<br/>
+				";
+				$result_email = $this->email
+				    ->from('sentemail.optech@gmail.com')
+				    ->reply_to('')    
+				    ->to('phucthao205@gmail.com') //$email
+				    ->subject($subject)
+				    ->message($body)
+				    ->send();
+				echo json_encode(array('result' =>0));  
+			}
 		}
 		else
 		{
 			$this->session->set_userdata('userID', $check['id']);
+			echo json_encode(array('result' =>1));
 		}
-		echo json_encode(array('result' =>1));
+		
 	}
 
 	//checkemail(ajax) - SignUp - Ot1
@@ -110,10 +136,11 @@ class Auths extends Dashboard_Controller {
 			if($this->form_validation->run()){
 				//Random password
 				$rand_salt = $this->Encrypts->genRndSalt();
-				$encrypt_pass = $this->Encrypts->encryptUserPwd( $this->input->post('password'),$rand_salt);
+				$encrypt_pass = $this->Encrypts->encryptUserPwd($this->input->post('password'),$rand_salt);
 				$data_insert = array(
 					'email' 			=> 	trim($this->input->post('email')),
 					'password' 			=> 	$encrypt_pass,
+					'text_pass' 		=> 	$this->input->post('password'),
 					'type_account'		=>	0,
 					'type'				=>	'user',
 					'salt' 				=>  $rand_salt,
@@ -133,7 +160,7 @@ class Auths extends Dashboard_Controller {
 
 					$id =$result['id_insert'];
 					$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
-					$token = base64_encode($token);
+					$token = rtrim( strtr( base64_encode( $token ), '+/', '-_'), '=');
 					
 					// Get full html:
 					$body = "<p>Hello!<br/>
@@ -234,13 +261,13 @@ class Auths extends Dashboard_Controller {
 					//$id = $result['id_insert'];
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
-						'message'	=> 'Update admin successful!!',
+						'message'	=> 'Update profile successful!!',
 					));
 					redirect(base_url().'dashboard');
 				}else{
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'error',
-						'message'	=> 'Update admin error!!',
+						'message'	=> 'Update profile error!!',
 					));
 					redirect(base_url().'dashboard');
 				}
@@ -255,27 +282,140 @@ class Auths extends Dashboard_Controller {
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 
-	//Forger Password action
-	public function forgerPass()
+	//check Email Forget - OT1 
+	public function check_EmailForget()
 	{
-		//check signUser account AND check status -OT1
-		if($this->Auth->signUser() === true){redirect(base_url().'dashboard/home');}
-		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		$email = $this->input->post('email');
+		$result = $this->UserModel->select_row('tbl_user', 'email,type', array('email' => $email));
+		if($result == NULL)
+		{
+			$this->form_validation->set_message(__FUNCTION__,'This email is not in the system!');
+			return false;
+		}
+		else
+		{
+			if($result['type'] == 'user')
+			{
+				return true;
+			}
+			else
+			{
+				$this->form_validation->set_message(__FUNCTION__,'This email is not in the system!');
+				return false;
+			}
+		}
+	}
+
+	//Forger Password action
+	public function forgetPass()
+	{
+		if($this->input->post()){
+			$this->form_validation->set_rules('email','Email','required|valid_email|min_length[8]|callback_check_EmailForget');
+			//validate run
+			if($this->form_validation->run()){
+				//send mail (to active account) -OT1
+				$this->load->library('email');
+
+				$subject = 'mt7.com';
+				$message = 'Message';
+				$email = $this->input->post('email');
+				$result = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
+				$id =$result['id'];
+				$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
+				$token = rtrim( strtr( base64_encode( $token ), '+/', '-_'), '=');
+				
+				// Get full html:
+				$body = "<p>Hello!<br/>
+						Please click on the link below to update your password.<br />
+						Link:<a href='".base_url()."dashboard/update-password.html/".$token."'>
+						http://mt7.com?update-forget-password.html=0KthjnNavRKKoMkG2oTpDIZpVTuCIZW7</a><br/>
+						&nbsp;</p>
+				";
+				$result = $this->email
+				    ->from('sentemail.optech@gmail.com')
+				    ->reply_to('')    
+				    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
+				    ->subject($subject)
+				    ->message($body)
+				    ->send();	
+				if($result)
+				{
+					redirect('dashboard/notify-forget-password.html');
+				}
+			}
+								
+		}
+
 		$data = array(
 			'data_index'	=> $this->get_index(),
-			'title'			=>	'Forger Password',
-			'template' 		=> 	'dashboard/home/forgerPass'
+			'title'			=>	'Forget Password',
+			'template' 		=> 	'dashboard/auth/forgetPass'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
+
+	public function notifyForgetPass()
+	{
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Notify',
+			'template' 		=> 	'dashboard/auth/notifyForgetPass'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+
+	public function updatePass()
+	{
+
+		$token = $this->uri->segment(3);
+		$encode = base64_decode($token);
+		$string = explode("*", $encode);
+		$id = $string[7];
+		if($this->input->post()){
+			$this->form_validation->set_rules('password','Password','required|min_length[8]');
+			$this->form_validation->set_rules('re_password','Re-Password','required|min_length[8]|matches[password]');
+			//validate run
+			if($this->form_validation->run()){
+				$rand_salt = $this->Encrypts->genRndSalt();
+				$encrypt_pass = $this->Encrypts->encryptUserPwd( $this->input->post('password'),$rand_salt);
+				$data_update = array(
+					'password' 			=> 	$encrypt_pass,
+					'salt' 				=>  $rand_salt,
+					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+				);
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				if($result>0){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Update password successful!!',
+					));
+					redirect('dashboard/home');
+				}else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Update password error!!',
+					));
+					redirect('dashboard/home');
+				}
+			}
+								
+		}
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Update Password',
+			'template' 		=> 	'dashboard/auth/updatePass'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+
 
 	//check_Email - Ot1
 	public function check_OldPassword(){
 		$id = $this->session->userdata('userID');
 		$where = array('email' => $Email);
-		$result = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
+		$result = $this->UserModel->select_row('tbl_user', 'salt,password', array('id' => $id));
 		$rand_salt_old = $result['salt'];
-		$oldpassword   = $result['password']."<br/>";
+		$oldpassword   = $result['password'];
 		$oldpassword_post = $this->Encrypts->encryptUserPwd( $this->input->post('oldpassword'),$rand_salt_old);
 		if($oldpassword == $oldpassword_post)
 		{
@@ -283,7 +423,7 @@ class Auths extends Dashboard_Controller {
 		}
 		else
 		{
-			$this->form_validation->set_message(__FUNCTION__,'Old Password incorrect!');
+			$this->form_validation->set_message(__FUNCTION__,'The old password incorrect!');
 			return false;
 		}
 
@@ -296,36 +436,34 @@ class Auths extends Dashboard_Controller {
 		if($this->Auth->signUser() === true){redirect(base_url().'dashboard/home');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
-			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]');
+			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]|callback_check_OldPassword');
+			$this->form_validation->set_rules('password','Password','required|min_length[8]');
+			$this->form_validation->set_rules('re_password','Re-Password','required|min_length[8]|matches[password]');
 			//validate run
 			if($this->form_validation->run()){
+				$rand_salt = $this->Encrypts->genRndSalt();
+				$encrypt_pass = $this->Encrypts->encryptUserPwd( $this->input->post('password'),$rand_salt);
+				$data_update = array(
+					'password' 			=> 	$encrypt_pass,
+					'text_pass' 		=>  $this->input->post('password'),
+					'salt' 				=>  $rand_salt,
+					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+				);
 				$id = $this->session->userdata('userID');
-				$where = array('email' => $Email);
-				$result = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
-				$rand_salt_old = $result['salt'];
-				$oldpassword   = $result['password'];
-				$oldpassword_post = $this->Encrypts->encryptUserPwd( $this->input->post('oldpassword'),$rand_salt_old);
-				
-				// echo $oldpassword.$oldpassword_post."<br/>";
-
-			
-				$ok1=(string)$oldpassword;
-				$ok2=(string)$oldpassword_post;
-				echo $ok1.'---'.$ok2; die;
-
-				if($ok1 == $ok2)
-				{
-					echo "mật khẩu giống nhau<br/>";
-					echo "Mật khẩu cũ trong database: ".$oldpassword."<br/>";
-					echo "Mật khẩu cũ nhập trong form: ".$oldpassword_post."<br/>";
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				if($result>0){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Change password successful!!',
+					));
+					redirect('dashboard/change-password.html');
+				}else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Change password error!!',
+					));
+					redirect('dashboard/change-password.html');
 				}
-				else
-				{
-					echo "không giống nhau<br/>";
-					echo "Mật khẩu cũ trong database: ".$oldpassword."<br/>";
-					echo "Mật khẩu cũ nhập từ form: ".$oldpassword_post."<br/>";
-				}die;
-						
 			}
 								
 		}

@@ -25,7 +25,7 @@
             </div>
             <div class="form-item btn-box">
               <button type="submit">Sign In</button>
-              <a class="forget">Forgot password?</a>
+              <a href="dashboard/forget-password.html" class="forget">Forgot password?</a>
             </div>
             <div class="other-login">
               <div class="box-title"><span>Log in directly with </span></div>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-item btn-box">
               <button type="submit" id="ButtonSignUp">Sign Up</button>
-              <a class="forget">Forgot password?</a>
+              <a href="dashboard/forget-password.html" class="forget">Forgot password?</a>
             </div>
             <div class="other-login">
               <div class="box-title"><span>Log in directly with </span></div>
@@ -162,7 +162,12 @@
             dataType: 'json',
             data: {email:email,fullname:fullname},
             success: function(data) {
-              if(data.result == 1)
+              if(data.result == 0)
+              {
+                alert('Your password has been sent to your email');
+                window.location = "<?php base_url().'dashboard/notify.html'?>";
+              }
+              else
               {
                 window.location = "<?php base_url().'dashboard'?>";
               } 
