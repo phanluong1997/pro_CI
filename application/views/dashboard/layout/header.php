@@ -32,7 +32,7 @@
                 <div class="dropdown myAccount">
                     <a class="dropdown-toggle fullname" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-shield"></i>
-                        Nguyen Huynh
+                            <?php echo $data_index['info_user']['fullname'];?>
                         <i class="fas fa-caret-down"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

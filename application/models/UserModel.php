@@ -65,6 +65,23 @@ class UserModel extends CI_Model {
 			return FALSE;
 		}
 	}
+
+	//checkEmail - Login Google - Ot1
+	function check_exists_google($where = array()){
+		$this->db->where($where);
+		$query = $this->db->get('tbl_user');
+		if($query->num_rows() > 0){
+			return array(
+				'type'		=> 'successful',
+				'message'	=> 'Add data success!',
+			);
+		}else{
+			return array(
+				'type'		=> 'error',
+				'message'	=> 'Add data error!',
+			);
+		}
+	}
 	//getAll- Ot1
 	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc'){
 		$result = $this->db->select($data)->from($table);
@@ -95,6 +112,7 @@ class UserModel extends CI_Model {
 		$flag = $this->db->affected_rows();
 		if($flag > 0){
 			return array(
+				'id_insert'	=> $insert_id,
 				'type'		=> 'successful',
 				'message'	=> 'Update success!',
 			);

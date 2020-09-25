@@ -1,3 +1,4 @@
+
 <div id="myModalLogin" class="modal fade" role="dialog">
   <div class="modal-dialog modalLogin">
     <div class="modal-content">
@@ -31,7 +32,7 @@
             </div>
             <div class="social">
               <a class="fb"><img src="public/dashboard/images/ic-facebook.png" alt="Facebook"></a>
-              <a href="dashboard/login-google.html" class="google"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
+              <a class="google" id="googleSignIn" ><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
             </div>
           </form>
         </div>
@@ -74,6 +75,8 @@
     </div>
   </div>
 </div>
+
+
 <script type="text/javascript">
   $(function(){
     //OtMain - hidden box sign up
@@ -142,6 +145,40 @@
       });
       if(result == 0){ return false; }else{ return true; }
     }
+  }
+
+  //Login Google - OTMain + OT1
+  function onLoadGoogleCallback(){
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '44392542747-1m64j0mv7ai4rv53bsvffteg5g997t3p.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'profile'
+      });
+
+    auth2.attachClickHandler(element, {},
+      function(googleUser) {
+          var email = googleUser.getBasicProfile().getEmail();
+          var fullname = googleUser.getBasicProfile().getName();
+          $.ajax({
+            url: 'dashboard/login-google.html',
+            type: 'POST',
+            dataType: 'json',
+            data: {email:email,fullname:fullname},
+            success: function(data) {
+              if(data.result == 1)
+              {
+                window.location = "<?php base_url().'dashboard'?>";
+              } 
+            }
+          });
+        }, function(error) {
+          console.log('Sign-in error', error);
+        }
+      );
+    });
+
+    element = document.getElementById('googleSignIn');
   }
 
 </script>

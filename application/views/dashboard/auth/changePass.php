@@ -1,10 +1,11 @@
 <div class="profileBox clearfix">
 	<div class="contents">
 		<div class="title">Change Password</div>
-		<form class="login__form" action="" method="">
+		<form action="" class="login__form" action="" method="POST">
 	        <div class="form-item">
 	        	<label>Old Password</label>
-	          	<input type="password" name="oldpassword" id="oldpassword" value="">
+	          	<input type="password" required name="oldpassword" id="oldpassword" value="">
+	          	<div class="has-error text-warning"><?php echo form_error('oldpassword') ?></div>
 	        </div>
 	        <div class="form-item">
 	        	<label>New Password</label>

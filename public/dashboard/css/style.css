@@ -29,6 +29,9 @@ body{
 a{
 	text-decoration: none;
 }
+.text__success{
+    color: #83A51A;
+}
 /*------- otMain -  main ---- */
 #main {
     margin-right: 400px;
@@ -509,6 +512,9 @@ a{
     margin-bottom: 20px;
 }
 /* dropdown account - otMain */
+.myAccount{
+    margin-left: 15px;
+}
 .myAccount .fullname{
     cursor: pointer;
     color: #FCC438;
@@ -533,6 +539,132 @@ a{
     border-bottom: 1px solid #ddd;
 }
 /* END dropdown account - otMain */
+
+/*---------------------------- dashboard - otMain ----------------------------*/
+.mainDash{
+    margin: 30px 0px;
+    padding: 0px 20px;
+}
+.mainDash .item__account{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 15px 0px;
+}
+.mainDash .item__account .avatar{
+    width: 100%;
+}
+.mainDash .item__account .info{
+    list-style: none;
+    color: #FFF;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+.mainDash .item__account .info .fullname{
+    font-size: 20px;
+    font-weight: 700;
+}
+.mainDash .item__account .info .btn__copy{
+    color: #FFF;
+    font-size: 17px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.mainDash .item__account .info .box__status{
+    position: absolute;
+    top: 0px;
+    right: 15px;
+}
+.mainDash .item__account .info .box__status .is__verify{
+    background-image: url('../../dashboard/images/icVerify.png');
+    background-position: top left;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+    line-height: 18px;
+}
+.mainDash .item__account__btn{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 5px 0px;
+}
+.mainDash .item__account__btn a{
+    color: #FFF;
+    min-height: 25px;
+    float: left;
+    background-position: top left;
+    background-size: 25px;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    line-height: 25px;
+}
+.mainDash .item__account__btn .key{
+    background-image: url('../../dashboard/images/icKey.png');
+}
+.mainDash .item__account__btn ._2fa{
+    background-image: url('../../dashboard/images/ic2FA.png');
+}
+.mainDash .item__amout__wallet{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 15px 0px;
+    height: 105px;
+}
+.mainDash .item__amout__wallet{
+    color: #FFF;
+    text-align: center;
+}
+.mainDash .item__amout__wallet .title{
+    color: rgb(161, 187, 206);
+}
+.mainDash .item__amout__wallet .amount{
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+}
+.mainDash .box__tools__wallet a{
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 12px 0px;
+    margin: 5px 0px;
+    width: 100%;
+    text-align: center;
+    display: table;
+    color: #FFF;
+}
+.mainDash .box__tools__wallet a.deposite{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #09871b , #0aa320);
+}
+.mainDash .box__tools__wallet a.withdraw{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #c2440d , #d64d11);
+}
+/*---------------------------- END dashboard - otMain ----------------------------*/
+
+/*---------------------------- Game List ----------------------- */
+.game__list{
+    margin: 20px 0px;
+}
+.game__list .title{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    color: rgb(161, 187, 206);
+    font-size: 20px;
+    line-height: 35px;
+    padding-left: 15px;
+    font-weight: 700;
+}
+/*---------------------------- END Game List  ----------------------- */
 
 /*---------------------------- Sidebar ----------------------- */
 #sidebar {
