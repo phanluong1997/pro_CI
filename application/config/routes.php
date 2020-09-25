@@ -63,6 +63,7 @@ $route['translate_uri_dashes'] = FALSE;
 //dashboard
 $route['dashboard'] = 'dashboard/home';
 $route['(dashboard/profile).html'] = 'dashboard/auths/profile';
+$route['(dashboard/add-password).html'] = 'dashboard/auths/addPass';
 $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 $route['(dashboard/forget-password).html'] = 'dashboard/auths/forgetPass';
 $route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass';

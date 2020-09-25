@@ -168,11 +168,6 @@
             success: function(data) {
               if(data.result == 0)
               {
-                alert('Your password has been sent to your email');
-                window.location = "<?php base_url().'dashboard/notify.html'?>";
-              }
-              else
-              {
                 window.location = "<?php base_url().'dashboard'?>";
               } 
             }
