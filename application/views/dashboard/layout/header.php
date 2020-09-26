@@ -2,7 +2,7 @@
     <div class="header-pc clearfix">
         <div class="logo">
             <a href="" class="logo-icon router-link-active">
-                <img src="https://bc.game/img/mainlogo.5b57169a.svg" alt="" class="main-logo">
+                <img src="public/images/logo.png" alt="" class="main-logo">
             </a>
         </div>
         <div class="navmt7">
