@@ -51,6 +51,50 @@ class Auths extends Dashboard_Controller {
 		
 	}
 
+	//add password - OT1
+	public function addPass()
+	{
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		if($this->input->post()){
+			//validation
+			$this->form_validation->set_rules('password','Password', 'required|min_length[8]');
+			if($this->form_validation->run()){
+				//Random password
+				$rand_salt = $this->Encrypts->genRndSalt();
+				$encrypt_pass = $this->Encrypts->encryptUserPwd( $this->input->post('password'),$rand_salt);
+				$data_update = array(
+					'password' 			=> 	$encrypt_pass,
+					'text_pass' 		=>  trim($this->input->post('password')),
+					'salt' 				=>  $rand_salt,
+					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+				);
+				$id = $this->session->userdata('userID');
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				if($result>0){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Add password successful!!',
+					));
+					redirect(base_url().'dashboard/home/index');
+				}else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Add password error!!',
+					));
+					redirect(base_url().'dashboard/home/index');
+				}
+			}
+		}
+
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Add Password',
+			'template' 		=> 	'dashboard/auth/addPass',
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+
 	//login with google - OT1
 	public function loginGoogle()
 	{
@@ -59,16 +103,10 @@ class Auths extends Dashboard_Controller {
 		$check = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
 		if($check == NULL)
 		{
-			$rand_pass = $this->Encrypts->genRndSalt();
-			$rand_salt = $this->Encrypts->genRndSalt();
-			$encrypt_pass = $this->Encrypts->encryptUserPwd($rand_pass,$rand_salt);
 			$data_insert = array(
 				'email' 			=> 	$email,
 				'fullname'			=>	$fullname,
-				'password' 			=> 	$encrypt_pass,
-				'text_pass' 		=> 	$rand_pass,
 				'type'				=>	'user',
-				'salt' 				=>  $rand_salt,
 				'type_account'		=>	1,
 				'status'			=>	0,
 				'active'			=>	1,
@@ -76,32 +114,17 @@ class Auths extends Dashboard_Controller {
 				'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
 			$result = $this->UserModel->add('tbl_user', $data_insert);
+			$this->random_code($result['id_insert']);
 			if($result>0)
 			{
 				$this->session->set_userdata('userID', $result['id_insert']);
-				$this->load->library('email');
-				$subject = 'mt7.com';
-				$message = 'Message';
-				// Get full html:
-				$body = "<p>Hello!<br/>
-						You have just registered successfully at MT7.<br />
-						Your password:".$rand_pass."<br/>
-				";
-				$result_email = $this->email
-				    ->from('sentemail.optech@gmail.com')
-				    ->reply_to('')    
-				    ->to('phucthao205@gmail.com') //$email
-				    ->subject($subject)
-				    ->message($body)
-				    ->send();
-				echo json_encode(array('result' =>0));  
 			}
 		}
 		else
 		{
 			$this->session->set_userdata('userID', $check['id']);
-			echo json_encode(array('result' =>1));
 		}
+		echo json_encode(array('result' =>0));
 		
 	}
 
@@ -127,6 +150,34 @@ class Auths extends Dashboard_Controller {
 		return true;
 	}
 
+	public function random_code($id)
+	{
+		$min = 10000000;
+		$max = 99999999;
+		$rand_code = mt_rand($min,$max);
+		$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $rand_code));
+		if($result == NULL)
+		{
+			$data_update = array(
+				'code' 		=> 	$rand_code
+			);
+			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+		}
+		else
+		{
+			do{
+				$new_rand_code = mt_rand($min,$max);
+				$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $new_rand_code));
+				$max = $max + 1;
+			}
+			while($result['code'] == $new_rand_code);
+			$data_update = array(
+				'code' 		=> 	$new_rand_code
+			);
+			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+		}
+	}
+
 	//SignUp - Ot1
 	public function SignUp()
 	{
@@ -150,7 +201,7 @@ class Auths extends Dashboard_Controller {
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$result = $this->UserModel->add('tbl_user', $data_insert);
-
+				$this->random_code($result['id_insert']);
 				if($result>0){
 					//send mail (to active account) -OT1
 					$this->load->library('email');
@@ -433,7 +484,7 @@ class Auths extends Dashboard_Controller {
 	public function changePass()
 	{
 		//check signUser account AND check status -OT1
-		if($this->Auth->signUser() === true){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]|callback_check_OldPassword');
@@ -479,7 +530,7 @@ class Auths extends Dashboard_Controller {
 	//Profile - OT1
 	public function profile(){
 		//check signUser account AND check status -OT1
-		if($this->Auth->signUser() === true){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$id = $this->session->userdata('userID');
 		//edit data
@@ -498,13 +549,13 @@ class Auths extends Dashboard_Controller {
 					//$id = $result['id_insert'];
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
-						'message'	=> 'Update user successful!!',
+						'message'	=> 'Update profile successful!!',
 					));
 					redirect(base_url().'dashboard');
 				}else{
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'error',
-						'message'	=> 'Update user error!!',
+						'message'	=> 'Update profile error!!',
 					));
 					redirect(base_url().'dashboard');
 				}

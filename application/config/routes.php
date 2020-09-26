@@ -63,6 +63,7 @@ $route['translate_uri_dashes'] = FALSE;
 //dashboard
 $route['dashboard'] = 'dashboard/home';
 $route['(dashboard/profile).html'] = 'dashboard/auths/profile';
+$route['(dashboard/add-password).html'] = 'dashboard/auths/addPass';
 $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 $route['(dashboard/forget-password).html'] = 'dashboard/auths/forgetPass';
 $route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass';
@@ -81,6 +82,10 @@ $route['(dashboard/notify).html'] = 'dashboard/auths/notify';
 $route['(dashboard/notify-forget-password).html'] = 'dashboard/auths/notifyForgetPass';
 $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
+
+//dashboard - WithdrawController
+$route['(dashboard/withdraw).html'] = 'dashboard/withdraw/Withdraw';
+$route['(dashboard/checkamount).html'] = 'dashboard/withdraw/checkAmount';
 
 
 
