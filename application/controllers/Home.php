@@ -17,4 +17,11 @@ class Home extends MY_Controller {
 		);
 		$this->load->view('frontend/default/index', isset($data)?$data:NULL);
 	}
+	public function page404()
+	{
+		$data = array(
+			'title'		=>	'404 Page',
+		);
+		$this->load->view('frontend/default/page404', isset($data)?$data:NULL);
+	}
 }

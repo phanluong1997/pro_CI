@@ -54,11 +54,13 @@
 					</ul>
 				</div>
 			</li>
+			<li>
+				<a href="cpanel/config">
+					<i class="icon-settings"></i>
+					<span class="menu-text">Setting</span>
+				</a>
+			</li>
 			<!-- sidebar for dashboard  user end-->
-
-			<!-- sidebar for website manager-->
-			<li class="header-menu">Website Manager</li>
-			<!-- sidebar for website manager-->
 		</ul>
 	</div>
 	<!-- sidebar menu end -->

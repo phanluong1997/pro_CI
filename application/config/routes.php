@@ -57,8 +57,9 @@ Luong => Ot2
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'home/page404';
 $route['translate_uri_dashes'] = FALSE;
+// $route['404'] = 'home/page404';
 
 //dashboard
 $route['dashboard'] = 'dashboard/home';
