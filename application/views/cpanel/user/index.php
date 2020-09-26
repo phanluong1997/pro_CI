@@ -28,11 +28,11 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="table-container">
-					<div class="table-responsive" >
-					<div style="float:right; margin-right:5px; margin-bottom:5px;" class="custom-search  " >
-						<input type="text" name="search_text" id="search_text" class="search-query" placeholder="Search User here ...">
-						<i class="icon-search1"></i>
-					</div>
+				<div style="float:right; margin-right:5px; margin-bottom:5px;" class="custom-search  " >
+					<input type="text" name="search_text" id="search_text<?php echo $search;?>" class="search-query" placeholder="Search User here ..." data-control="<?php echo $control;?>">
+					<i class="icon-search1"></i>
+				</div>			
+					<div class="table-responsive" id ="result">
 						<table id="employeeList" class="table custom-table">
 							<thead>
 								<tr>
@@ -88,7 +88,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 							<?php } ?>
 						</table>	
     					<ul class ="pagination pagination-sm" id =ajax>
-							<?php for($i = 1; $i <= $countPage; $i ++){ ?>
+							<?php for($i = 1; $i <= $countPage; $i++){ ?>
 								<li >
 									<a  onclick="loadPage(<?php echo $i;?>)" data-control="<?php echo $control;?>" id="pagination<?php echo $i;?>" class="btn btn-info text-white" ><i class="icon-trash-1"></i><?php echo $i;?></a>
 								</li>
@@ -170,27 +170,19 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 			// load_data();
 			$('#search_text').keyup(function(){
 				var search = $(this).val();
-				if(search != ''){
-					$.ajax
-					({
-						url: "cpanel/user/fetch" ,
-						type: "POST",
-						dataType:'html',
-						data: {search:search},
-						success : function (result){
-							$('#test').html(result);
-						}
-					});
-					// $.post('cpanel/user/fetch',{search:search},function(data){ //search = query => push $query to User.php in func fetch.php.
-					// 	$('#test').html(data);
-					// });
-				}	
+				var control = $('#search_text').attr('data-control');
+				if(search != ""){
+					$.post('cpanel/user/search',{query:search},function(data){ //search = query => push $query to User.php in func fetch.php.
+						$('#result').html(data);
+					});	
+				}
+				else{
+					location.reload(true); 
+				}
 			});
 
 		});	
 	
-
-
 	//pagination  -- OT2
 		function loadPage(i){
 			var control = $('#pagination'+i).attr('data-control');

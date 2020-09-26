@@ -141,19 +141,26 @@ class UserModel extends CI_Model {
 		$result = $this->db->count_all_results();
 		return $result;
 	}
-	//fetch data users -OT2
-	public function fetch_data($query){
-		
-		$this->db->select('*');
-		$this->db->from('tbl_user')->where('type','user');
-		if($query != ''){
-			$this->db->like('email',$query);
-			// $this->db->where("`phone` LIKE '%$query%'");
+	// Search data users -OT2
+
+	function getSearch($table = '', $data = NULL, $where = NULL, $order = 'id desc', $query){ 
+		$result = $this->db->select($data)->from($table);
+		if($where != NULL){
+			$result = $this->db->where($where);
 		}
-		
-		$this->db->order_by('id','ASC');
-		return $this->db->get()->result_array();
-		
+		if($order != ''){
+			$result = $this->db->order_by($order);
+		}
+		if($query != ''){
+			$result = $this->db->like('email', $query);	
+		}
+		// if($query != ''){
+		// 	$result = $this->db->like('phone', $query);	
+		// }
+
+		$result = $this->db->get()->result_array();
+		return $result;
 	}
 	
+		
 }
