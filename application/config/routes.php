@@ -83,6 +83,10 @@ $route['(dashboard/notify-forget-password).html'] = 'dashboard/auths/notifyForge
 $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
 
+//dashboard - WithdrawController
+$route['(dashboard/withdraw).html'] = 'dashboard/withdraw/Withdraw';
+$route['(dashboard/checkamount).html'] = 'dashboard/withdraw/checkAmount';
+
 
 
 

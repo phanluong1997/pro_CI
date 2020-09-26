@@ -4,7 +4,6 @@
       <tr>
         <th>
           User
-
         </th>
         <th>
           Amount
@@ -22,7 +21,7 @@
         <td>chuongle</td>
         <td class="currency">$100</td>
         <td>9-23-2020</td>
-        <td><span class="status">success</span> </td>
+        <td><span class="status">success</span></td>
       </tr>
       <tr>
         <td>chuongle</td>
