@@ -18,11 +18,11 @@
     <div id="tabTransfer" class="tab-pane fade in active">
       <div class="content-transfer">
         <form action="" method="">
-          <label>Amount</label><br />
+          <label>Amount <span class="box__require">(*)</span></label><br />
           <input id="txtAmountTransfer" value="" type="number" min="0" name="" /><br />
-          <label>Transfer to</label><br />
+          <label>Transfer to <span class="box__require">(*)</span></label><br />
           <input id="txtTransferTo" type="text" name="" /><br />
-          <label>2FA code</label><br />
+          <label>2FA code <span class="box__require">(*)</span></label><br />
           <input id="FACodeTransfer" type="text" name="" /><br />
           <label class="lable-btn"><button id="btn-confirm" type="submit">Confirm</button></label>
         </form>

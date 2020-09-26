@@ -4,6 +4,7 @@ class WithdrawModel extends CI_Model {
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('settingmodel');
 	}
 	//select row -> get value. - OT2
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
@@ -81,6 +82,12 @@ class WithdrawModel extends CI_Model {
 		}
 		$result = $this->db->get()->result_array();
 		return $result;
+	}
+	//get data to setting - OTMain
+	public function getSetting()
+	{
+		$data = $this->settingmodel->select_row('tbl_config', 'content', array('key' => 'wallet'));
+		return json_decode($data['content'],true);
 	}
 }
 ?>

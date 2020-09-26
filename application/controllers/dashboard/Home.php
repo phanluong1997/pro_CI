@@ -13,7 +13,7 @@ class Home extends Dashboard_Controller {
 
 	//Main action
 	public function index()
-	{
+	{	
 		//check signUser account -OT1
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$data = array(
@@ -21,8 +21,8 @@ class Home extends Dashboard_Controller {
 			'title'		=>	'Dashboard',
 			'template' 	=> 	'dashboard/home/index'
 		);
-		$id = $this->session->userdata('userID');
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
+		$userID = $this->session->userdata('userID');
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 

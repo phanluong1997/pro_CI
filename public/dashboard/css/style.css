@@ -32,6 +32,11 @@ a{
 .text__success{
     color: #83A51A;
 }
+/*------- css label input require -  main ---- */
+.box__require{
+    color: #ffe22b;
+    font-weight: 300 !important;
+}
 /*------- otMain -  main ---- */
 #main {
     margin-right: 400px;

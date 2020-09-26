@@ -3,16 +3,16 @@
 		<div class="title">Profile Update</div>
 		<form action="" method="POST" class="login__form">
 			<div class="form-item">
-	        	<label>Email</label>
+	        	<label>Email <span class="box__require">(*)</span></label>
 	          	<input type="text" readonly="readonly" value="<?php echo $datas['email']; ?>">
 	        </div>
 	        <div class="form-item">
-	        	<label>Fullname</label>
+	        	<label>Fullname <span class="box__require">(*)</span></label>
 	          	<input type="text" required="" name="fullname" placeholder="Fullname" id="fullname" value="<?php echo $datas['fullname']; ?>">
 	          	<div class="has-error text-warning"><?php echo form_error('fullname') ?></div>
 	        </div>
 	        <div class="form-item">
-	        	<label>Phone</label>
+	        	<label>Phone <span class="box__require">(*)</span></label>
 	          	<input type="text" required="" name="phone" placeholder="Phone" id="phone" value="<?php echo $datas['phone']; ?>">
 	          	<div class="has-error text-warning"><?php echo form_error('phone') ?></div>
 	        </div>
