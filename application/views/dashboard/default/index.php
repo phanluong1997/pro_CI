@@ -32,6 +32,8 @@
         <?php $this->load->view('dashboard/layout/header'); ?>
         <!-- load modal -->
         <?php $this->load->view('dashboard/modals/loginModal'); ?>
+        <?php $this->load->view('dashboard/modals/transferModal'); ?>
+        <?php $this->load->view('dashboard/modals/walletModal'); ?>
         
         <?php
             if(isset($template) && !empty($template)){
@@ -40,11 +42,10 @@
         ?>
     </div>
     <div id="sidebar">
-        <div class="content">
-            <?php $this->load->view('dashboard/layout/sidebar'); ?>
-        </div>
+        <?php $this->load->view('dashboard/layout/sidebar'); ?>
     </div>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="public/dashboard/js/main.js"></script>
 </body>
 </html>

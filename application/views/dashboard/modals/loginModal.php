@@ -25,7 +25,7 @@
             </div>
             <div class="form-item btn-box">
               <button type="submit">Sign In</button>
-              <a class="forget">Forgot password?</a>
+              <a href="dashboard/forget-password.html" class="forget">Forgot password?</a>
             </div>
             <div class="other-login">
               <div class="box-title"><span>Log in directly with </span></div>
@@ -59,7 +59,7 @@
             </div>
             <div class="form-item btn-box">
               <button type="submit" id="ButtonSignUp">Sign Up</button>
-              <a class="forget">Forgot password?</a>
+              <a href="dashboard/forget-password.html" class="forget">Forgot password?</a>
             </div>
             <div class="other-login">
               <div class="box-title"><span>Log in directly with </span></div>
@@ -121,25 +121,29 @@
 
   //Sign in - OT1
   function checkLogin(){
+    //Get value to input
     var emailSignIn = $('#emailSignIn').val();
     var passwordSignIn = $('#passwordSignIn').val();
+    //Check require
     if(emailSignIn == "" || passwordSignIn == "" ){
-      $('#messageSignIn').html('Email or password is null');
+      $('#messageSignIn').html('Email or password is empty');
       return false;
-    }
-    if(emailSignIn != "" || passwordSignIn != "" )
-    {
+    }else{
+      let result = 1;
       $.ajax({
+        async: false,
         url: 'dashboard/checklogin.html',
         type: 'POST',
         dataType: 'json',
         data: {email:emailSignIn, password:passwordSignIn},
         success: function(data) {
-          $('#messageSignIn').html(data.message);
-          alert(data.message);
+          if(data){
+            $('#messageSignIn').html(data.message);
+            result = 0;
+          }
         }
       });
-      // return false;
+      if(result == 0){ return false; }else{ return true; }
     }
   }
 
@@ -162,7 +166,7 @@
             dataType: 'json',
             data: {email:email,fullname:fullname},
             success: function(data) {
-              if(data.result == 1)
+              if(data.result == 0)
               {
                 window.location = "<?php base_url().'dashboard'?>";
               } 

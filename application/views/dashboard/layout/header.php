@@ -10,11 +10,12 @@
                 <li><a href="">Home</a></li>
                 <li><a href="">Game</a></li>
                 <li><a href="">Bonus</a></li>
+                <li><a data-toggle="modal" data-target="#myTransfer" href="">Transfer</a></li>
             </ul>
         </div>
         
         <div class="right">
-            <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap">
+            <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap" data-toggle="modal" data-target="#myWallet">
                 <i class="fas fa-wallet" aria-hidden="true"></i>
             </button>
             <button type="button" class="xbutton head-button xbutton-gray xbadge-wrap">

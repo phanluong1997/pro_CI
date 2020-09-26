@@ -29,6 +29,9 @@ body{
 a{
 	text-decoration: none;
 }
+.text__success{
+    color: #83A51A;
+}
 /*------- otMain -  main ---- */
 #main {
     margin-right: 400px;
@@ -509,6 +512,9 @@ a{
     margin-bottom: 20px;
 }
 /* dropdown account - otMain */
+.myAccount{
+    margin-left: 15px;
+}
 .myAccount .fullname{
     cursor: pointer;
     color: #FCC438;
@@ -534,9 +540,135 @@ a{
 }
 /* END dropdown account - otMain */
 
-/*------- otMain -  sidebar ---- */
-#sidebar{
-	position: fixed;
+/*---------------------------- dashboard - otMain ----------------------------*/
+.mainDash{
+    margin: 30px 0px;
+    padding: 0px 20px;
+}
+.mainDash .item__account{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 15px 0px;
+}
+.mainDash .item__account .avatar{
+    width: 100%;
+}
+.mainDash .item__account .info{
+    list-style: none;
+    color: #FFF;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+.mainDash .item__account .info .fullname{
+    font-size: 20px;
+    font-weight: 700;
+}
+.mainDash .item__account .info .btn__copy{
+    color: #FFF;
+    font-size: 17px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.mainDash .item__account .info .box__status{
+    position: absolute;
+    top: 0px;
+    right: 15px;
+}
+.mainDash .item__account .info .box__status .is__verify{
+    background-image: url('../../dashboard/images/icVerify.png');
+    background-position: top left;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+    line-height: 18px;
+}
+.mainDash .item__account__btn{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 5px 0px;
+}
+.mainDash .item__account__btn a{
+    color: #FFF;
+    min-height: 25px;
+    float: left;
+    background-position: top left;
+    background-size: 25px;
+    background-repeat: no-repeat;
+    padding-left: 35px;
+    line-height: 25px;
+}
+.mainDash .item__account__btn .key{
+    background-image: url('../../dashboard/images/icKey.png');
+}
+.mainDash .item__account__btn ._2fa{
+    background-image: url('../../dashboard/images/ic2FA.png');
+}
+.mainDash .item__amout__wallet{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 15px 0px;
+    height: 105px;
+}
+.mainDash .item__amout__wallet{
+    color: #FFF;
+    text-align: center;
+}
+.mainDash .item__amout__wallet .title{
+    color: rgb(161, 187, 206);
+}
+.mainDash .item__amout__wallet .amount{
+    font-weight: 700;
+    font-size: 25px;
+    text-align: center;
+}
+.mainDash .box__tools__wallet a{
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 12px 0px;
+    margin: 5px 0px;
+    width: 100%;
+    text-align: center;
+    display: table;
+    color: #FFF;
+}
+.mainDash .box__tools__wallet a.deposite{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #09871b , #0aa320);
+}
+.mainDash .box__tools__wallet a.withdraw{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #c2440d , #d64d11);
+}
+/*---------------------------- END dashboard - otMain ----------------------------*/
+
+/*---------------------------- Game List ----------------------- */
+.game__list{
+    margin: 20px 0px;
+}
+.game__list .title{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    color: rgb(161, 187, 206);
+    font-size: 20px;
+    line-height: 35px;
+    padding-left: 15px;
+    font-weight: 700;
+}
+/*---------------------------- END Game List  ----------------------- */
+
+/*---------------------------- Sidebar ----------------------- */
+#sidebar {
+    position: fixed;
     right: 0px;
     top: 0px;
     bottom: 0px;
@@ -550,10 +682,671 @@ a{
     height: 6.5rem;
     padding-top: 0;
 }
-#sidebar .content{
-	padding: 4rem 0px 0.625rem;
-    user-select: text;
+
+#sidebar .topsidebar {
+    height: 10vh;
+    background: transparent;
     background-image: linear-gradient(90deg, rgb(42, 58, 71), rgb(33, 47, 59));
-    height: 100vh;
+    border-bottom: 1px solid #6e8899;
+}
+
+#sidebar .content {
+    padding: 10px 0px;
+    user-select: text;
+    height: 75vh;
+    display: block;
+    overflow-y: scroll;
+    background-image: linear-gradient(90deg, rgb(42, 58, 71), rgb(33, 47, 59));
+}
+
+#sidebar .boxInput {
+    height: 15vh;
+    background: transparent;
+    background-color: rgb(41, 57, 70);
+    padding: 10px 10px;
+    box-sizing: border-box;
+}
+
+#sidebar .boxInput .sendInput {
+    position: relative;
+    background-color: rgb(30, 43, 55);
+    padding: 0px;
+    width: 100%;
+    height: 40px;
+}
+
+#sidebar .boxInput .sendInput .typeMessage {
+    flex: 1 1 0%;
+    border-radius: 2px;
+    font-size: 14px;
+    margin-right: 10px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    line-height: 20px;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: #FFF;
+}
+
+#sidebar .boxInput .boxControl {
+    display: flex;
+    position: relative;
+    z-index: 10;
+    margin-top: 10px;
+    height: 36px;
+}
+
+#sidebar .boxInput .boxControl .btnTag {
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    border: 2px solid rgb(49, 68, 82);
+    background-color: rgb(30, 43, 55);
+    position: relative;
+    cursor: pointer;
+}
+
+#sidebar .boxInput .boxControl .btnTag img {
+    width: 100%;
+}
+
+#sidebar .boxInput .boxControl .btnGIF {
+    margin-left: 20px;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+#sidebar .boxInput .boxControl .btnGIF button {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(150, 174, 193);
+    padding: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    outline: none
+}
+
+#sidebar .boxInput .boxControl .btnGIF:hover>button {
+    color: #FFF
+}
+
+#sidebar .boxInput .boxControl .btnEmoji {
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+#sidebar .boxInput .boxControl .btnEmoji img {
+    width: 100%;
+    padding: 5px;
+}
+
+#sidebar .boxInput .boxControl .btnSend {
+    position: absolute;
+    right: 0px;
+    top: -2px;
+    width: 74px;
+    height: 36px;
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    background-image: linear-gradient(264deg, rgb(53, 71, 86), rgb(65, 91, 112), rgb(65, 91, 112));
+}
+
+#sidebar .boxInput .boxControl .btnSend .clippy-right {
+    margin: 0 auto;
+    background-color: rgb(150, 174, 193);
+    border: 5px;
+    width: 20px;
+    height: 17px;
+    clip-path: polygon(0 0, 83% 50%, 0 100%, 24% 50%);
+}
+
+#sidebar .boxInput .boxControl .btnSend:hover {
+    background-image: linear-gradient(264deg, rgb(247, 218, 66), rgb(255, 188, 52), rgb(247, 218, 66));
+}
+
+#sidebar .boxInput .boxControl .btnSend:hover .clippy-right {
+    background-color: #FFF;
+}
+
+#sidebar .content .itemchat .head .avatar {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: none !important;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+#sidebar .content .itemchat {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+#sidebar .content .itemchat .head .checked {
+    color: orange;
+}
+
+#sidebar .content .itemchat .head .level {
+    text-align: center;
+    margin-left: -5px;
+}
+
+#sidebar .content .itemchat .head .level span {
+    transform: scale(0.7);
+    margin-right: -5px;
+}
+
+#sidebar .content .itemchat .name {
+    line-height: 26px;
+    color: rgb(255, 255, 255);
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
+#sidebar .content .itemchat .boxMessage {
+    background-color: rgb(49, 68, 82);
+    border-radius: 10px;
+    padding: 5px;
+    color: rgb(161, 187, 206);
+    display: block;
+    word-wrap: break-word;
+    overflow: hidden;
+    font-size: 12px;
+    max-width: 88%;
+    float: left;
+}
+
+#sidebar .content .itemchat .timeMessage {
+    float: left;
+    width: 12%;
+    padding-left: 3px;
+    font-size: 12px;
+    align-self: flex-end;
+}
+
+#sidebar .content .itemchat .head {
+    display: inline-block;
+    width: 18%;
+}
+
+#sidebar .content .itemchat .contentMessage {
+    display: inline-block;
+    width: 79%;
+    padding: 6px;
+    border-radius: 5px;
+    position: relative;
+}
+
+#sidebar .content .itemchat .contentMessage .message {
+    display: flex;
+}
+
+#sidebar .content .itemchat .contentMessage:hover {
+    background-image: linear-gradient(to right, rgb(41, 57, 71), rgb(41, 57, 71));
+}
+
+#sidebar .content .itemchat .contentMessage .icon-hover {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    display: none;
+}
+
+#sidebar .content .itemchat .contentMessage:hover>.icon-hover {
+    display: block;
+}
+#sidebar .content .itemchat .contentMessage .icon-hover i {
+    margin-left: 7px;
+    color: #6e8899;
+}
+#sidebar .content .itemchat .contentMessage .icon-hover i:hover {
+    color: rgb(255, 226, 43);
+}
+.content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: transparent
+}
+.content::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent
+}
+.content::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: rgba(161, 187, 206, 0.6);
+}
+/*----------------- transfer -----------------*/    
+button.close {
+    outline: none !important;
+    margin: 0px 6px 0px 0px;
+} 
+#myTransfer::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: transparent
+}
+#myTransfer::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent
+}
+#myTransfer::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: rgba(161, 187, 206, 0.6);
+}
+.main-transfer {
+    width: 60%;
+    margin: auto;
+    height: 90%;
+    background-color: #273642;
+}
+.main-transfer .nav-pills li a {
+    font-weight: bold;
+}
+.content-transfer {
+    width: 40%;
+    margin: 20px auto 0;
+}
+.content-transfer form label {
+    color: #5d6a78;
+    margin-top: 20px;
+}
+.content-transfer form input {
+    width: 100%;
+    margin: auto;
+    border: none;
+    background-color: #344757;
+    color: white;
+    padding: 7px 15px;
+    border: 1px solid #5d6a78;
+    border-radius: 3px;
+}
+.content-transfer form button {
+    width: 100%;
+    margin: auto;
+    border: none;
+    background-color: #344757;
+    color: white;
+    padding: 7px 20px;
+    border: 1px solid #5d6a78;
+    border-radius: 3px;
+}
+.content-transfer form button:hover {
+    background-color: yellow;
+    color: #333;
+}
+.content-transfer form {
+    width: 90%;
+    margin: auto;
+}
+.content-transfer form input:active,
+.content-transfer form input:focus {
+    outline: 0;
+    outline-style: none;
+    outline-width: 0;
+}
+.content-transferHistory {
+    width: 98%;
+    margin: auto;
+}
+.content-transferHistory table {
+    width: 98%;
+    margin: 20px auto;
+    color: #FFF;
+}
+.content-transferHistory table tr th {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+}
+.content-transferHistory table tr td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #344757;
+}
+/*----------------- END transfer -----------------*/
+
+/*----------------- Deposite -----------------*/
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: transparent
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: rgba(161, 187, 206, 0.6);
+}
+
+.main-deposite {
+    width: 60%;
+    height: 90%;
+    margin: auto;
+    background-color: #273642;
+}
+
+.top-deposite {
+    width: 100%;
+    display: inline-block;
+}
+
+.wallet {
+    padding-top: 10px;
+}
+
+.wallet span {
+    color: #5d6a78;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.wallet button span:hover {
+    color: white;
+}
+
+.tab-deposite {
+    width: 100%;
+}
+
+.btn-close {
+    padding: 10px;
+    color: #5d6a78;
+    font-size: 20px;
+}
+
+.link-tab-deposite {
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+.link-tab-deposite {
+    margin: auto;
+    width: 45%;
+}
+
+.link-tab-deposite li {
+    display: inline-block;
+}
+
+.container-tab-deposite .link-tab-deposite li a {
+    font-size: 18px;
+    font-weight: bold;
+    color: #5d6a78;
+    text-transform: uppercase;
+}
+
+.container-tab-deposite .link-tab-deposite li a:hover {
+    color: yellow;
+    background-color: #273642;
+}
+
+.container-tab-deposite .link-tab-deposite li.active>a {
+    color: white;
+    background-color: #273642;
+}
+/* tab deposite*/
+
+#tab-deposite {
+    width: 95%;
+    margin: auto;
+}
+
+.top-tab-deposite {
+    color: #5d6a78;
+}
+
+.link-tab li a {
+    font-size: 14px;
+    color: #5d6a78;
+    background-color: #273642
+}
+
+.link-tab li a:hover {
+    color: yellow;
+    background-color: #273642;
+}
+
+.link-tab li.active a,
+.link-tab li.active a:focus,
+.link-tab li.active a:hover {
+    color: white;
+    background-color: #273642;
+}
+
+.link-tab {
+    padding: 5px;
+    background-color: #1c2933;
+    margin: auto;
+}
+
+.code,
+.icon-copy {
+    color: white;
+    padding: 7px 10px;
+    cursor: pointer;
+}
+
+.code {
+    width: 70%;
+}
+
+.code input {
+    border: none;
+    background-color: #1c2933;
+}
+
+.content-tab-deposite .nav-pills li {
+    float: left;
+}
+
+.code input,
+.code input:active,
+.code input:focus {
+    outline: 0;
+    outline-style: none;
+    outline-width: 0;
+}
+
+.icon-copy {
+    cursor: pointer;
+    float: right !important;
+    padding-top: 10px;
+}
+
+#segwit img,
+#Legacy img {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    border: 7px solid #344757;
+}
+
+.img-legacy {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+/*bottom-deposite */
+
+.bottom-deposite {
+    width: 96%;
+    margin: auto;
+    margin-top: 20px;
+    border: 1px solid#bdc3c9;
+}
+
+.content-bottom-deposite p span {
+    color: yellow;
+}
+
+.content-bottom-deposite {
+    padding: 10px 15px 10px 15px;
+}
+
+.content-bottom-deposite p {
+    color: #5d6a78;
+    margin-top: 5px;
+}
+/*Tab bill*/
+
+.content-tab-bill {
+    width: 96%;
+    margin: auto;
+}
+
+.link-tab-bill li a {
+    font-size: 14px;
+    color: #5d6a78;
+    background-color: #273642
+}
+
+.link-tab-bill li a:hover {
+    color: yellow;
+    background-color: #273642;
+    border: none;
+}
+
+.link-tab-bill li a {
+    border-bottom: 1px #5d6a78;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.link-tab-bill li.active a,
+.link-tab-bill li.active a:focus,
+.link-tab-bill li.active a:hover {
+    color: white;
+    background-color: #273642;
+}
+/*tab history deposite*/
+
+.content-deposite-history {
+    width: 98%;
+    margin: auto;
+}
+
+.content-deposite-history table {
+    width: 98%;
+    margin: 20px auto;
+    color: #FFF;
+}
+
+.content-deposite-history table tr th {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.content-deposite-history table tr td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #344757;
+}
+
+.currency {
+    text-align: right !important;
+}
+
+.status {
+    color: green;
+}
+
+.table-deposite tbody tr:hover {
+    background-color: #344757;
+}
+
+.table-deposite {
+    border: 1px solid #344757;
+}
+
+.pending {
+    color: yellow;
+}
+
+.destroy {
+    color: red;
+}
+/*Tab Withdraw*/
+
+.content-withdraw {
+    width: 60%;
+    margin: auto;
+}
+
+.content-withdraw form label {
+    color: #5d6a78;
+    margin-top: 20px;
+}
+
+.content-withdraw form input {
+    width: 100%;
+    margin: auto;
+    border: none;
+    background-color: #344757;
+    color: white;
+    padding: 7px 15px;
+    border: 1px solid #5d6a78;
+    border-radius: 3px;
+}
+.content-withdraw form button {
+    width: 100%;
+    margin: auto;
+    border: none;
+    background-color: #344757;
+    color: white;
+    padding: 7px 20px;
+    border: 1px solid #5d6a78;
+    border-radius: 3px;
+}
+
+.content-withdraw form {
+    width: 90%;
+    margin: auto;
+}
+
+.content-withdraw form input:active,
+.content-withdraw form input:focus {
+    outline: 0;
+    outline-style: none;
+    outline-width: 0;
+}
+
+#btn-withdraw {
+    background-color: #2f3e4b;
+    border-radius: 10px;
+}
+
+.lable-btn {
+    display: table;
+    margin: auto;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    opacity: 0;
 }
 

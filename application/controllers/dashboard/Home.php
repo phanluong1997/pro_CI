@@ -21,6 +21,8 @@ class Home extends Dashboard_Controller {
 			'title'		=>	'Dashboard',
 			'template' 	=> 	'dashboard/home/index'
 		);
+		$id = $this->session->userdata('userID');
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 

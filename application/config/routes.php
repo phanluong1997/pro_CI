@@ -63,8 +63,11 @@ $route['translate_uri_dashes'] = FALSE;
 //dashboard
 $route['dashboard'] = 'dashboard/home';
 $route['(dashboard/profile).html'] = 'dashboard/auths/profile';
+$route['(dashboard/add-password).html'] = 'dashboard/auths/addPass';
 $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
-
+$route['(dashboard/forget-password).html'] = 'dashboard/auths/forgetPass';
+$route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass';
+$route['(dashboard/update-password).html/(:any)'] = 'dashboard/auths/updatePass';
 
 //dashboard (SignUp + checkEmail - Login + checkLogin...) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
@@ -76,6 +79,7 @@ $route['(dashboard/checklogin).html'] = 'dashboard/auths/checklogin';
 $route['(dashboard/logout).html'] = 'dashboard/auths/logout';
 //dashboard notify - OTMain
 $route['(dashboard/notify).html'] = 'dashboard/auths/notify';
+$route['(dashboard/notify-forget-password).html'] = 'dashboard/auths/notifyForgetPass';
 $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
 
