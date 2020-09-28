@@ -54,7 +54,7 @@ class Auths extends Dashboard_Controller {
 	//add password - OT1
 	public function addPass()
 	{
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			//validation
@@ -484,7 +484,7 @@ class Auths extends Dashboard_Controller {
 	public function changePass()
 	{
 		//check signUser account AND check status -OT1
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]|callback_check_OldPassword');
@@ -530,7 +530,7 @@ class Auths extends Dashboard_Controller {
 	//Profile - OT1
 	public function profile(){
 		//check signUser account AND check status -OT1
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$id = $this->session->userdata('userID');
 		//edit data

@@ -1333,6 +1333,9 @@ button.close {
 .destroy {
     color: red;
 }
+.waiting{
+    color: #AFEEEE;
+}
 /*Tab Withdraw*/
 
 .content-withdraw {

@@ -7,13 +7,15 @@ class Withdraw extends Dashboard_Controller {
 		parent::__construct();
 		$this->load->model('WithdrawModel');
 	}
-
+	//checkAmount<100 - OT1
 	public function checkAmount()
 	{
+		//checkSignin and checkStatus account -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$amount = $_POST['amount'];
 		$userID = $this->session->userdata('userID');
 		$result = $this->WithdrawModel->select_row('tbl_user', 'walletUSD', array('id' => $userID));
-		// echo json_encode(array('message' =>$amount.'---'.$result['walletUSD']));
 		if($amount < 100 )
 		{
 			echo json_encode(array('message' => 'The amount must be greater than or equal to 100'));
@@ -28,16 +30,17 @@ class Withdraw extends Dashboard_Controller {
 	public function Withdraw()
 	{
 		//checkSignin and checkStatus account -OT1
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
+			
 			//Random password
 			$userID = $this->session->userdata('userID');
 			$data_insert = array(
 				'userID' 				=> 	$userID,
 				'amount' 				=> 	trim($this->input->post('Amount')),
-				'amount_receive' 		=>  trim($this->input->post('Amount'))*0.9,
-				'amount_eth'			=>	(trim($this->input->post('Amount'))*0.9)*10,
+				'amount_receive' 		=>  trim($this->input->post('AmountReceive')),
+				'amount_eth'			=>	trim($this->input->post('ETH')),
 				'wallet' 				=> 	trim($this->input->post('ETHWallet')),
 				'status' 				=>  0,
 				'date'					=>	gmdate('Y-m-d H:i:s', time()+7*3600)
@@ -54,13 +57,13 @@ class Withdraw extends Dashboard_Controller {
 					'type'		=> 'sucess',
 					'message'	=> 'Withdraw successful!!',
 				));
-				redirect('dashboard/home/index');
+				redirect('dashboard');
 			}else{
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'error',
 					'message'	=> 'Withdraw error!!',
 				));
-				redirect('dashboard/home/index');
+				redirect('dashboard');
 			}
 		}
 	}
@@ -68,11 +71,11 @@ class Withdraw extends Dashboard_Controller {
 	//historyWithdraw - OT1
 	public function historyWithdraw()
 	{
-		$data = array(
-			'data_index'	=>  $this->get_index(),
-			'template' 		=> 	'dashboard/withdraw/history'
-		);
-		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*','','id desc');
+		//checkSignin and checkStatus account -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		$userID = $this->session->userdata('userID');
+		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*',array('userID' =>$userID),'id desc');
 		$userID = $this->session->userdata('userID');
 		foreach ($Withdraw as $key => $value) {
 			$result = $this->WithdrawModel->select_row('tbl_user', 'id,fullname', array('id' => $userID));
@@ -80,8 +83,12 @@ class Withdraw extends Dashboard_Controller {
 				$Withdraw[$key]['fullname'] = $result['fullname'];
 			}
 		}
+
+		$data = array(
+			'data_index'	=>  $this->get_index(),
+			'template' 		=> 	'dashboard/withdraw/history'
+		);
 		$data['history'] = $Withdraw;
-		var_dump($Withdraw); die;
 		$this->load->view('dashboard/home/index', isset($data)?$data:NULL);
 	}
 }
