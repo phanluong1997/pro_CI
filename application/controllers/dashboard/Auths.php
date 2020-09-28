@@ -224,7 +224,7 @@ class Auths extends Dashboard_Controller {
 					$result = $this->email
 					    ->from('sentemail.optech@gmail.com')
 					    ->reply_to('')    
-					    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
+					    ->to(trim($this->input->post('email'))) //
 					    ->subject($subject)
 					    ->message($body)
 					    ->send();
@@ -385,7 +385,7 @@ class Auths extends Dashboard_Controller {
 				$result = $this->email
 				    ->from('sentemail.optech@gmail.com')
 				    ->reply_to('')    
-				    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
+				    ->to(trim($this->input->post('email'))) //
 				    ->subject($subject)
 				    ->message($body)
 				    ->send();	

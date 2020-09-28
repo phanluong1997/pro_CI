@@ -17,6 +17,20 @@ class Home extends Dashboard_Controller {
 	{	
 		//check signUser account -OT1
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'		=>	'Dashboard',
+			'template' 	=> 	'dashboard/home/index'
+		);
+		$data['history'] = $this->get_historyWithdraw();
+		$data['wallet'] = $this->get_AmountMin();
+		$userID = $this->session->userdata('userID');
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//get_history Withdraw - OT1
+	public function get_historyWithdraw()
+	{
 		//get_history Withdraw
 		$userID = $this->session->userdata('userID');
 		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*',array('userID' =>$userID),'id desc');
@@ -27,15 +41,14 @@ class Home extends Dashboard_Controller {
 				$Withdraw[$key]['fullname'] = $result['fullname'];
 			}
 		}
-		$data = array(
-			'data_index'	=> $this->get_index(),
-			'title'		=>	'Dashboard',
-			'template' 	=> 	'dashboard/home/index'
-		);
-		$data['history'] = $Withdraw;
-		$userID = $this->session->userdata('userID');
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
-		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+		return $Withdraw;
 	}
+	//get Amount Min (Withdraw) and Cost Withdraw (%) in config
+	public function get_AmountMin()
+	{
+		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
+		$wallet = json_decode($result['content'], true);
+		return $wallet;
+	} 
 
 }

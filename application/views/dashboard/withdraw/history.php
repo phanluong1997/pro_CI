@@ -23,10 +23,10 @@
               echo '<td><span class="waiting">waiting</span></td>';
               break;
             case 1:
-               echo '<td><span class="status">success</span></td>';
+              echo '<td><span class="pending">pending</span></td>';
               break;
             case 2:
-               echo '<td><span class="pending">pending</span></td>';
+              echo '<td><span class="status">success</span></td>';
               break;
             case 3:
                echo '<td><span class="destroy">destroy</span></td>';
