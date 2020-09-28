@@ -32,6 +32,26 @@ class TransferModel extends CI_Model {
 		$result = $this->db->get()->result_array();
 		return $result;
 	}
+	//add transfer --OT2
+	public function add($table='',$data = NULL){
+		$this->db->insert($table, $data);
+		$flag = $this->db->affected_rows(); 
+		$insert_id = $this->db->insert_id();
+		if($flag > 0){
+			return array(
+				'id_insert'	=> $insert_id,
+				'type'		=> 'successful',
+				'message'	=> 'Add data success!',
+			);
+		}
+		else
+		{
+			return array(
+				'type'		=> 'error',
+				'message'	=> 'Add data unsuccess!',
+			);
+		}
+	}	
 
 }
 ?>

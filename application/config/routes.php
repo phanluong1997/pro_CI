@@ -84,7 +84,10 @@ $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccoun
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
 
 
-
+//dashboard - transfer - OT2
+$route['(dashboard/transfer).html'] = 'dashboard/transfer/Transfer';
+$route['(dashboard/checkamount).html'] = 'dashboard/transfer/checkAmount';
+$route['(dashboard/checktransferto).html'] = 'dashboard/transfer/checkTransferto';
 
 //admin
 $route['cpanel'] = 'cpanel/home';

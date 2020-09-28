@@ -82,7 +82,7 @@ class UserModel extends CI_Model {
 			);
 		}
 	}
-	//getAll- Ot1
+	//getAll- Ot1 -- //OT2 add value $start , $limit.
 	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){ 
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -151,12 +151,13 @@ class UserModel extends CI_Model {
 		if($order != ''){
 			$result = $this->db->order_by($order);
 		}
-		if($query != ''){
-			$result = $this->db->like('email', $query);	
+		if($query != '' && $where != NULL ){
+			
+			$result = $this->db->like('email', $query);
+			// $result = $this->db->where($where);
+			// $result = $this->db->like('phone', $query);	
 		}
-		// if($query != ''){
-		// 	$result = $this->db->like('phone', $query);	
-		// }
+	
 
 		$result = $this->db->get()->result_array();
 		return $result;
