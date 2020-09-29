@@ -6,7 +6,6 @@ class Withdraw extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('WithdrawModel');
-		$this->load->model('CoinModel');
 	}
 	//checkAmount<100 - OT1
 	public function checkAmount()
@@ -28,6 +27,13 @@ class Withdraw extends Dashboard_Controller {
 		}
 	}
 
+	public function testWithdraw()
+	{
+		$userID = $this->session->userdata('userID');
+		$Query_Wallet = $this->WithdrawModel->select_row('tbl_user', 'email,walletUSD', array('id' => $userID));
+		echo $Query_Wallet['walletUSD']-100 ;
+	}
+
 	//Withdraw - OT1
 	public function Withdraw()
 	{
@@ -35,8 +41,6 @@ class Withdraw extends Dashboard_Controller {
 		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
-
-			//Random password
 			$userID = $this->session->userdata('userID');
 			$data_insert = array(
 				'userID' 				=> 	$userID,
@@ -120,11 +124,4 @@ class Withdraw extends Dashboard_Controller {
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 
-
-	public function ETH_Wallet()
-	{
-		$ETH_Wallet = $this->CoinModel->getPriceUsd(eth);
-		$percentage = $_POST['percentage'];
-		echo json_encode(array('message' => $percentage*$ETH_Wallet));
-	}
 }

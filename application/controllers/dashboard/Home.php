@@ -10,6 +10,7 @@ class Home extends Dashboard_Controller {
 		parent::__construct();
 		$this->load->model('UserModel');
 		$this->load->model('WithdrawModel');
+		$this->load->model('CoinModel');
 	}
 
 	//Main action
@@ -22,10 +23,13 @@ class Home extends Dashboard_Controller {
 			'title'		=>	'Dashboard',
 			'template' 	=> 	'dashboard/home/index'
 		);
+		//START - OT1
 		$data['history'] = $this->get_historyWithdraw();
 		$data['wallet'] = $this->get_AmountMin();
+		$data['ETH'] = $this->get_ETH();
 		$userID = $this->session->userdata('userID');
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
+		//END - OT1 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 	//get_history Withdraw - OT1
@@ -43,12 +47,18 @@ class Home extends Dashboard_Controller {
 		}
 		return $Withdraw;
 	}
-	//get Amount Min (Withdraw) and Cost Withdraw (%) in config
+	//get Amount Min (Withdraw) and Cost Withdraw (%) in config - OT1
 	public function get_AmountMin()
 	{
 		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
 		$wallet = json_decode($result['content'], true);
 		return $wallet;
+	}
+	//get_cost ETH - OT1
+	public function get_ETH()
+	{
+		$ETH = $this->CoinModel->getPriceUsd(eth);
+		return $ETH;
 	} 
 
 }

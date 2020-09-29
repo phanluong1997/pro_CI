@@ -508,7 +508,7 @@ class Auths extends Dashboard_Controller {
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]|callback_check_OldPassword');
-			$this->form_validation->set_rules('password','Password','required|min_length[8]');
+			$this->form_validation->set_rules('password','New Password','required|min_length[8]');
 			$this->form_validation->set_rules('re_password','Re-Password','required|min_length[8]|matches[password]');
 			//validate run
 			if($this->form_validation->run()){
