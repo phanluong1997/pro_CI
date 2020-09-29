@@ -55,18 +55,4 @@ function myCopy() {
     copyText.select();
     document.execCommand("copy");
 }
-//percentage
-$(function() {
-    $('#txtAmount').keyup(function() {
-        var inputTxtAmount = $('#txtAmount').val();
-        if (inputTxtAmount > 0) {
-            var percentage = ((90 * inputTxtAmount) / 100);
-            var amountETH = percentage * 2;
-            $('#txtAmountReceive').attr('value', percentage);
-            $('#txtETH').attr('value', amountETH);
-        } else {
-            $('#txtAmountReceive').attr('value', 0);
-            $('#txtETH').attr('value', 0);
-        }
-    });
-});
+

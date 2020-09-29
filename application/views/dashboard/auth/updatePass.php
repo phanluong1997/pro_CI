@@ -25,6 +25,7 @@
 	        </div>
 	        <div class="form-item btn-box">
               	<button type="submit">Save</button>
+              	<a class="link__style" href="dashboard" >Back to Dashboard <i class="fas fa-long-arrow-alt-right"></i></a>
             </div>
 	    </form>
 	</div>

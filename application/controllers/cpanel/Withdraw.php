@@ -51,7 +51,7 @@ class Withdraw extends Admin_Controller {
 			$data_update = array(
 				'id' 		=> 	$id,
 				'status'	=>	$status,
-				'note'	=>	$note
+				'note'		=>	$note
 			);
 			$result = $this->withdrawmodel->edit('tbl_withdraw', $data_update, array('id' => $id));
 			if($result>0){

@@ -54,7 +54,7 @@ class Auths extends Dashboard_Controller {
 	//add password - OT1
 	public function addPass()
 	{
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			//validation
@@ -224,7 +224,7 @@ class Auths extends Dashboard_Controller {
 					$result = $this->email
 					    ->from('sentemail.optech@gmail.com')
 					    ->reply_to('')    
-					    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
+					    ->to(trim($this->input->post('email'))) //
 					    ->subject($subject)
 					    ->message($body)
 					    ->send();
@@ -260,6 +260,26 @@ class Auths extends Dashboard_Controller {
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Notify',
 			'template' 		=> 	'dashboard/auth/notify'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Upload Identity Card
+	public function uploadIdentityCard(){
+		//check signUser account -OT1
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Upload Identity Card',
+			'template' 		=> 	'dashboard/auth/uploadIdentityCard'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Update referent
+	public function updateReferent(){
+		//check signUser account -OT1
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Update referent',
+			'template' 		=> 	'dashboard/auth/updateReferent'
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
@@ -385,7 +405,7 @@ class Auths extends Dashboard_Controller {
 				$result = $this->email
 				    ->from('sentemail.optech@gmail.com')
 				    ->reply_to('')    
-				    ->to('phucthao205@gmail.com') //to(trim($this->input->post('email')))
+				    ->to(trim($this->input->post('email'))) //
 				    ->subject($subject)
 				    ->message($body)
 				    ->send();	
@@ -484,11 +504,11 @@ class Auths extends Dashboard_Controller {
 	public function changePass()
 	{
 		//check signUser account AND check status -OT1
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		if($this->input->post()){
 			$this->form_validation->set_rules('oldpassword','Old Password','required|min_length[8]|callback_check_OldPassword');
-			$this->form_validation->set_rules('password','Password','required|min_length[8]');
+			$this->form_validation->set_rules('password','New Password','required|min_length[8]');
 			$this->form_validation->set_rules('re_password','Re-Password','required|min_length[8]|matches[password]');
 			//validate run
 			if($this->form_validation->run()){
@@ -530,7 +550,7 @@ class Auths extends Dashboard_Controller {
 	//Profile - OT1
 	public function profile(){
 		//check signUser account AND check status -OT1
-		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard/home');}
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$id = $this->session->userdata('userID');
 		//edit data

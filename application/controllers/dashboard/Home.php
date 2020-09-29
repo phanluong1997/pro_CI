@@ -10,6 +10,8 @@ class Home extends Dashboard_Controller {
 		parent::__construct();
 		$this->load->model('UserModel');
 		$this->load->model('transfermodel');
+		$this->load->model('WithdrawModel');
+		$this->load->model('CoinModel');
 	}
 
 	//Main action
@@ -22,9 +24,14 @@ class Home extends Dashboard_Controller {
 			'title'		=>	'Dashboard',
 			'template' 	=> 	'dashboard/home/index'
 		);
+		//START - OT1
+		$data['history'] = $this->get_historyWithdraw();
+		$data['wallet'] = $this->get_AmountMin();
+		$data['ETH'] = $this->get_ETH();
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
-		//call data of history(); --OT2 
+		//END START - OT1 
+
 		//START -OT2
 		$data['historyTransfer']=$this->history();
 		//END - OT2
@@ -43,7 +50,6 @@ class Home extends Dashboard_Controller {
 				$user_nameSender = '';
 				$user_nameReceived='';
 				$resultSender = $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_sender']));
-
 				$resultReceived =  $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_received']));
 				if($val['userID_sender'] == $resultSender['id']  ){
 					$data[$key]['user_nameSender'] = $resultSender['fullname'];
@@ -56,6 +62,34 @@ class Home extends Dashboard_Controller {
 		// var_dump($data); die;
 		return $data['datas'] = $data ;
 	}
+	//get_history Withdraw - OT1
+	public function get_historyWithdraw()
+	{
+		//get_history Withdraw
+		$userID = $this->session->userdata('userID');
+		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*',array('userID' =>$userID),'id desc');
+		$userID = $this->session->userdata('userID');
+		foreach ($Withdraw as $key => $value) {
+			$result = $this->WithdrawModel->select_row('tbl_user', 'id,fullname', array('id' => $userID));
+			if($value['userID'] == $result['id']){
+				$Withdraw[$key]['fullname'] = $result['fullname'];
+			}
+		}
+		return $Withdraw;
+	}
+	//get Amount Min (Withdraw) and Cost Withdraw (%) in config - OT1
+	public function get_AmountMin()
+	{
+		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
+		$wallet = json_decode($result['content'], true);
+		return $wallet;
+	}
+	//get_cost ETH - OT1
+	public function get_ETH()
+	{
+		$ETH = $this->CoinModel->getPriceUsd(eth);
+		return $ETH;
+	} 
 }
 
 

@@ -69,8 +69,10 @@ $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 $route['(dashboard/forget-password).html'] = 'dashboard/auths/forgetPass';
 $route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass';
 $route['(dashboard/update-password).html/(:any)'] = 'dashboard/auths/updatePass';
+$route['(dashboard/upload-identity-card).html'] = 'dashboard/auths/uploadIdentityCard';
+$route['(dashboard/update-referent).html'] = 'dashboard/auths/updateReferent';
 
-//dashboard (SignUp + checkEmail - Login + checkLogin...) - OT1
+//dashboard - AuthsController (SignUp + checkEmail - Login + checkLogin...) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
 $route['(dashboard/checkEmail).html'] = 'dashboard/auths/checkEmail';
 $route['(dashboard/update-profile).html'] = 'dashboard/auths/updateProfile';
@@ -84,9 +86,12 @@ $route['(dashboard/notify-forget-password).html'] = 'dashboard/auths/notifyForge
 $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
 
-//dashboard - WithdrawController
+//dashboard - WithdrawController - OT1
 $route['(dashboard/withdraw).html'] = 'dashboard/withdraw/Withdraw';
 $route['(dashboard/checkamount).html'] = 'dashboard/withdraw/checkAmount';
+$route['(dashboard/trans-to-pending).html/(:any)'] = 'dashboard/withdraw/transToPending';
+$route['(dashboard/notify-withdraw).html'] = 'dashboard/withdraw/notifyWithDraw';
+$route['(dashboard/trans-to-pending-success).html'] = 'dashboard/withdraw/notifyPendingSuccess';
 
 
 //dashboard - transfer - OT2
