@@ -69,6 +69,8 @@ $route['(dashboard/change-password).html'] = 'dashboard/auths/changePass';
 $route['(dashboard/forget-password).html'] = 'dashboard/auths/forgetPass';
 $route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass';
 $route['(dashboard/update-password).html/(:any)'] = 'dashboard/auths/updatePass';
+$route['(dashboard/upload-identity-card).html'] = 'dashboard/auths/uploadIdentityCard';
+$route['(dashboard/update-referent).html'] = 'dashboard/auths/updateReferent';
 
 //dashboard - AuthsController (SignUp + checkEmail - Login + checkLogin...) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';

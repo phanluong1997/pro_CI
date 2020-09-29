@@ -1,6 +1,6 @@
 <div class="profileBox clearfix">
 	<div class="contents">
-		<div class="title">Profile Update</div>
+		<div class="title"><?php echo $title;?></div>
 		<form action="" method="POST" class="login__form">
 			<div class="form-item">
 	        	<label>Email <span class="box__require">(*)</span></label>
@@ -18,6 +18,7 @@
 	        </div>
 	        <div class="form-item btn-box">
               	<button type="submit">Save</button>
+              	<a class="link__style" href="dashboard" >Back to Dashboard <i class="fas fa-long-arrow-alt-right"></i></a>
             </div>
 	    </form>
 	</div>

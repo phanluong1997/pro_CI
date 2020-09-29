@@ -25,7 +25,7 @@
 								<?php if($datas['verify'] == 1){ ?>
 									<div class="text__success is__verify">Verify</div>
 								<?php } else { ?>
-									<div class="">Verify = 0</div>
+									<a href="dashboard/upload-identity-card.html" class="btn__verify">Not Verify</a>
 								<?php } ?>
 							</div>
 						</ul>
@@ -63,6 +63,15 @@
 				<a href="" class="withdraw">Withdraw</a>
 			</div>
 		</div>
+		<div class="col-sm-6">
+            <div class="my__referent clearfix">
+            	<div class="col-md-6">My Referral</div>
+            	<div class="col-md-6 info__referent">
+            		<span>Pinar Nguyen</span>
+            		<a href="dashboard/update-referent.html" class="btn__referent">Update My Referral</a>
+            	</div>
+            </div>
+        </div>
 	</div>
 	<div class="game__list">
 		<div class="title">My Game</div>

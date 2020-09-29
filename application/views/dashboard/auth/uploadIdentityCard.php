@@ -1,4 +1,4 @@
-<div class="profileBox clearfix">
+<div class="profileBox clearfix upload__identity__card">
 	<!-- Info Submit -->
 	<?php $message_flashdata = $this->session->flashdata('message_flashdata');
 	if(isset($message_flashdata) && count($message_flashdata)){ ?>
@@ -14,22 +14,19 @@
 		<div class="title"><?php echo $title;?></div>
 		<form action="" class="login__form" action="" method="POST">
 	        <div class="form-item">
-	        	<label>Old Password <span class="box__require">(*)</span></label>
-	          	<input type="password" required name="oldpassword" id="oldpassword" autofocus>
-	          	<div class="has-error text-warning"><?php echo form_error('oldpassword') ?></div>
+	        	<label>YOUR ID IN FRONT OF YOUR FACE <span class="box__require">(*)</span></label>
+	          	<input type="file" class="custom-file-input" name="avatar" value="">
 	        </div>
 	        <div class="form-item">
-	        	<label>New Password <span class="box__require">(*)</span></label>
-	          	<input type="password" required name="password" id="password" >
-	          	<div class="has-error text-warning"><?php echo form_error('password') ?></div>
+	        	<label>ID/Passport front side <span class="box__require">(*)</span></label>
+	          	<input type="file" class="custom-file-input" name="card_front" value="">
 	        </div>
 	        <div class="form-item">
-	        	<label>Re-Password <span class="box__require">(*)</span></label>
-	          	<input type="password" required name="re_password" id="re-password" >
-	          	<div class="has-error text-warning"><?php echo form_error('re_password') ?></div>
+	        	<label>ID/Passport back side <span class="box__require">(*)</span></label>
+	          	<input type="file" class="custom-file-input" name="card_back" value="">
 	        </div>
 	        <div class="form-item btn-box">
-              	<button type="submit">Save</button>
+              	<button type="submit">Update</button>
               	<a class="link__style" href="dashboard" >Back to Dashboard <i class="fas fa-long-arrow-alt-right"></i></a>
             </div>
 	    </form>

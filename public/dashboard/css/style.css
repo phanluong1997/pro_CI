@@ -32,6 +32,14 @@ a{
 .text__success{
     color: #83A51A;
 }
+.link__style{
+    color: #FFF;
+    display: table;
+    margin: 10px auto;
+}
+.link__style:hover{
+    color: #FFF;
+}
 /*------- css label input require -  main ---- */
 .box__require{
     color: #ffe22b;
@@ -590,6 +598,9 @@ a{
     padding-left: 22px;
     line-height: 18px;
 }
+.mainDash .item__account .info .box__status .btn__verify{
+    color: #D34C11;
+}
 .mainDash .item__account__btn{
     background-color: #22303b;
     background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
@@ -652,7 +663,116 @@ a{
     background-color: #22303b;
     background-image: linear-gradient(to right, #c2440d , #d64d11);
 }
+.mainDash .my__referent{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    border: 1px solid #2b3e4d;
+    border-radius: 5px;
+    padding: 15px 0px;
+    color: rgb(161, 187, 206);
+}
+.mainDash .my__referent .info__referent span{
+    color: #0AA020;
+    font-weight: 700;
+    background-image: url(../../dashboard/images/icReferent.png);
+    background-position: 0px 3px;
+    background-size: 17px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    min-height: 25px;
+    line-height: 25px;
+    float: right;
+}
+.mainDash .my__referent .btn__referent{
+    color: #D34C11;
+    background-image: url(../../dashboard/images/icWarning.png);
+    background-position: 0px 3px;
+    background-size: 17px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    min-height: 25px;
+    line-height: 25px;
+    float: right;
+    cursor: pointer;
+}
 /*---------------------------- END dashboard - otMain ----------------------------*/
+
+/*---------------------------- Custom Button Styling - otMain ----------------------------*/
+.btn__orange{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    vertical-align: top;
+    background-size: 200%;
+    background-color: transparent;
+    background-image: linear-gradient(264deg, #D34C11, #e0642e, #D34C11);
+    white-space: nowrap;
+    padding: 0px;
+    user-select: none;
+    border: none;
+    transition: background-position 0.5s cubic-bezier(0.36, 0.66, 0.04, 1) 0s;
+    line-height: 2.75rem;
+    height: 4rem;
+    border-radius: .125rem;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #FFF;
+    margin: 10px 0px 0px;
+}
+.btn__orange:hover{
+    color: #FFF;
+    text-decoration: none;
+    background-image: linear-gradient(264deg, #e0642e, #D34C11, #e0642e);
+}
+/*---------------------------- END Custom Button Styling - otMain ----------------------------*/
+
+/*---------------------------- Custom File Input Styling - otMain ----------------------------*/
+.upload__identity__card .login__form .form-item input {
+    position: relative;
+    padding-left: 42px;
+}
+.custom-file-input {
+  color: transparent;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Select some files';
+  color: black;
+  display: inline-block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
+}
+
+/*---------------------------- END Custom File Input Styling - otMain ----------------------------*/
 
 /*---------------------------- Game List ----------------------- */
 .game__list{

@@ -263,6 +263,26 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
+	//Upload Identity Card
+	public function uploadIdentityCard(){
+		//check signUser account -OT1
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Upload Identity Card',
+			'template' 		=> 	'dashboard/auth/uploadIdentityCard'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	//Update referent
+	public function updateReferent(){
+		//check signUser account -OT1
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Update referent',
+			'template' 		=> 	'dashboard/auth/updateReferent'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
 
 	//Notify active account action - OT1
 	public function activeAccount(){
