@@ -9,6 +9,7 @@ class Home extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
+		$this->load->model('transfermodel');
 		$this->load->model('WithdrawModel');
 		$this->load->model('CoinModel');
 	}
@@ -30,8 +31,37 @@ class Home extends Dashboard_Controller {
 		$data['referentID'] = $this->get_referentID();
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
-		//END - OT1 
+		//END START - OT1 
+
+		//START -OT2
+		$data['historyTransfer']=$this->history();
+		//END - OT2
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	// get data table tbl_transfer--OT2
+	public function history(){
+		// get data
+		$userID = $this->session->userdata('userID');
+		// $data= $this->transfermodel->getAll('tbl_transfer','*',array('userID_sender'=>$userID,'userID_received'=>$userID),'id desc ');
+		$data = $this->db->select('*')->from('tbl_transfer')->where(array('userID_sender' => $userID))->or_where(array('userID_received'=>$userID))->get()->result_array();
+		// var_dump($data);
+		$userID = $this->session->userdata('userID');
+		// if($data['datas'] != NULL){
+			foreach ($data as $key => $val) {
+				$user_nameSender = '';
+				$user_nameReceived='';
+				$resultSender = $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_sender']));
+				$resultReceived =  $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_received']));
+				if($val['userID_sender'] == $resultSender['id']  ){
+					$data[$key]['user_nameSender'] = $resultSender['fullname'];
+					if($val['userID_received']== $resultReceived['id']){
+						$data[$key]['user_nameReceived'] = $resultReceived['fullname'];
+					}
+				}				
+			}
+		// }
+		// var_dump($data); die;
+		return $data['datas'] = $data ;
 	}
 	//get_history Withdraw - OT1
 	public function get_historyWithdraw()
@@ -60,6 +90,7 @@ class Home extends Dashboard_Controller {
 	{
 		$ETH = $this->CoinModel->getPriceUsd(eth);
 		return $ETH;
+<<<<<<< HEAD
 	}
 	//get_referentID - OT1
 	public function get_referentID()
@@ -71,4 +102,9 @@ class Home extends Dashboard_Controller {
 		return $referentID;
 	}  
 
+=======
+	} 
+>>>>>>> 25aa95cbf62243d8f1ca2135c65f05c766b42bc2
 }
+
+

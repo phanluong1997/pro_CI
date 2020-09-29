@@ -82,14 +82,17 @@ class UserModel extends CI_Model {
 			);
 		}
 	}
-	//getAll- Ot1
-	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc'){
+	//getAll- Ot1 -- //OT2 add value $start , $limit.
+	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){ 
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
 			$result = $this->db->where($where);
 		}
 		if($order != ''){
 			$result = $this->db->order_by($order);
+		}
+		if($limit != ''){
+			$result = $this->db->limit($limit, $start);
 		}
 		$result = $this->db->get()->result_array();
 		return $result;
@@ -138,18 +141,50 @@ class UserModel extends CI_Model {
 		$result = $this->db->count_all_results();
 		return $result;
 	}
-	//fetch data users -OT2
-	public function fetch_data($query){
-		$type = 'user';
-		$this->db->select('*');
-		$this->db->from('tbl_user');
-		if($query!=''){
-			 $this->db->like('email',$query);
-			 $this->db->or_like('phone',$query);
+	// Search data users -OT2
+
+	// function getSearch($table = '', $data = NULL, $where = NULL, $order = 'id desc', $query){ 
+	// 	$result = $this->db->select($data)->from($table);
+	// 	if($where != NULL){
+	// 		$result = $this->db->where($where);
+	// 	}
+	// 	if($order != ''){
+	// 		$result = $this->db->order_by($order);
+	// 	}
+	// 	if($query != '' && $where != NULL ){
+			
+	// 		$result = $this->db->like('email', $query);
+	// 		// $result = $this->db->where($where);
+	// 		// $result = $this->db->like('phone', $query);	
+	// 	}
+	
+
+	// 	$result = $this->db->get()->result_array();
+	// 	return $result;
+	// }
+		public function getSearch($query)
+		{
+			$type = 'user';
+			// $this->db->query("SELECT * FROM tbl_user WHERE type.user LIKE '%$query%'");
+			$this->db->select('*');
+			$this->db->from("tbl_user");
+			$this->db->where('type',$type);
+			if($query != '')
+			{
+				$this->db->like('email', $query);
+				
+				$this->db->where('email ', $query);
+				$this->db->like('phone', $query);
+				$this->db->where('phone ', $query);
+
+			}
+			$this->db->order_by('id', 'DESC');
+			
+			// if($this->db->where('type',$type)){
+			// 	$this->db->like('phone', $query);
+			// }
+			return $this->db->get()->result_array();
 		}
-		$this->db->where('type',$type);
-		$this->db->order_by('id','DES');
-		return $this->db->get();
+	
 		
-	}
 }

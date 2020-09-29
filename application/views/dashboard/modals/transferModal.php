@@ -6,6 +6,17 @@
       </button>
     </div>
   </div>
+	<!-- Info Submit -->
+<!-- <?php $message_flashdata = $this->session->flashdata('message_flashdata');
+if(isset($message_flashdata) && count($message_flashdata)){ ?>
+    <div id="alerttopfix" class="myadmin-alert <?php if($message_flashdata['type'] == 'sucess'){ ?> alert-success <?php }else{ ?> alert-danger <?php } ?>">
+        <?php if($message_flashdata['type'] == 'sucess'){ ?> 
+          	<i class="icon-check"></i> <?php echo $message_flashdata['message']; ?>
+          <?php }else if($message_flashdata['type'] == 'error'){ ?>
+          	<i class="icon-close"></i> <?php echo $message_flashdata['message']; ?>
+        <?php } ?>
+  	</div>
+<?php } ?> -->
   <div class="container-fluid">
     <ul class="row nav nav-pills link-tab-bill">
       <li class="active col-md-offset-4 col-md-2 col-sm-offset-4 col-xs-3 col-lg-offset-4 col-lg-2 col-xs-offset-2 ">
@@ -17,49 +28,99 @@
   <div class="tab-content">
     <div id="tabTransfer" class="tab-pane fade in active">
       <div class="content-transfer">
-        <form action="" method="">
+		<form onsubmit="return checkAmountTransfer()" action="dashboard/transfer.html" method="POST">
+			<div id="messageAmount" class="text-danger"></div> 
           <label>Amount <span class="box__require">(*)</span></label><br />
-          <input id="txtAmountTransfer" value="" type="number" min="0" name="" /><br />
+          		<input  id="txtAmountTransfer" required value="" type="number" min="0" name="amount" /><br />
+			     
           <label>Transfer to <span class="box__require">(*)</span></label><br />
-          <input id="txtTransferTo" type="text" name="" /><br />
-          <label>2FA code <span class="box__require">(*)</span></label><br />
-          <input id="FACodeTransfer" type="text" name="" /><br />
+          		<input id="txtTransferTo" required type="text" name="transfer" /><br />
+				
+         <label>2FA code <span class="box__require">(*)</span></label><br />
+          		<input id="FACodeTransfer" type="text" name="" /><br />
           <label class="lable-btn"><button id="btn-confirm" type="submit">Confirm</button></label>
         </form>
       </div>
     </div>
+	
     <div id="tabTransferHistory" class="tab-pane fade">
       <div class="content-transferHistory">
         <!-- table -->
         <table style="overflow-x:auto" class=" table-deposite table table-hover">
-          <thead>
-            <tr>
-              <th>Sender </th>
-              <th>Receiver</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>chuongle</td>
-              <td>mesi</td>
-              <td class="currency">$100</td>
-              <td>9-23-2020</td>
-              <td><span class="status">success</span> </td>
-            </tr>
-            <tr>
-              <td>chuongle</td>
-              <td>jenny</td>
-              <td class="currency">$100</td>
-              <td>9-23-2020</td>
-              <td><span class="status">success</span> </td>
-            </tr>
-          </tbody>
+			<thead>
+				<tr>
+					<th>Sender</th>
+					<th>Received</th>
+					<th>Amount</th>
+					<th>Date</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<?php if(isset($historyTransfer) && $historyTransfer != NULL){ ?>
+				<tbody>
+					<?php foreach($historyTransfer as $key => $val) {?>
+						<tr>
+							<td class="text-left" ><?php echo $val['user_nameSender']; ?></td>
+							<td class="text-left"><?php echo $val['user_nameReceived']; ?></td>	
+							<td class="text-right">
+								<?php 
+									if($val['userID_received'] == $this->session->userdata('userID')){
+										echo "<span class='text-success'>+ $".$val['amount']."</span>";
+									}else{
+										echo "<span class='text-danger'>- $".$val['amount']."</span>";
+									}
+								?>
+							</td>
+							<td><?php echo $val['date']; ?></td>
+							<td class="text-center">
+								<?php if($val['status'] == 1){ ?>
+									<span class="text-success">Success</span>
+								<?php } ?>
+							</td>
+						</tr>
+					<?php } ?>	
+				</tbody>
+			<?php } ?>				
         </table>
         <!-- END table -->
       </div>
     </div>
   </div>
 </div>
+<script>
+	//check Amount >50 --OT2
+	function checkAmountTransfer(){
+		//Get value to input
+		var amount = $('#txtAmountTransfer').val();
+		var transfer = $('#txtTransferTo').val();
+		//Check require
+		if(amount == "" )
+		{
+			$('#messageAmount').html('Amount is empty');
+			$('#messageTransferto').html('Transfer to is empty');
+			return false;
+		}
+		else
+		{
+			let result = 1;
+			$.ajax({
+				
+				async: false,
+				url: 'dashboard/checkamountTransfer.html',
+				type: 'POST',
+				dataType: 'json',
+				data: {amount:amount,transfer:transfer},
+				success: function(data) {
+					if(data){
+						$('#messageAmount').html(data.message);
+						// $('#messageTransferto').html(data.message);
+						result = 0;
+					}
+				}
+			});
+			if(result == 0){ return false; }else{ return true; }
+		}
+	}
+
+
+</script>

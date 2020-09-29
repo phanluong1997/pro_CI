@@ -38,8 +38,9 @@
 		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4.css" />
 		<link rel="stylesheet" href="public/cpanel/vendor/datatables/dataTables.bs4-custom.css" />
 		<link href="public/cpanel/vendor/datatables/buttons.bs.css" rel="stylesheet" />
-		<!-- file style Thảo tạo -->
+		<!-- file style OT1 -->
 		<link href="public/cpanel/css/style.css" rel="stylesheet" />
+		<!-- file style OT2 -->
 		<!-- Jquery -->
 		<script src="public/cpanel/js/jquery.min.js"></script>
 	</head>

@@ -94,7 +94,10 @@ $route['(dashboard/notify-withdraw).html'] = 'dashboard/withdraw/notifyWithDraw'
 $route['(dashboard/trans-to-pending-success).html'] = 'dashboard/withdraw/notifyPendingSuccess';
 
 
-
+//dashboard - transfer - OT2
+$route['(dashboard/transfer).html'] = 'dashboard/transfer/Transfer';
+$route['(dashboard/checkamountTransfer).html'] = 'dashboard/transfer/checkAmountTransfer';
+// $route['(dashboard/checktransferto).html'] = 'dashboard/transfer/checkTransferto';
 
 //admin
 $route['cpanel'] = 'cpanel/home';
