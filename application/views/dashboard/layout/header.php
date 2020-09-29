@@ -64,14 +64,16 @@
         </div>
     </div>
     <div class="clear"></div>
-    <div class="sub-header">
-        <div class="sub-header-wrap">
-            <div id="broadcast">
-                <img src="https://bc.game/img/horn.ec3d01d0.svg" alt="" class="hron-img">
-                <div class="msg">
-                    <div class="text">WELCOME <i><?php echo $data_index['info_user']['fullname'];?></i> JOIN THE GAME</div>
+    <?php if($this->Auth->checkSignin() === true){?>
+        <div class="sub-header">
+            <div class="sub-header-wrap">
+                <div id="broadcast">
+                    <img src="https://bc.game/img/horn.ec3d01d0.svg" alt="" class="hron-img">
+                    <div class="msg">
+                        <div class="text">WELCOME <i><?php echo $data_index['info_user']['fullname'];?></i> JOIN THE GAME</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 </header>

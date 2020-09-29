@@ -8,6 +8,7 @@
     <input id="txtAmountReceive" readonly  type="text" name="AmountReceive"  /><br />
     <input id="cost_withdraw" readonly hidden type="text" value="<?php echo $wallet['cost_withdraw']; ?>"  />
     <label>Amount in ETH <span class="box__require">(*)</span></label><br />
+    <input id="cost_ETH" readonly hidden type="text" value="<?php echo $ETH; ?>"  />
     <input id="txtETH" type="text"  readonly name="ETH" /><br />
     <label>Your ETH wallet <span class="box__require">(*)</span></label><br />
     <input id="txtETHWallet" type="text" name="ETHWallet" required /><br />
@@ -22,22 +23,12 @@
     $('#txtAmount').keyup(function() {
         var inputTxtAmount = $('#txtAmount').val();
         var cost_withdraw = $('#cost_withdraw').val();
+        var cost_ETH = $('#cost_ETH').val();
         if (inputTxtAmount > 0) {
             var percentage = inputTxtAmount-((cost_withdraw * inputTxtAmount) / 100);
-            var amountETH = percentage * 2;
+            var amountETH = percentage/cost_ETH;
             $('#txtAmountReceive').attr('value', percentage);
-            $.ajax({
-              async: false,
-              url: 'dashboard/withdraw/ETH_Wallet',
-              type: 'POST',
-              dataType: 'json',
-              data: {percentage:percentage},
-              success: function(data) {
-                if(data){
-                  $('#txtETH').attr('value', data.message);
-                }
-              }
-            });
+            $('#txtETH').attr('value', amountETH.toPrecision(7));
         } else {
             $('#txtAmountReceive').attr('value', 0);
             $('#txtETH').attr('value', 0);
