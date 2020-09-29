@@ -66,6 +66,96 @@
 	</div>
 	<div class="game__list">
 		<div class="title">My Game</div>
-
+		<div class="clearfix"></div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/1.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/2.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/1.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/2.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/1.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/2.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/1.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="item">
+					<div class="box__img">
+						<img src="public/images/2.png">
+					</div>
+					<div class="item__info">
+						<h3>Crash</h3>
+						<div class="des">Watch the multiplier go to the infinit. </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

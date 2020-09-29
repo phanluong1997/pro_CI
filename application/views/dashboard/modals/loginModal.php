@@ -21,7 +21,10 @@
             </div>
             <div class="form-item">
               <input type="password" name="password" placeholder="Password" id="passwordSignIn" value="">
-              <a class="check_show_pass"><i class="far fa-eye"></i></a>
+              <a class="check_show_pass" id="check_show_pass_signin">
+                <i class="far fa-eye"></i>
+                <i class="far fa-eye-slash"></i>
+              </a>
             </div>
             <div class="form-item btn-box">
               <button type="submit">Sign In</button>
@@ -51,7 +54,10 @@
             </div>
             <div class="form-item">
               <input type="password" name="password" required="" pattern=".{8,}" placeholder="Password" id="password" value="">
-              <a class="check_show_pass"><i class="far fa-eye"></i></a>
+              <a class="check_show_pass" id="check_show_pass_signup">
+                <i class="far fa-eye ic__eye"></i>
+                <i class="far fa-eye-slash ic__eye__hide"></i>
+              </a>
             </div>
             <div class="form-item no-bg checkbox">
               <i class="far fa-check-square"></i>

@@ -51,7 +51,37 @@ class TransferModel extends CI_Model {
 				'message'	=> 'Add data unsuccess!',
 			);
 		}
+	}
+	//update  data -OT2
+	function edit($table = '', $data = NULL, $where = NULL){
+		$this->db->where($where)->update($table, $data);	
+		$flag = $this->db->affected_rows();
+		if($flag > 0){
+			return array(
+				'type'		=> 'successful',
+				'message'	=> 'Update Success!',
+			);
+		}
+		else
+		{
+			return array(
+				'type'		=> 'error',
+				'message'	=> 'Update unsuccess!',
+			);
+		}
 	}	
+	//getAll- Ot2
+	function getAll($table = '', $data = NULL, $where = NULL, $order = 'id desc'){
+		$result = $this->db->select($data)->from($table);
+		if($where != NULL){
+			$result = $this->db->where($where);
+		}
+		if($order != ''){
+			$result = $this->db->order_by($order);
+		}
+		$result = $this->db->get()->result_array();
+		return $result;
+	}
 
 }
 ?>

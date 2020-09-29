@@ -1,9 +1,9 @@
 <header class="header">
 	<div class="toggle-btns">
-		<a id="toggle-sidebar" href="#">
+		<a id="toggle-sidebar">
 			<i class="icon-list"></i>
 		</a>
-		<a id="pin-sidebar" href="#">
+		<a id="pin-sidebar">
 			<i class="icon-list"></i>
 		</a>
 	</div>

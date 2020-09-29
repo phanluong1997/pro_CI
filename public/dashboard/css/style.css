@@ -32,6 +32,11 @@ a{
 .text__success{
     color: #83A51A;
 }
+/*------- css label input require -  main ---- */
+.box__require{
+    color: #ffe22b;
+    font-weight: 300 !important;
+}
 /*------- otMain -  main ---- */
 #main {
     margin-right: 400px;
@@ -663,6 +668,43 @@ a{
     line-height: 35px;
     padding-left: 15px;
     font-weight: 700;
+}
+.game__list .item{
+    background-color: #22303b;
+    background-image: linear-gradient(to right, #22303b , rgb(49, 68, 82));
+    margin: 20px 0px 0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.game__list .item .box__img{
+    height: 140px;
+    overflow: hidden;
+}
+.game__list .item .box__img img{
+    width: 100%;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.game__list .item:hover .box__img img{
+    transform: scale(1.1);
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.game__list .item .item__info{
+    padding: 5px 10px;
+}
+.game__list .item .item__info h3{
+    color: #FFF;
+    margin: 5px 0px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.game__list .item .item__info .des{
+    color: #849bb1;
 }
 /*---------------------------- END Game List  ----------------------- */
 

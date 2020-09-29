@@ -154,10 +154,16 @@ class User extends Admin_Controller {
 		if($this->input->post('query')){
 			$query = $this->input->post('query');
 		}
+		// echo $query;
+		// die;
 		//get data as an Array in UserModel - function getSearch().
 		if($query != ''){
-			$datas = $this->UserModel->getSearch('tbl_user','*',array('type'=>'user'),'id desc',$query);
+				$datas = $this->UserModel->getSearch($query);
+				// $q =" SELECT * FROM tbl_user WHERE type = 'user' like email ='%".$query."%' OR phone ='%".$query."%'";
+				// $datas=mysql_query($q);
 		}
+		print_r($datas);
+		die;
 		$output ='<table id="employeeList" class="table custom-table">
 					<thead>
 						<tr>

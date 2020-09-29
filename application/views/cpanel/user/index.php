@@ -172,7 +172,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 				var search = $(this).val();
 				var control = $('#search_text').attr('data-control');
 				if(search != ""){
-					$.post('cpanel/user/search',{query:search},function(data){ //search = query => push $query to User.php in func fetch.php.
+					$.post('cpanel/user/search',{query:search},function(data){ //search = query => push $query to User.php in func search.php.
 						$('#result').html(data);
 					});	
 				}

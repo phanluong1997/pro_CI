@@ -57,8 +57,9 @@ Luong => Ot2
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'home/page404';
 $route['translate_uri_dashes'] = FALSE;
+// $route['404'] = 'home/page404';
 
 //dashboard
 $route['dashboard'] = 'dashboard/home';
@@ -83,11 +84,15 @@ $route['(dashboard/notify-forget-password).html'] = 'dashboard/auths/notifyForge
 $route['(dashboard/active-account).html/(:any)'] = 'dashboard/auths/activeAccount';
 $route['(dashboard/active-notify).html'] = 'dashboard/auths/activeNotify';
 
+//dashboard - WithdrawController
+$route['(dashboard/withdraw).html'] = 'dashboard/withdraw/Withdraw';
+$route['(dashboard/checkamount).html'] = 'dashboard/withdraw/checkAmount';
+
 
 //dashboard - transfer - OT2
 $route['(dashboard/transfer).html'] = 'dashboard/transfer/Transfer';
-$route['(dashboard/checkamount).html'] = 'dashboard/transfer/checkAmount';
-$route['(dashboard/checktransferto).html'] = 'dashboard/transfer/checkTransferto';
+$route['(dashboard/checkamountTransfer).html'] = 'dashboard/transfer/checkAmountTransfer';
+// $route['(dashboard/checktransferto).html'] = 'dashboard/transfer/checkTransferto';
 
 //admin
 $route['cpanel'] = 'cpanel/home';
