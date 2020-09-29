@@ -90,7 +90,7 @@ class Home extends Dashboard_Controller {
 	{
 		$ETH = $this->CoinModel->getPriceUsd(eth);
 		return $ETH;
-<<<<<<< HEAD
+
 	}
 	//get_referentID - OT1
 	public function get_referentID()
@@ -102,9 +102,6 @@ class Home extends Dashboard_Controller {
 		return $referentID;
 	}  
 
-=======
-	} 
->>>>>>> 25aa95cbf62243d8f1ca2135c65f05c766b42bc2
 }
 
 
