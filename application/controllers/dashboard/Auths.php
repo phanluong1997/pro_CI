@@ -2,6 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auths extends Dashboard_Controller {
+
+	public $path_dir = 'upload/passport/';
+	public $path_dir_thumb = 'upload/passport/thumb/';
+
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
@@ -263,19 +267,192 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	//Upload Identity Card
+	//Upload Identity Card - OT1
 	public function uploadIdentityCard(){
-		//check signUser account -OT1
+		//check checkSignin account AND checkStatus  -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		$userID = $this->session->userdata('userID');
+		$getInfo = $this->UserModel->select_row('tbl_user','verify,avatar,card_front,card_back', array('id' => $userID));
+		if($getInfo['verify']==1){redirect(base_url().'dashboard');}
+		if($_FILES["avatar"]["name"] AND $_FILES["card_front"]["name"] AND $_FILES["card_back"]["name"] ){
+			//avatar
+			if($_FILES["avatar"]["name"]){
+				if (!is_dir($this->path_dir)){mkdir($this->path_dir);}
+				if (!is_dir($this->path_dir_thumb)){mkdir($this->path_dir_thumb);}
+				$config['upload_path']	= $this->path_dir;
+				$config['allowed_types'] = 'jpg|png|jpeg|gif';
+				$config['max_size'] = 5120;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				$image_avatar = $this->upload->do_upload("avatar");
+				$image_data = $this->upload->data();
+				$name_avatar = $image_data['file_name'];
+
+				//Create thumb
+				$this->load->library('image_lib');
+				$config['image_library'] 	= 'gd2';
+				$config['source_image'] 	= $this->path_dir.$image_data['file_name'];
+				$config['new_image'] 		= $this->path_dir_thumb.$image_data['file_name'];
+				$config['create_thumb'] 	= TRUE;
+				$config['maintain_ratio'] 	= TRUE;
+				$config['width'] = 400;
+
+				$ar_name_image = explode('.',$image_data['file_name']);
+				$name_avatar_thumb = $ar_name_image[0].'_thumb.'.$ar_name_image[1];
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+			}else{
+				$name_avatar = '';
+				$name_avatar_thumb = '';
+			}
+			//card_front
+			if($_FILES["card_front"]["name"]){
+				if (!is_dir($this->path_dir)){mkdir($this->path_dir);}
+				if (!is_dir($this->path_dir_thumb)){mkdir($this->path_dir_thumb);}
+				$config['upload_path']	= $this->path_dir;
+				$config['allowed_types'] = 'jpg|png|jpeg|gif';
+				$config['max_size'] = 5120;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				$image_card_front = $this->upload->do_upload("card_front");
+				$image_data = $this->upload->data();
+				$name_card_front = $image_data['file_name'];
+
+				//Create thumb
+				$this->load->library('image_lib');
+				$config['image_library'] 	= 'gd2';
+				$config['source_image'] 	= $this->path_dir.$image_data['file_name'];
+				$config['new_image'] 		= $this->path_dir_thumb.$image_data['file_name'];
+				$config['create_thumb'] 	= TRUE;
+				$config['maintain_ratio'] 	= TRUE;
+				$config['width'] = 400;
+
+				$ar_name_image = explode('.',$image_data['file_name']);
+				$name_card_front_thumb = $ar_name_image[0].'_thumb.'.$ar_name_image[1];
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+			}else{
+				$name_card_front = '';
+				$name_card_front_thumb = '';
+			}
+			//card_back
+			if($_FILES["card_back"]["name"]){
+				if (!is_dir($this->path_dir)){mkdir($this->path_dir);}
+				if (!is_dir($this->path_dir_thumb)){mkdir($this->path_dir_thumb);}
+				$config['upload_path']	= $this->path_dir;
+				$config['allowed_types'] = 'jpg|png|jpeg|gif';
+				$config['max_size'] = 5120;
+				$this->load->library('upload', $config);
+				$this->upload->initialize($config);
+				$image_card_back = $this->upload->do_upload("card_back");
+				$image_data = $this->upload->data();
+				$name_card_back = $image_data['file_name'];
+
+				//Create thumb
+				$this->load->library('image_lib');
+				$config['image_library'] 	= 'gd2';
+				$config['source_image'] 	= $this->path_dir.$image_data['file_name'];
+				$config['new_image'] 		= $this->path_dir_thumb.$image_data['file_name'];
+				$config['create_thumb'] 	= TRUE;
+				$config['maintain_ratio'] 	= TRUE;
+				$config['width'] = 400;
+
+				$ar_name_image = explode('.',$image_data['file_name']);
+				$name_card_back_thumb = $ar_name_image[0].'_thumb.'.$ar_name_image[1];
+				$this->image_lib->initialize($config);
+				$this->image_lib->resize();
+			}else{
+				$name_card_back = '';
+				$name_card_back_thumb = '';
+			}
+			$userID = $this->session->userdata('userID');
+			$data_update = array(
+				'avatar' 				=> 	$name_avatar_thumb,
+				'card_front' 			=> 	$name_card_front_thumb,
+				'card_back' 			=> 	$name_card_back_thumb,
+				'updated_at'			=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+			);
+			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
+			if($result>0){
+				$this->session->set_flashdata('message_flashdata', array(
+					'type'		=> 'sucess',
+					'message'	=> 'Upload iddentity card successful!!',
+				));
+				redirect(base_url().'dashboard/upload-identity-card.html');
+			}else{
+				$this->session->set_flashdata('message_flashdata', array(
+					'type'		=> 'error',
+					'message'	=> 'Upload iddentity card error!!',
+				));
+				redirect(base_url().'dashboard/upload-identity-card.html');
+			}
+		}
+		else
+		{
+			//message error
+		}
+		
 		$data = array(
-			'data_index'	=> $this->get_index(),
-			'title'			=>	'Upload Identity Card',
-			'template' 		=> 	'dashboard/auth/uploadIdentityCard'
+			'data_index'		=>  $this->get_index(),
+			'title'				=>	'Upload Identity Card',
+			'path_dir_thumb'	=>	$this->path_dir_thumb,
+			'template' 			=> 	'dashboard/auth/uploadIdentityCard'
 		);
+		$data['datas'] = $getInfo;
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	//Update referent
+
+	//check ReferentCode - OT1 
+	public function check_ReferentCode()
+	{
+		$code = $this->input->post('code');
+		$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $code));
+		if($result == NULL)
+		{
+			$this->form_validation->set_message(__FUNCTION__,'This code does not exist');
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	//Update referent - OT1
 	public function updateReferent(){
-		//check signUser account -OT1
+		//check checkSignin account AND checkStatus  -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		//check 
+		$userID = $this->session->userdata('userID');
+		$check_referentID = $this->UserModel->select_row('tbl_user','fullname,referentID', array('id' => $userID));
+		if($check_referentID['referentID']!=0){redirect(base_url().'dashboard');}
+		if($this->input->post()){
+			//validation
+			$this->form_validation->set_rules('code','Referent Code','required|min_length[8]|callback_check_ReferentCode');
+			if($this->form_validation->run()){
+				$code = $this->input->post('code');
+				$get_User = $this->UserModel->select_row('tbl_user', 'id,code', array('code' => $code));
+				$data_update = array(
+					'referentID'		=>	$get_User['id'],
+					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
+				);
+				$userID = $this->session->userdata('userID');
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
+				if($result>0){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Update referent successful!!',
+					));
+					redirect('dashboard');
+				}else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Update referent error!!',
+					));
+					redirect('dashboard');
+				}
+			}
+		}
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'			=>	'Update referent',
@@ -334,13 +511,13 @@ class Auths extends Dashboard_Controller {
 						'type'		=> 'sucess',
 						'message'	=> 'Update profile successful!!',
 					));
-					redirect(base_url().'dashboard');
+					redirect(base_url().'dashboard/update-referent.html');
 				}else{
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'error',
 						'message'	=> 'Update profile error!!',
 					));
-					redirect(base_url().'dashboard');
+					redirect(base_url().'dashboard/update-referent.html');
 				}
 			}
 		}
