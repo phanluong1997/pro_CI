@@ -10,7 +10,6 @@
 	        <?php } ?>
 	  	</div>
 	<?php } ?> 
-
 	<?php if($this->Auth->checkSignin() === true){?>
 		<div class="row">
 			<div class="col-md-4">
@@ -70,8 +69,8 @@
 	            </div>
 	        </div>
 		</div>
-	</div>
 	<?php } ?>
+
 	<div class="game__list">
 		<div class="title">My Game</div>
 		<div class="clearfix"></div>

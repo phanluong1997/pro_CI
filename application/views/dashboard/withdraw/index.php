@@ -2,13 +2,14 @@
   <form onsubmit="return checkAmount();" action="dashboard/withdraw.html" method="POST">
     <div id="messageAmount" class="text-danger"></div>
     <label style="display: inline-block;">Amount in USD <span class="box__require">(*)</span></label><br />
-    <input id="amount_min_withdraw" readonly hidden type="text" value="<?php echo $wallet['amount_min_withdraw']; ?>"  />
+    <!-- get amount_min_withdraw AND cost_withdraw AND Cost_ETH - OT1 -->
+    <div id="resultWithdraw">
+      <!-- ajax -->  
+    </div>
     <input id="txtAmount" type="number"  min="0" name="Amount" required /><br />
     <label>Amount USD you will receive <span class="box__require">(*)</span></label><br />
     <input id="txtAmountReceive" readonly  type="text" name="AmountReceive"  /><br />
-    <input id="cost_withdraw" readonly hidden type="text" value="<?php echo $wallet['cost_withdraw']; ?>"  />
     <label>Amount in ETH <span class="box__require">(*)</span></label><br />
-    <input id="cost_ETH" readonly hidden type="text" value="<?php echo $ETH; ?>"  />
     <input id="txtETH" type="text"  readonly name="ETH" /><br />
     <label>Your ETH wallet <span class="box__require">(*)</span></label><br />
     <input id="txtETHWallet" type="text" name="ETHWallet" required /><br />
@@ -34,6 +35,21 @@
             $('#txtETH').attr('value', 0);
         }
     });
+  });
+
+  $("#withdrawAjax").click(function(){
+    $.ajax({
+      async: false,
+      url: 'dashboard/ajax/getValueToWithdraw',
+      type: 'POST',
+      dataType: 'html',
+      success: function(data) {
+        if(data){
+          $('#resultWithdraw').html(data);
+          //alert(data);
+        }
+      }
+    }); 
   });
 
   //checkAmount > 100 - OT1

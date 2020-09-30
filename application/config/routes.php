@@ -93,6 +93,8 @@ $route['(dashboard/trans-to-pending).html/(:any)'] = 'dashboard/withdraw/transTo
 $route['(dashboard/notify-withdraw).html'] = 'dashboard/withdraw/notifyWithDraw';
 $route['(dashboard/trans-to-pending-success).html'] = 'dashboard/withdraw/notifyPendingSuccess';
 
+//dashboard - AjaxController - OT1
+$route['(dashboard/history-Withdraw).html'] = 'dashboard/ajax/get_historyWithdraw';
 
 //dashboard - transfer - OT2
 $route['(dashboard/transfer).html'] = 'dashboard/transfer/Transfer';
