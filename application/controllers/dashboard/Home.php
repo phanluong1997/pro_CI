@@ -28,6 +28,7 @@ class Home extends Dashboard_Controller {
 		$data['history'] = $this->get_historyWithdraw();
 		$data['wallet'] = $this->get_AmountMin();
 		$data['ETH'] = $this->get_ETH();
+		$data['referentID'] = $this->get_referentID();
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
 		//END START - OT1 
@@ -84,7 +85,18 @@ class Home extends Dashboard_Controller {
 	{
 		$ETH = $this->CoinModel->getPriceUsd(eth);
 		return $ETH;
-	} 
+
+	}
+	//get_referentID - OT1
+	public function get_referentID()
+	{
+		$userID = $this->session->userdata('userID');
+		$referentID = $this->WithdrawModel->select_row('tbl_user','id,referentID',array('id' =>$userID));
+		$get_User = $this->WithdrawModel->select_row('tbl_user','*',array('id' =>$referentID['referentID']));
+		$referentID['fullname'] = $get_User['fullname'];
+		return $referentID;
+	}  
+
 }
 
 

@@ -61,8 +61,11 @@
 	            <div class="my__referent clearfix">
 	            	<div class="col-md-6">My Referral</div>
 	            	<div class="col-md-6 info__referent">
-	            		<span>Pinar Nguyen</span>
-	            		<a href="dashboard/update-referent.html" class="btn__referent">Update My Referral</a>
+	            		<?php if($referentID['referentID']!=0){?>
+	            			<span><?php echo $referentID['fullname'] ?></span>
+	            		<?php }else{ ?>
+	            			<a href="dashboard/update-referent.html" class="btn__referent">Update My Referral</a>
+	            		<?php } ?>
 	            	</div>
 	            </div>
 	        </div>
