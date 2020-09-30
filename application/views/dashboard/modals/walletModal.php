@@ -14,7 +14,7 @@
         <a style="text-align: right;" data-toggle="tab" href="#tab-deposite">Deposite</a>
       </li>
       <li class="">
-        <a data-toggle="tab" href="#withdraw">Withdraw</a>
+        <a data-toggle="tab" href="#withdraw" id="withdrawAjax" >Withdraw</a>
       </li>
       <li class="">
         <a data-toggle="tab" href="#bill">History</a>
@@ -37,7 +37,7 @@
         <div class="content-tab-bill">
           <ul class="nav nav-tabs link-tab-bill">
             <li class="active"><a data-toggle="tab" href="#deposite-history">Deposite</a></li>
-            <li><a data-toggle="tab" href="#withdraw-history">Withdraw</a></li>
+            <li><a data-toggle="tab" id="withdraw-historyAjax" href="#withdraw-history">Withdraw</a></li>
           </ul>
           <div class="tab-content">
             <div id="deposite-history" class="tab-pane fade in active">

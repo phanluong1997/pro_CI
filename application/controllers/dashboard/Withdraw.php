@@ -6,6 +6,7 @@ class Withdraw extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('WithdrawModel');
+		$this->load->model('TelegramModels');
 	}
 	//checkAmount<100 - OT1
 	public function checkAmount()
@@ -27,13 +28,6 @@ class Withdraw extends Dashboard_Controller {
 		}
 	}
 
-	public function testWithdraw()
-	{
-		$userID = $this->session->userdata('userID');
-		$Query_Wallet = $this->WithdrawModel->select_row('tbl_user', 'email,walletUSD', array('id' => $userID));
-		echo $Query_Wallet['walletUSD']-100 ;
-	}
-
 	//Withdraw - OT1
 	public function Withdraw()
 	{
@@ -53,7 +47,7 @@ class Withdraw extends Dashboard_Controller {
 			);
 			$result = $this->WithdrawModel->add('tbl_withdraw', $data_insert);
 			if($result>0){
-				$Query_Wallet = $this->WithdrawModel->select_row('tbl_user', 'email,walletUSD', array('id' => $userID));
+				$Query_Wallet = $this->WithdrawModel->select_row('tbl_user', 'fullname,email,walletUSD', array('id' => $userID));
 				$New_Wallet = $Query_Wallet['walletUSD']-trim($this->input->post('Amount'));
 				$data_update = array(
 					'walletUSD' 		=> $New_Wallet
@@ -85,7 +79,15 @@ class Withdraw extends Dashboard_Controller {
 				    ->send();
 
 				if($result){
-					redirect('dashboard/notify-withdraw.html',$data);
+					$apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
+					$data = [
+						'chat_id' => '@mt7accountnew',
+						'text' => 'User <b>'.$Query_Wallet['fullname'].'</b> requests to withdraw $<b>'.number_format(trim($this->input->post('Amount')),2).'</b>'
+					];
+					$response = $this->TelegramModels->sendMessageChannel($apiToken, $data);
+					if($response['ok'] == true){
+						redirect('dashboard/notify-withdraw.html');
+					}
 				}
 			}
 		}

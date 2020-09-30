@@ -15,17 +15,18 @@
 		<form action="" class="login__form" method="POST" enctype="multipart/form-data">
 	        <div class="form-item">
 	        	<label>YOUR ID IN FRONT OF YOUR FACE <span class="box__require">(*)</span></label>
-	          	<input type="file" class="custom-file-input" name="avatar" />
+	          	<input type="file" class="custom-file-input" <?php if(!$datas['avatar']){?> required <?php }?> name="avatar" />
+	          	<input type="text" name="post" hidden />
 	          	<?php if($datas['avatar']){?><image src="<?php echo $path_dir_thumb.$datas['avatar'];?>"><?php }?> 
 	        </div>
 	        <div class="form-item">
 	        	<label>ID/Passport front side <span class="box__require">(*)</span></label>
-	          	<input type="file" class="custom-file-input" name="card_front" />
+	          	<input type="file" class="custom-file-input" <?php if(!$datas['card_front']){?> required <?php }?> name="card_front" />
 	          	<?php if($datas['card_front']){?><image src="<?php echo $path_dir_thumb.$datas['card_front'];?>"><?php } ?>
 	        </div>
 	        <div class="form-item">
 	        	<label>ID/Passport back side <span class="box__require">(*)</span></label>
-	          	<input type="file" class="custom-file-input" name="card_back" />
+	          	<input type="file" class="custom-file-input" <?php if(!$datas['card_back']){?> required <?php }?> name="card_back" />
 	          	<?php if($datas['card_back']){?><image src="<?php echo $path_dir_thumb.$datas['card_back'];?>"><?php } ?>
 	        </div>
 	        <div class="form-item btn-box">

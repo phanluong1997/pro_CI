@@ -11,7 +11,6 @@ class Home extends Dashboard_Controller {
 		$this->load->model('UserModel');
 		$this->load->model('transfermodel');
 		$this->load->model('WithdrawModel');
-		$this->load->model('CoinModel');
 	}
 
 	//Main action
@@ -25,14 +24,10 @@ class Home extends Dashboard_Controller {
 			'template' 	=> 	'dashboard/home/index'
 		);
 		//START - OT1
-		$data['history'] = $this->get_historyWithdraw();
-		$data['wallet'] = $this->get_AmountMin();
-		$data['ETH'] = $this->get_ETH();
 		$data['referentID'] = $this->get_referentID();
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
 		//END START - OT1 
-
 		//START -OT2
 		$data['historyTransfer']=$this->history();
 		//END - OT2
@@ -62,35 +57,6 @@ class Home extends Dashboard_Controller {
 		// }
 		// var_dump($data); die;
 		return $data['datas'] = $data ;
-	}
-	//get_history Withdraw - OT1
-	public function get_historyWithdraw()
-	{
-		//get_history Withdraw
-		$userID = $this->session->userdata('userID');
-		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*',array('userID' =>$userID),'id desc');
-		$userID = $this->session->userdata('userID');
-		foreach ($Withdraw as $key => $value) {
-			$result = $this->WithdrawModel->select_row('tbl_user', 'id,fullname', array('id' => $userID));
-			if($value['userID'] == $result['id']){
-				$Withdraw[$key]['fullname'] = $result['fullname'];
-			}
-		}
-		return $Withdraw;
-	}
-	//get Amount Min (Withdraw) and Cost Withdraw (%) in config - OT1
-	public function get_AmountMin()
-	{
-		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
-		$wallet = json_decode($result['content'], true);
-		return $wallet;
-	}
-	//get_cost ETH - OT1
-	public function get_ETH()
-	{
-		$ETH = $this->CoinModel->getPriceUsd(eth);
-		return $ETH;
-
 	}
 	//get_referentID - OT1
 	public function get_referentID()
