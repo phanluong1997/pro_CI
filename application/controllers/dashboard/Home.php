@@ -41,11 +41,8 @@ class Home extends Dashboard_Controller {
 	public function history(){
 		// get data
 		$userID = $this->session->userdata('userID');
-		// $data= $this->transfermodel->getAll('tbl_transfer','*',array('userID_sender'=>$userID,'userID_received'=>$userID),'id desc ');
 		$data = $this->db->select('*')->from('tbl_transfer')->where(array('userID_sender' => $userID))->or_where(array('userID_received'=>$userID))->get()->result_array();
-		// var_dump($data);
 		$userID = $this->session->userdata('userID');
-		// if($data['datas'] != NULL){
 			foreach ($data as $key => $val) {
 				$user_nameSender = '';
 				$user_nameReceived='';
@@ -58,8 +55,6 @@ class Home extends Dashboard_Controller {
 					}
 				}				
 			}
-		// }
-		// var_dump($data); die;
 		return $data['datas'] = $data ;
 	}
 	//get_history Withdraw - OT1

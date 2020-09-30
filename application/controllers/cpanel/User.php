@@ -154,16 +154,10 @@ class User extends Admin_Controller {
 		if($this->input->post('query')){
 			$query = $this->input->post('query');
 		}
-		// echo $query;
-		// die;
 		//get data as an Array in UserModel - function getSearch().
 		if($query != ''){
-				$datas = $this->UserModel->getSearch($query);
-				// $q =" SELECT * FROM tbl_user WHERE type = 'user' like email ='%".$query."%' OR phone ='%".$query."%'";
-				// $datas=mysql_query($q);
+			$datas = $this->UserModel->getSearch($query);
 		}
-		print_r($datas);
-		die;
 		$output ='<table id="employeeList" class="table custom-table">
 					<thead>
 						<tr>
@@ -221,14 +215,8 @@ class User extends Admin_Controller {
 		$number = 5;
 		$page = $_POST['i'];
 		$start = ($page - 1) * $number;
-
 		$limit = $number;
-
-	
-
 		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', $start, $limit);
-		// echo json_encode($datas);
-		// var_dump($page);die;
 		$output = '' ;	
 				foreach($datas as $row){
 					$activeChecked = '';

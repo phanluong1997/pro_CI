@@ -101,13 +101,17 @@
 			{
 				if($emailTransfer == NULL){
 					echo json_encode(array('message' => "Email don't Exists"));
-				}else if($emailTransfer['type'] == 'admin'){
+				}
+				else if($emailTransfer['type'] == 'admin'){
 					echo json_encode(array('message' => "Email don't Exists"));
-				}else if($emailTransfer['email'] == $result['email']){
+				}
+				else if($emailTransfer['email'] == $result['email']){
 					echo json_encode(array('message' => 'Cannot transfer money to yourself'));
-				}else if($emailTransfer['active'] == 0){
+				}
+				else if($emailTransfer['active'] == 0){
 					echo json_encode(array('message' => "The recipient's account is not activated"));
-				}else if($emailTransfer['status'] == 0){
+				}
+				else if($emailTransfer['status'] == 0){
 					echo json_encode(array('message' => 'Account information not updated'));
 				}
 					
