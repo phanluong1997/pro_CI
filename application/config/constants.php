@@ -86,3 +86,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 // PHPMailer - OT1
 defined('VENDORPATH') OR define('VENDORPATH', rtrim(str_replace('\\', '/', realpath(dirname(APPPATH.'vendor/autoload.php'))), '/').'/');
+
+// App Name Google 2FA - OTmain
+defined('APP_NAME') or define('APP_NAME', 'MoneyGaming');

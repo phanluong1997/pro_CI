@@ -42,7 +42,7 @@
 					<?php } ?>
 				</div>
 				<div class="item__account__btn clearfix">
-					<a class="_2fa" href="">Google Authenticator Setting</a>
+					<a class="_2fa" href="dashboard/google-authenticator.html">Google Authenticator Setting</a>
 				</div>
 			</div>
 			<div class="col-md-2">

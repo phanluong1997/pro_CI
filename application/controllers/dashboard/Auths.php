@@ -417,6 +417,124 @@ class Auths extends Dashboard_Controller {
 		}
 	}
 
+	//Google Authenticator - OTMain
+	public function googleAuthenticator(){
+		//check checkSignin account AND checkStatus  -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+
+		//load library Google 2FA
+		$this->load->library('GoogleAuthenticator');
+		//get info current user
+		$user = $this->Auth->getInfoUser();
+		//get info 2fa 
+		if($user['is_enabled_2fa'] == 1){
+			$user['2fa'] = json_decode($user['google_auth_code'],true);
+		}
+
+		//submit form
+		if ($this->input->post()) {
+			$jsonData2FA = $user['google_auth_code'];
+			if($user['google_auth_code'] == ''){
+				$secret = $this->googleauthenticator->createSecret();
+				$qrCodeUrl = $this->googleauthenticator->getQRCodeGoogleUrl(APP_NAME, $user['email'], $secret);
+				//push data into array
+				$arrayData2FA = array(
+					'secret' 	=> 	$secret,
+					'qrCodeUrl'	=>	$qrCodeUrl
+				);
+				//convert data to json
+				$jsonData2FA = json_encode($arrayData2FA);
+			}
+
+			//data update
+			$data_update = array(
+				'google_auth_code' 		=> 	$jsonData2FA,
+				'is_enabled_2fa' 		=> 	1,
+			);
+			$rsResult = $this->UserModel->edit('tbl_user', $data_update, array('id' => $user['id']));
+			if ($rsResult > 0) {
+				$this->session->set_flashdata('security_success', 'Enabled Google Authenticator Successful!');
+				redirect('dashboard/google-authenticator.html');
+			} else {
+				$this->session->set_flashdata('warning_already_security', 'Enabled Google Authenticator error!');
+				redirect('dashboard/google-authenticator.html', $data);
+			}
+			
+		} 
+		//data push into view
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'			=>	'Google Authenticator',
+			'user'			=>	$user,
+			'template' 		=> 	'dashboard/auth/googleAuthenticator'
+		);
+		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
+	}
+	// public function getGoogle2FA()
+	// {
+	// 	if (!$this->input->is_ajax_request() || !$this->CI_auth->checkSignin()) {
+	// 		exit('No direct script access allowed');
+	// 	}
+	// 	$this->load->library('GoogleAuthenticator');
+	// 	$user = $this->CI_auth->getInfoUser();
+	// 	if (!empty($user['google_auth_code'])) {
+	// 		$secret = $user['google_auth_code'];
+	// 		$is_enabled = true;
+	// 	} else {
+	// 		$is_enabled = false;
+	// 		// $secret = $ga->createSecret();
+	// 		$secret = $this->googleauthenticator->createSecret();
+	// 		$_SESSION['secret'] = $secret;
+	// 	}
+
+	// 	$qrCodeUrl = $this->googleauthenticator->getQRCodeGoogleUrl(APP_NAME, $user['email'], $secret);
+	// 	echo json_encode([
+	// 		'is_enabled' => $is_enabled,
+	// 		'qrCodeUrl' => $qrCodeUrl,
+	// 		'secret' => $secret
+	// 	]);
+	// }
+
+	//Enabled Google 2FA
+	public function disabledGoogle2FA()
+	{
+		//check checkSignin account AND checkStatus  -OT1
+		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
+		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+
+		//load library Google 2FA
+		$this->load->library('GoogleAuthenticator');
+		//get info current user
+		$user = $this->Auth->getInfoUser();
+
+		//submit form
+		if ($this->input->post()) {
+			//check Google 2FA
+			$google_auth_code = $this->input->post('google_auth_code');
+			//get info 2fa 
+			$googleauthcodeArray = json_decode($user['google_auth_code'],true);
+			$isValid = $this->googleauthenticator->verifyCode($googleauthcodeArray['secret'], $google_auth_code, 2);
+			if (!$isValid) {
+				$this->session->set_flashdata('warning_already', 'Invalid authenticator code');
+				redirect(base_url().'dashboard/google-authenticator.html');
+			}
+
+			//data update
+			$data_update = array(
+				'is_enabled_2fa' 		=> 	0,
+			);
+			$rsResult = $this->UserModel->edit('tbl_user', $data_update, array('id' => $user['id']));
+			if ($rsResult > 0) {
+				$this->session->set_flashdata('security_success', 'Disabled Google Authenticator Successful!');
+				redirect('dashboard/google-authenticator.html');
+			} else {
+				$this->session->set_flashdata('warning_already_security', 'Disabled Google Authenticator error!');
+				redirect('dashboard/google-authenticator.html', $data);
+			}
+		}
+	}
+
 	//Update referent - OT1
 	public function updateReferent(){
 		//check checkSignin account AND checkStatus  -OT1

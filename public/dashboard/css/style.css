@@ -463,6 +463,17 @@ a{
     overflow: hidden;
     width: 100%;
 }
+.profileBox .login__form .form-item .box__qrcode{
+    text-align: center;
+    margin-bottom: 15px;
+}
+.profileBox .login__form .form-item .box__qrcode p{
+    color: #FFF;
+}
+.box__notify__2fa{
+    margin-bottom: 10px;
+    text-align: center;
+}
 .profileBox .login__form .form-item label{
     color: #6e8899;
 }

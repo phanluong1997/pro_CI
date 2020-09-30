@@ -71,6 +71,8 @@ $route['(dashboard/message-update-password).html'] = 'dashboard/auths/updatePass
 $route['(dashboard/update-password).html/(:any)'] = 'dashboard/auths/updatePass';
 $route['(dashboard/upload-identity-card).html'] = 'dashboard/auths/uploadIdentityCard';
 $route['(dashboard/update-referent).html'] = 'dashboard/auths/updateReferent';
+$route['(dashboard/google-authenticator).html'] = 'dashboard/auths/googleAuthenticator';
+$route['(dashboard/disabled-google-2fa).html'] = 'dashboard/auths/disabledGoogle2FA';
 
 //dashboard - AuthsController (SignUp + checkEmail - Login + checkLogin...) - OT1
 $route['(dashboard/SignUp).html'] = 'dashboard/auths/SignUp';
