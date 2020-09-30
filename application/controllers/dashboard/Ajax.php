@@ -54,7 +54,7 @@ class Ajax extends Dashboard_Controller {
 		}		
 	}
 	//get amount_min_withdraw AND cost_withdraw AND Cost_ETH - OT1
-	public function getValueToWithdraw()
+	public function getETH_AmountMin_CostWithdraw()
 	{
 		//get Amount Min (Withdraw) and Cost Withdraw (%) in config - OT1
 		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
