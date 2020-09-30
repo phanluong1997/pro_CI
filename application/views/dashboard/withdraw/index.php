@@ -40,7 +40,7 @@
   $("#withdrawAjax").click(function(){
     $.ajax({
       async: false,
-      url: 'dashboard/ajax/getValueToWithdraw',
+      url: 'dashboard/get-Eth-AmountMin-CostWithdraw.html',
       type: 'POST',
       dataType: 'html',
       success: function(data) {

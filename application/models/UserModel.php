@@ -142,49 +142,11 @@ class UserModel extends CI_Model {
 		return $result;
 	}
 	// Search data users -OT2
-
-	// function getSearch($table = '', $data = NULL, $where = NULL, $order = 'id desc', $query){ 
-	// 	$result = $this->db->select($data)->from($table);
-	// 	if($where != NULL){
-	// 		$result = $this->db->where($where);
-	// 	}
-	// 	if($order != ''){
-	// 		$result = $this->db->order_by($order);
-	// 	}
-	// 	if($query != '' && $where != NULL ){
-			
-	// 		$result = $this->db->like('email', $query);
-	// 		// $result = $this->db->where($where);
-	// 		// $result = $this->db->like('phone', $query);	
-	// 	}
-	
-
-	// 	$result = $this->db->get()->result_array();
-	// 	return $result;
-	// }
-		public function getSearch($query)
-		{
-			$type = 'user';
-			// $this->db->query("SELECT * FROM tbl_user WHERE type.user LIKE '%$query%'");
-			$this->db->select('*');
-			$this->db->from("tbl_user");
-			$this->db->where('type',$type);
-			if($query != '')
-			{
-				$this->db->like('email', $query);
-				
-				$this->db->where('email ', $query);
-				$this->db->like('phone', $query);
-				$this->db->where('phone ', $query);
-
-			}
-			$this->db->order_by('id', 'DESC');
-			
-			// if($this->db->where('type',$type)){
-			// 	$this->db->like('phone', $query);
-			// }
-			return $this->db->get()->result_array();
-		}
-	
+	function getSearch($query){ 
+		
+		$sql = $this->db->query("SELECT * FROM `tbl_user` WHERE type = 'user' AND  (email LIKE '%$query%' or phone LIKE '%$query%')");
+		$query = $sql->result_array();				
+		return $query;
+	}
 		
 }

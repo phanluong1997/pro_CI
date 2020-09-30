@@ -17,7 +17,7 @@
         <a data-toggle="tab" href="#withdraw" id="withdrawAjax" >Withdraw</a>
       </li>
       <li class="">
-        <a data-toggle="tab" href="#bill">History</a>
+        <a data-toggle="tab" href="#bill" id = "depositeHistory">History</a>
       </li>
     </ul>
 
@@ -53,3 +53,13 @@
     </div>
   </div>
 </div>
+<script>
+	$("#depositeHistory").click(function(){
+		$.ajax({url: "dashboard/ajax/historyDeposite",
+			 success: function(result){
+			$("#historyDeposite").html(result);
+		}});
+	});
+
+
+</script>

@@ -22,7 +22,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
       <li class="active col-md-offset-4 col-md-2 col-sm-offset-4 col-xs-3 col-lg-offset-4 col-lg-2 col-xs-offset-2 ">
         <a data-toggle="tab" href="#tabTransfer">Transfer</a>
       </li>
-      <li class="col-lg-5 col-xs-4 "><a data-toggle="tab" href="#tabTransferHistory">History</a></li>
+      <li class="col-lg-5 col-xs-4 "><a data-toggle="tab" id="TransferHistory" href="#tabTransferHistory">History</a></li>
     </ul>
   </div>
   <div class="tab-content">
@@ -56,31 +56,8 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 					<th>Status</th>
 				</tr>
 			</thead>
-			<?php if(isset($historyTransfer) && $historyTransfer != NULL){ ?>
-				<tbody>
-					<?php foreach($historyTransfer as $key => $val) {?>
-						<tr>
-							<td class="text-left" ><?php echo $val['user_nameSender']; ?></td>
-							<td class="text-left"><?php echo $val['user_nameReceived']; ?></td>	
-							<td class="text-right">
-								<?php 
-									if($val['userID_received'] == $this->session->userdata('userID')){
-										echo "<span class='text-success'>+ $".$val['amount']."</span>";
-									}else{
-										echo "<span class='text-danger'>- $".$val['amount']."</span>";
-									}
-								?>
-							</td>
-							<td><?php echo $val['date']; ?></td>
-							<td class="text-center">
-								<?php if($val['status'] == 1){ ?>
-									<span class="text-success">Success</span>
-								<?php } ?>
-							</td>
-						</tr>
-					<?php } ?>	
-				</tbody>
-			<?php } ?>				
+			<tbody id = "historyTransfer">
+			</tbody>
         </table>
         <!-- END table -->
       </div>
@@ -113,7 +90,6 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 				success: function(data) {
 					if(data){
 						$('#messageAmount').html(data.message);
-						// $('#messageTransferto').html(data.message);
 						result = 0;
 					}
 				}
@@ -121,6 +97,11 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 			if(result == 0){ return false; }else{ return true; }
 		}
 	}
-
+	$("#TransferHistory").click(function(){
+		$.ajax({url: "dashboard/ajax/historyTransfer",
+			 success: function(result){
+			$("#historyTransfer").html(result);
+		}});
+	});
 
 </script>

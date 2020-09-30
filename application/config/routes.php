@@ -97,6 +97,7 @@ $route['(dashboard/trans-to-pending-success).html'] = 'dashboard/withdraw/notify
 
 //dashboard - AjaxController - OT1
 $route['(dashboard/history-Withdraw).html'] = 'dashboard/ajax/get_historyWithdraw';
+$route['(dashboard/get-Eth-AmountMin-CostWithdraw).html'] = 'dashboard/ajax/getETH_AmountMin_CostWithdraw';
 
 //dashboard - transfer - OT2
 $route['(dashboard/transfer).html'] = 'dashboard/transfer/Transfer';
