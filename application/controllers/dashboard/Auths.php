@@ -9,6 +9,7 @@ class Auths extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
+		$this->load->model('TelegramModels');
 	}
 
 	//check email, password before login - OT1
@@ -267,15 +268,32 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
+
+	//testTelegram
+	public function testTelegram()
+	{
+		//Sent message into tele
+	    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
+	    $data = [
+	         'chat_id' => '@mt7accountnew',
+	         'text' => 'Verify request for user Hien Nguyen'
+	    ];
+	    	$response = $this->TelegramModels->sendMessageChannel($apiToken, $data);
+	    if($response['ok'] == true){
+	    	echo "ok";
+	    	redirect('/', 'refresh');
+	    }
+	}
+
 	//Upload Identity Card - OT1
 	public function uploadIdentityCard(){
 		//check checkSignin account AND checkStatus  -OT1
 		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$userID = $this->session->userdata('userID');
-		$getInfo = $this->UserModel->select_row('tbl_user','verify,avatar,card_front,card_back', array('id' => $userID));
+		$getInfo = $this->UserModel->select_row('tbl_user','fullname,verify,avatar,card_front,card_back', array('id' => $userID));
 		if($getInfo['verify']==1){redirect(base_url().'dashboard');}
-		if($_FILES["avatar"]["name"] AND $_FILES["card_front"]["name"] AND $_FILES["card_back"]["name"] ){
+		if($this->input->post()){
 			//avatar
 			if($_FILES["avatar"]["name"]){
 				if (!is_dir($this->path_dir)){mkdir($this->path_dir);}
@@ -304,7 +322,7 @@ class Auths extends Dashboard_Controller {
 				$this->image_lib->resize();
 			}else{
 				$name_avatar = '';
-				$name_avatar_thumb = '';
+				$name_avatar_thumb = $getInfo['avatar'];
 			}
 			//card_front
 			if($_FILES["card_front"]["name"]){
@@ -334,7 +352,7 @@ class Auths extends Dashboard_Controller {
 				$this->image_lib->resize();
 			}else{
 				$name_card_front = '';
-				$name_card_front_thumb = '';
+				$name_card_front_thumb = $getInfo['card_front'];
 			}
 			//card_back
 			if($_FILES["card_back"]["name"]){
@@ -364,7 +382,7 @@ class Auths extends Dashboard_Controller {
 				$this->image_lib->resize();
 			}else{
 				$name_card_back = '';
-				$name_card_back_thumb = '';
+				$name_card_back_thumb = $getInfo['card_back'];
 			}
 			$userID = $this->session->userdata('userID');
 			$data_update = array(
@@ -375,22 +393,28 @@ class Auths extends Dashboard_Controller {
 			);
 			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
 			if($result>0){
-				$this->session->set_flashdata('message_flashdata', array(
-					'type'		=> 'sucess',
-					'message'	=> 'Upload iddentity card successful!!',
-				));
-				redirect(base_url().'dashboard/upload-identity-card.html');
-			}else{
-				$this->session->set_flashdata('message_flashdata', array(
-					'type'		=> 'error',
-					'message'	=> 'Upload iddentity card error!!',
-				));
-				redirect(base_url().'dashboard/upload-identity-card.html');
+				//Sent message into tele
+			    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
+			    $data = [
+			         'chat_id' => '@mt7accountnew',
+			         'text' => 'Verify request for user '.$getInfo['fullname']
+			    ];
+			    $response = $this->TelegramModels->sendMessageChannel($apiToken, $data);
+			    if($response['ok'] == true){
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Upload iddentity card successful!!',
+					));
+					redirect(base_url().'dashboard/upload-identity-card.html');
+				}
+				else{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Upload iddentity card error!!',
+					));
+					redirect(base_url().'dashboard/upload-identity-card.html');
+				}
 			}
-		}
-		else
-		{
-			//message error
 		}
 		
 		$data = array(
@@ -406,14 +430,23 @@ class Auths extends Dashboard_Controller {
 	//check ReferentCode - OT1 
 	public function check_ReferentCode()
 	{
-		$code = $this->input->post('code');
+		$code = trim($this->input->post('code'));
 		$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $code));
+		$userID = $this->session->userdata('userID');
+		$myCode = $this->UserModel->select_row('tbl_user', 'code', array('id' => $userID));
 		if($result == NULL)
 		{
 			$this->form_validation->set_message(__FUNCTION__,'This code does not exist');
 			return false;
 		}else{
-			return true;
+			if($code == $myCode['code'] ){
+				$this->form_validation->set_message(__FUNCTION__,'Cannot enter yourself code');
+				return false;
+			}
+			else
+			{
+				return true;
+			}
 		}
 	}
 
