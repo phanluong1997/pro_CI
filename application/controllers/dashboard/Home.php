@@ -5,7 +5,6 @@ class Home extends Dashboard_Controller {
 	/**
 	Controller main template user
 	 */
-
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('UserModel');
@@ -13,7 +12,6 @@ class Home extends Dashboard_Controller {
 		$this->load->model('WithdrawModel');
 		$this->load->model('CoinModel');
 	}
-
 	//Main action
 	public function index()
 	{	
@@ -32,31 +30,7 @@ class Home extends Dashboard_Controller {
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
 		//END START - OT1 
-
-		//START -OT2
-		$data['historyTransfer']=$this->history();
-		//END - OT2
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
-	}
-	// get data table tbl_transfer--OT2
-	public function history(){
-		// get data
-		$userID = $this->session->userdata('userID');
-		$data = $this->db->select('*')->from('tbl_transfer')->where(array('userID_sender' => $userID))->or_where(array('userID_received'=>$userID))->get()->result_array();
-		$userID = $this->session->userdata('userID');
-			foreach ($data as $key => $val) {
-				$user_nameSender = '';
-				$user_nameReceived='';
-				$resultSender = $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_sender']));
-				$resultReceived =  $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_received']));
-				if($val['userID_sender'] == $resultSender['id']  ){
-					$data[$key]['user_nameSender'] = $resultSender['fullname'];
-					if($val['userID_received']== $resultReceived['id']){
-						$data[$key]['user_nameReceived'] = $resultReceived['fullname'];
-					}
-				}				
-			}
-		return $data['datas'] = $data ;
 	}
 	//get_history Withdraw - OT1
 	public function get_historyWithdraw()
@@ -96,7 +70,6 @@ class Home extends Dashboard_Controller {
 		$referentID['fullname'] = $get_User['fullname'];
 		return $referentID;
 	}  
-
 }
 
 
