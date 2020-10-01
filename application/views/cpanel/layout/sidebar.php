@@ -51,6 +51,9 @@
 						<li>
 							<a href="cpanel/wallet">Wallet List</a>
 						</li>
+						<li>
+							<a href="cpanel/game">Game List</a>
+						</li>
 					</ul>
 				</div>
 			</li>
