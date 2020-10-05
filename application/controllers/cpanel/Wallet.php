@@ -13,12 +13,7 @@ class Wallet extends Admin_Controller {
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		$data = array(
-			'data_index'	=> $this->get_index(),
-			'title'		=>	'Wallet Manager',
-			'template' 	=> 	$this->template.'index',
-			'control'	=>  'wallet'
-		);
+		
 		//get fullname - OT1
 		$getWallet = $this->walletmodel->select_array('tbl_wallet','*',NULL,'id desc');
 		foreach ($getWallet as $key => $value) {
@@ -27,7 +22,13 @@ class Wallet extends Admin_Controller {
 				$getWallet[$key]['fullname']=$getUser['fullname'];
 			}
 		}
-		$data['datas'] = $getWallet;
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'		=>	'Wallet Manager',
+			'template' 	=> 	$this->template.'index',
+			'control'	=>  'wallet',
+			'datas'		=>  $getWallet
+		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//function check duplicate wallet ! - OT2
