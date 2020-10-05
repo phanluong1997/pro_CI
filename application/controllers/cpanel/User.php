@@ -257,5 +257,13 @@ class User extends Admin_Controller {
 				}	
 		echo $output;
 	}
-		
+	//Change Verify -OT2
+	public function showIdentity()
+	{
+		//check login
+		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		$userID = $_POST['userID'];
+		$user = $this->UserModel->select_row('tbl_user', 'fullname, avatar, card_front, card_back', array('id' => $userID));
+		echo json_encode(array('user' => $user));
+	}	
 }

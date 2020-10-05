@@ -30,15 +30,13 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
       <div class="content-transfer">
 		<form onsubmit="return checkAmountTransfer()" action="dashboard/transfer.html" method="POST">
 			<div id="messageAmount" class="text-danger"></div> 
-          <label>Amount <span class="box__require">(*)</span></label><br />
-          		<input  id="txtAmountTransfer" required value="" type="number" min="0" name="amount" /><br />
-			     
-          <label>Transfer to <span class="box__require">(*)</span></label><br />
-          		<input id="txtTransferTo" required type="text" name="transfer" /><br />
-				
-         <label>2FA code <span class="box__require">(*)</span></label><br />
-          		<input id="FACodeTransfer" type="text" name="" /><br />
-          <label class="lable-btn"><button id="btn-confirm" type="submit">Confirm</button></label>
+          	<label>Amount <span class="box__require">(*)</span></label><br />
+          	<input  id="txtAmountTransfer" required value="" type="number" min="0" name="amount" /><br />
+          	<label>Transfer to <span class="box__require">(*)</span></label><br />
+          	<input id="txtTransferTo" required type="text" name="transfer" /><br />
+         	<label>2FA code <span class="box__require">(*)</span></label><br />
+          	<input id="FACodeTransfer" required type="text" /><br />
+          	<label class="lable-btn"><button id="btn-confirm" type="submit">Confirm</button></label>
         </form>
       </div>
     </div>
@@ -70,6 +68,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		//Get value to input
 		var amount = $('#txtAmountTransfer').val();
 		var transfer = $('#txtTransferTo').val();
+		var google_2fa = $('#FACodeTransfer').val();
 		//Check require
 		if(amount == "" )
 		{
@@ -79,6 +78,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		}
 		else
 		{
+
 			let result = 1;
 			$.ajax({
 				
@@ -86,7 +86,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 				url: 'dashboard/checkamountTransfer.html',
 				type: 'POST',
 				dataType: 'json',
-				data: {amount:amount,transfer:transfer},
+				data: {amount: amount, transfer: transfer, google_2fa:google_2fa},
 				success: function(data) {
 					if(data){
 						$('#messageAmount').html(data.message);

@@ -88,14 +88,28 @@
 			//get $amount
 			$amount = $_POST['amount'];
 			$transfer = $_POST['transfer'];
+			$google_auth_code = $_POST['google_2fa'];
 			$type = 'user';
 			$userID = $this->session->userdata('userID');
 			$result = $this->transfermodel->select_row('tbl_user', 'email,walletUSD', array('id' => $userID));
 			$emailTransfer = $this->transfermodel->select_row('tbl_user', 'email,type,status,active', array('email'=>$transfer));
+
+			//load library Google 2FA
+			$this->load->library('GoogleAuthenticator');
+			//get info current user
+			$user = $this->Auth->getInfoUser();
+			//get info 2fa 
+			$googleauthcodeArray = json_decode($user['google_auth_code'],true);
+			$isValid = $this->googleauthenticator->verifyCode($googleauthcodeArray['secret'], $google_auth_code, 2);
+			
+
 			// //process 
 			if(($amount < 50)||($amount > $result['walletUSD']))
 			{
 				echo json_encode(array('message' => 'The amount entered must be greater than 50 or The balance in the wallet is not enough '));
+			}
+			else if(!$isValid){
+				echo json_encode(array('message' => "Invalid authenticator code"));
 			}
 			else
 			{
@@ -116,8 +130,6 @@
 				}
 					
 			}
-			
-
 		}
 
 	}

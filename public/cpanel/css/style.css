@@ -1,3 +1,6 @@
+a{
+	cursor: pointer;
+}
 /* notify error validate -optech1 */
 .has-error{
 	color: #bd0103;
@@ -22,3 +25,7 @@
 	cursor: pointer;
 }
 /* END alert notify add/edit/change data module - otMain */
+.box___identity__modal img{
+	max-height: 250px;
+	border: 1px solid #ddd;
+}

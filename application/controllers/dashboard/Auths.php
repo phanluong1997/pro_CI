@@ -504,30 +504,6 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-	// public function getGoogle2FA()
-	// {
-	// 	if (!$this->input->is_ajax_request() || !$this->CI_auth->checkSignin()) {
-	// 		exit('No direct script access allowed');
-	// 	}
-	// 	$this->load->library('GoogleAuthenticator');
-	// 	$user = $this->CI_auth->getInfoUser();
-	// 	if (!empty($user['google_auth_code'])) {
-	// 		$secret = $user['google_auth_code'];
-	// 		$is_enabled = true;
-	// 	} else {
-	// 		$is_enabled = false;
-	// 		// $secret = $ga->createSecret();
-	// 		$secret = $this->googleauthenticator->createSecret();
-	// 		$_SESSION['secret'] = $secret;
-	// 	}
-
-	// 	$qrCodeUrl = $this->googleauthenticator->getQRCodeGoogleUrl(APP_NAME, $user['email'], $secret);
-	// 	echo json_encode([
-	// 		'is_enabled' => $is_enabled,
-	// 		'qrCodeUrl' => $qrCodeUrl,
-	// 		'secret' => $secret
-	// 	]);
-	// }
 
 	//Enabled Google 2FA
 	public function disabledGoogle2FA()

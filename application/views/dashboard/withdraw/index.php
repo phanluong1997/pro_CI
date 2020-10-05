@@ -1,6 +1,6 @@
 <div class="content-withdraw">
+  <div id="messageAmounts" class="text-danger text-center"></div>
   <form onsubmit="return checkAmount();" action="dashboard/withdraw.html" method="POST">
-    <div id="messageAmount" class="text-danger"></div>
     <label style="display: inline-block;">Amount in USD <span class="box__require">(*)</span></label><br />
     <!-- get amount_min_withdraw AND cost_withdraw AND Cost_ETH - OT1 -->
     <div id="resultWithdraw">
@@ -57,9 +57,10 @@
     //Get value to input
     var amount = $('#txtAmount').val();
     var amount_min = $('#amount_min_withdraw').val();
+    var google_2fa = $('#FACode').val();
     //Check require
     if(amount == ""){
-      $('#messageAmount').html('Amount is empty');
+      $('#messageAmounts').html('Amount is empty');
       return false;
     }else{
       let result = 1;
@@ -68,10 +69,10 @@
         url: 'dashboard/checkamount.html',
         type: 'POST',
         dataType: 'json',
-        data: {amount:amount,amount_min:amount_min},
+        data: {amount:amount,amount_min:amount_min,google_2fa:google_2fa},
         success: function(data) {
           if(data){
-            $('#messageAmount').html(data.message);
+            $('#messageAmounts').html(data.message);
             result = 0;
           }
         }

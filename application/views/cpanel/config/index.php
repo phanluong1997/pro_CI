@@ -20,7 +20,10 @@
 				    <a class="nav-link active" data-toggle="tab" href="#general">General</a>
 				  </li>
 				  <li class="nav-item">
-				    <a class="nav-link" data-toggle="tab" href="#wallet">Wallet</a>
+				    <a class="nav-link" data-toggle="tab" href="#deposite">Deposite</a>
+				  </li>
+				  <li class="nav-item">
+				    <a class="nav-link" data-toggle="tab" href="#withdraw">Withdraw</a>
 				  </li>
 				</ul>
 				<!-- Tab panes -->
@@ -37,7 +40,23 @@
 							</div>
 						</form>
 					</div>
-					<div class="tab-pane container" id="wallet">
+					<div class="tab-pane container" id="deposite">
+					  	<form action="cpanel/config/deposite" method="POST">
+						  	<div class="form-group">
+								<label for="inputName">Wallet Address (ETH)</label>
+								<input type="text" name="address_eth" class="form-control" value="<?php echo $deposite['address_eth'];?>">
+							</div>
+							<div class="form-group">
+								<label for="inputName">Wallet Address (USDT)</label>
+								<input type="text" name="address_usdt" class="form-control" value="<?php echo $deposite['address_usdt'];?>">
+							</div>
+							<div class="row gutters justify-content-center">
+								<button type="submit" class="btn btn-success btn-rounded">Save</button>
+								<button type="reset" class="btn btn-primary btn-rounded">Reset</button>
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane container" id="withdraw">
 					  	<form action="cpanel/config/wallet" method="POST">
 						  	<div class="form-group">
 								<label for="inputName">Amount Min (Withdraw)</label>

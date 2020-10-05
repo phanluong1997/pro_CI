@@ -72,9 +72,10 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 													<input onclick="checkVerify(<?php echo $val['id'];?>)"
 													<?php if($val['verify'] == 1){ ?> checked <?php } ?>
 													type="checkbox" class="custom-control-input" id="verify<?php echo $val['id'];?>" data-control="<?php echo $control;?>">
-													<label class="custom-control-label" for="verify<?php echo $val['id'];?>">
-														Verify (<a href="" class="text-success">View Detail</a>)
-													</label>
+													<label class="custom-control-label" for="verify<?php echo $val['id'];?>">Verify</label>
+													<?php if($val['avatar'] != ''){ ?>
+														(<a onclick="showIdentity(<?php echo $val['id'];?>);" class="text-success">View Detail</a>)
+													<?php } ?>
 												</div>
 											</td>
 											<td class="text-center">
@@ -100,108 +101,152 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	</div>
 	<!-- Row end -->
 </div>
+
+<!-- Modal load Identity-->
+<div id="modalShowIdentity" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      	<div class="modal-header">
+	      		<h4 id="load_fullname" class="modal-title"></h4>
+	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	      	</div>
+	      	<div class="modal-body">
+	      		<div class="row box___identity__modal">
+		        	<div class="col-md-4">
+		        		<div id="load_avatar"></div>
+		        	</div>
+		        	<div class="col-md-4">
+		        		<div id="load_card_front"></div>
+		        	</div>
+		        	<div class="col-md-4">
+		        		<div id="load_card_back"></div>
+		        	</div>
+		        </div>
+	      	</div>
+	    </div>
+	</div>
+</div>
 <script>
 	//check Active - OT1
-		function checkActive(id){
-			var control = $('#active'+id).attr('data-control');
-			var active = 0;
-			if($('#active' + id).is(':checked')){ active = 1; }
-			if(id != '')  
-			{ 
-				$.ajax
-				({
-					method: "POST",
-					url: "cpanel/"+control+"/active",
-					data: { id:id,active:active},
-					success : function (result){
-						$('#boxNotify').show().html('<i class="icon-check"></i> Change status success.');
-						setTimeout(function(){ $('#boxNotify').hide(); }, 2000);
-					}
-				});
-			}
+	function checkActive(id){
+		var control = $('#active'+id).attr('data-control');
+		var active = 0;
+		if($('#active' + id).is(':checked')){ active = 1; }
+		if(id != '')  
+		{ 
+			$.ajax
+			({
+				method: "POST",
+				url: "cpanel/"+control+"/active",
+				data: { id:id,active:active},
+				success : function (result){
+					$('#boxNotify').show().html('<i class="icon-check"></i> Change status success.');
+					setTimeout(function(){ $('#boxNotify').hide(); }, 2000);
+				}
+			});
 		}
+	}
 	//check Verify -OT2	
-		function checkVerify(id){
-			var control = $('#verify'+id).attr('data-control');
-			var verify = 0;
-			if($('#verify' + id).is(':checked')){ verify = 1; }
-			if(id != '')  
-			{ 
-				$.ajax
-				({
-					method: "POST",
-					url: "cpanel/"+control+"/verify",
-					data: { id:id,verify:verify},
-					success : function (result){
-						$('#boxNotify').show().html('<i class="icon-check"></i> Change status success.');
-						setTimeout(function(){ $('#boxNotify').hide(); }, 1000);
-					}
-				});
-			}
-			
+	function checkVerify(id){
+		var control = $('#verify'+id).attr('data-control');
+		var verify = 0;
+		if($('#verify' + id).is(':checked')){ verify = 1; }
+		if(id != '')  
+		{ 
+			$.ajax
+			({
+				method: "POST",
+				url: "cpanel/"+control+"/verify",
+				data: { id:id,verify:verify},
+				success : function (result){
+					$('#boxNotify').show().html('<i class="icon-check"></i> Change status success.');
+					setTimeout(function(){ $('#boxNotify').hide(); }, 1000);
+				}
+			});
 		}
+		
+	}
 	//del - OT1
-		function del(id) {
-			swal({title: "Are you sure?",showCancelButton: true, }
-			, function(isConfirm){
-				if (isConfirm) {
-					$('#delete'+id).parent().parent().fadeOut();
-					var control = $('#delete'+id).attr('data-control');
-					if(id != '')  
-					{ 
-						$.ajax
-						({
-							method: "POST",
-							url: "cpanel/"+control+"/delete",
-							data: { id:id},
-							success : function (result){
-								$('#test').html(result);
-							}
-						});
-					}
-				}
-				else{
-					swal("Dữ liệu của bạn đã không bị xóa!");
-				}
-			});
-		}
-	//search user -OT2
-		$(document).ready(function(){
-			// load_data();
-			$('#search_text').keyup(function(){
-				var search = $(this).val();
-				var control = $('#search_text').attr('data-control');
-				if(search != ""){
-					$.post('cpanel/user/search',{query:search},function(data){ //search = query => push $query to User.php in func search.php.
-						$('#result').html(data);
-					});	
-				}
-				else{
-					location.reload(true); 
-				}
-			});
-
-		});	
-	
-	//pagination  -- OT2
-		function loadPage(i){
-			var control = $('#pagination'+i).attr('data-control');
-			if(i != '')
-			{
-				// alert(i);
-				$.ajax
+	function del(id) {
+		swal({title: "Are you sure?",showCancelButton: true, }
+		, function(isConfirm){
+			if (isConfirm) {
+				$('#delete'+id).parent().parent().fadeOut();
+				var control = $('#delete'+id).attr('data-control');
+				if(id != '')  
+				{ 
+					$.ajax
 					({
-						url: "cpanel/"+control+"/pagination" ,
-						type: "POST",
-						dataType:'html',
-						data: {i:i},
+						method: "POST",
+						url: "cpanel/"+control+"/delete",
+						data: { id:id},
 						success : function (result){
 							$('#test').html(result);
 						}
 					});
+				}
+			}
+			else{
+				swal("Dữ liệu của bạn đã không bị xóa!");
+			}
+		});
+	}
+	//search user -OT2
+	$(document).ready(function(){
+		// load_data();
+		$('#search_text').keyup(function(){
+			var search = $(this).val();
+			var control = $('#search_text').attr('data-control');
+			if(search != ""){
+				$.post('cpanel/user/search',{query:search},function(data){ //search = query => push $query to User.php in func search.php.
+					$('#result').html(data);
+				});	
+			}
+			else{
+				location.reload(true); 
+			}
+		});
 
-			}	
+	});	
+	//pagination  -- OT2
+	function loadPage(i){
+		var control = $('#pagination'+i).attr('data-control');
+		if(i != '')
+		{
+			$.ajax
+			({
+				url: "cpanel/"+control+"/pagination" ,
+				type: "POST",
+				dataType:'html',
+				data: {i:i},
+				success : function (result){
+					$('#test').html(result);
+				}
+			});
+		}	
+	}
+	//pagination  -- OTMain
+	function showIdentity(id){
+		if(id){
+			$.ajax
+			({
+				url: "cpanel/user/showIdentity" ,
+				type: "POST",
+				dataType:'json',
+				data: {userID:id},
+				success : function (result){
+					if(result){
+						$("#modalShowIdentity").modal('show');
+						$('#load_fullname').html(result.user.fullname);
+						$('#load_avatar').html('<img src="upload/passport/thumb/'+result.user.avatar+'" width="100%" />');
+						$('#load_card_front').html('<img src="upload/passport/thumb/'+result.user.card_front+'" width="100%" />');
+						$('#load_card_back').html('<img src="upload/passport/thumb/'+result.user.card_back+'" width="100%" />');
+					}
+				}
+			});
 		}
+	}
 
 </script>
 
