@@ -71,98 +71,24 @@
 		</div>
 	<?php } ?>
 
+	<!-- load list game- OT1 -->
 	<div class="game__list">
 		<div class="title">My Game</div>
 		<div class="clearfix"></div>
 		<div class="row">
+		<?php foreach ($getGame as $key => $val) { ?>
 			<div class="col-md-3">
 				<div class="item">
 					<div class="box__img">
-						<img src="public/images/1.png">
+						<img src="upload/game/thumb/<?php echo $path_dir_thumb;?><?php echo $val['thumb'];?>" alt="" width="60px">
 					</div>
 					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
+						<h3><?php echo $val['name'];?></h3>
+						<div class="des"><?php echo $val['des'];?></div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/2.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/1.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/2.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/1.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/2.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/1.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="item">
-					<div class="box__img">
-						<img src="public/images/2.png">
-					</div>
-					<div class="item__info">
-						<h3>Crash</h3>
-						<div class="des">Watch the multiplier go to the infinit. </div>
-					</div>
-				</div>
-			</div>
+		<?php } ?>
 		</div>
 	</div>
 </div>

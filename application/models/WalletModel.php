@@ -89,7 +89,6 @@ class WalletModel extends CI_Model {
 		$result = $this->db->get()->row_array();
 		return $result;
 	}
-
 	//check validate field wallet - OT2
 	function check_exists($where = array())
 	{

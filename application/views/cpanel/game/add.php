@@ -14,30 +14,27 @@
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
-				<form action="" data-toggle="validator" novalidate="true" method="post">
+				<form action="" data-toggle="validator" method="POST" enctype="multipart/form-data">
 					<div class="card-body">
 						<div class="form-group">
 							<label for="inputName">Name</label>
-							<input type="text" name="Name" class="form-control" id="inputName" value="<?php echo set_value('name'); echo $datas['name'];?>">
-							<div class="has-error"><?php echo form_error('name') ?></div>
-						</div>
-						<div class="form-group">
-							<label for="input-file-now">Image (width: 400 x height: 240)</label>
-							<input type="file" required="" requiredmsg="Please select photo" name="image" id="image" class="dropify" />
+							<input type="text" required=""  name="name" class="form-control" id="inputName" value="">
 						</div>
 						<div class="form-group">
 							<label for="inputName">Description</label>
-							<input type="text" name="des" class="form-control" id="inputName" value="<?php echo set_value('des'); echo $datas['des']; ?>" >
-							<div class="has-error"><?php echo form_error('des') ?></div>
+							<input type="text" required name="des" class="form-control" id="inputName" value="" >
+						</div>
+						<div class="form-group">
+							<label for="input-file-now">Image (width: 400 x height: 240)</label>
+							<input type="file" required="" requiredmsg="Please select image" name="image" id="image" />
 						</div>
 						<div class="form-group">
 							<label for="inputName">Link</label>
 							<input type="text" name="link" class="form-control" id="inputName">
-							<div class="has-error"><?php echo form_error('link') ?></div>
 						</div>
 						<div class="custom-control custom-switch">
-							<input type="checkbox" name="active" class="custom-control-input" checked id="customSwitch3">
-							<label class="custom-control-label" for="customSwitch3">Active</label>
+							<input type="checkbox" name="publish" class="custom-control-input" checked id="customSwitch3">
+							<label class="custom-control-label" for="customSwitch3">Publish</label>
 						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>

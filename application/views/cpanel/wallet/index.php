@@ -26,10 +26,9 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	<!-- Row start -->
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			
 			<div class="table-container">
 				<div class="table-responsive">
-					<table id="basicExample" class="table custom-table">
+					<table id="myDataTable" class="table custom-table">
 						<thead>
 							<tr>
 								<th>Wallet</th>

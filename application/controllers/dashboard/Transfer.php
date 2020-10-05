@@ -66,7 +66,7 @@
 					}	
 			}
 			$data = array(
-				'data_index'	=> $this->get_index(),
+				'data_index'	=> $this->get_index()
 			);
 			$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 		}
@@ -77,10 +77,7 @@
 				'title'			=>	'Notify',
 				'template' 		=>  'dashboard/modals/notifyTransfer'
 			);
-
 			$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
-			
-
 		}
 		//check Amount --OT2
 		public function checkAmountTransfer()
@@ -117,7 +114,6 @@
 					
 			}
 			
-
 		}
 
 	}

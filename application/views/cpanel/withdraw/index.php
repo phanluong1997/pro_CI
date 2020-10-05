@@ -20,7 +20,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="table-container">
 				<div class="table-responsive">
-					<table id="basicExample" class="table custom-table">
+					<table id="myDataTable" class="table custom-table">
 						<thead>
 							<tr>
 								<th>User</th>
@@ -45,14 +45,17 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 										<td><?php echo $val['note']; ?></td>
 										<td><?php echo $val['date']; ?></td>
 										<td class="text-center">
+											<?php if($val['status'] == 0){ ?>	
+													<span class="text-dark">Waiting</span>	
+											<?php } ?>
 											<?php if($val['status'] == 1){ ?>
 												<a onclick="changeStatus(<?php echo $val['id']; ?>,2)" class="btn btn-success btn-rounded text-white">Apprive</a>
 												<a onclick="changeStatus(<?php echo $val['id']; ?>,3)" class="btn btn-danger btn-rounded text-white">Destroy</a>
-												<?php } ?>
-												<?php if($val['status'] == 2){ ?>	
+											<?php } ?>
+											<?php if($val['status'] == 2){ ?>	
 													<span class="text-success">Apprive</span>
-												<?php } ?>
-												<?php if($val['status'] == 3){ ?>	
+											<?php } ?>
+											<?php if($val['status'] == 3){ ?>	
 													<span class="text-danger">Destroy</span>	
 											<?php } ?>	
 										</td>

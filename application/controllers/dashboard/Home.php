@@ -10,6 +10,7 @@ class Home extends Dashboard_Controller {
 		$this->load->model('UserModel');
 		$this->load->model('transfermodel');
 		$this->load->model('WithdrawModel');
+		$this->load->model('GameModel');
 	}
 	//Main action
 	public function index()
@@ -26,6 +27,9 @@ class Home extends Dashboard_Controller {
 		$userID = $this->session->userdata('userID');
 		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
 		//END START - OT1 
+		//START - OT2
+		$data['getGame'] = $this->GameModel->select_array('tbl_game','*',array('publish'=>1),'id desc');
+		//END START -OT2
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 	//get_referentID - OT1
@@ -37,6 +41,7 @@ class Home extends Dashboard_Controller {
 		$referentID['fullname'] = $get_User['fullname'];
 		return $referentID;
 	}  
+	
 }
 
 

@@ -10,7 +10,7 @@
 			
 			<div class="table-container">
 				<div class="table-responsive">
-					<table id="basicExample" class="table custom-table">
+					<table id="myDataTable" class="table custom-table">
 						<thead>
 							<tr>
 								<th>User</th>

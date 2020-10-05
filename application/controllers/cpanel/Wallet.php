@@ -13,7 +13,6 @@ class Wallet extends Admin_Controller {
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Wallet Manager',
@@ -81,7 +80,6 @@ class Wallet extends Admin_Controller {
 		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-
 	//Edit actions -OT2
 	public function edit($id = 0)
 	{
@@ -123,7 +121,6 @@ class Wallet extends Admin_Controller {
 			'template' 	=> 	$this->template.'edit'
 		);
 		$data['datas'] = $this->walletmodel->select_row('tbl_wallet','*',array('id' =>$id));
-
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//delete OT2

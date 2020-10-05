@@ -30,7 +30,6 @@ class Admin extends Admin_Controller {
 		$Email = $this->input->post('email');
 		$where = array('email' => $Email);
 		if($this->UserModel->check_exists($where)){
-			//trả về thông báo lỗi
 			$this->form_validation->set_message(__FUNCTION__,'Email already exists !');
 			return false;
 		}

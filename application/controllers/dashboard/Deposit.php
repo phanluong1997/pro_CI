@@ -5,8 +5,6 @@
 			parent::__construct();
 			$this->load->model('depositmodel');
 		}	
-		
-
 	}	
 
 ?>
