@@ -14,18 +14,36 @@ class Withdraw extends Dashboard_Controller {
 		//checkSignin and checkStatus account -OT1
 		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
+		//get data post
 		$amount = $_POST['amount'];
 		$amount_min = $_POST['amount_min'];
+		$google_auth_code = $_POST['google_2fa'];
 		$userID = $this->session->userdata('userID');
-		$result = $this->WithdrawModel->select_row('tbl_user', 'walletUSD', array('id' => $userID));
+
+		//load library Google 2FA
+		$this->load->library('GoogleAuthenticator');
+		//get info current user
+		$user = $this->Auth->getInfoUser();
+		//get info 2fa 
+		$googleauthcodeArray = json_decode($user['google_auth_code'],true);
+		$isValid = $this->googleauthenticator->verifyCode($googleauthcodeArray['secret'], $google_auth_code, 2);
+
+
 		if($amount < $amount_min )
 		{
 			echo json_encode(array('message' => 'The amount must be greater than or equal to '.$amount_min));
 		}else{
-			if($amount > $result['walletUSD']){
+			if($amount > $user['walletUSD']){
 				echo json_encode(array('message' => 'The balance in the wallet is not enough'));
 			}
+			else{
+				//check google 2FA
+				if(!$isValid){
+					echo json_encode(array('message' => "Invalid authenticator code"));
+				}
+			}
 		}
+		
 	}
 
 	//Withdraw - OT1
