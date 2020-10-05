@@ -32,6 +32,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 					<table id="basicExample" class="table custom-table">
 						<thead>
 							<tr>
+								<th>Fullname</th>
 								<th>Wallet</th>
 								<th>Date</th>
 								<th>Status</th>
@@ -42,6 +43,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 							<tbody>
 								<?php foreach ($datas as $key => $val) { ?>
 									<tr>
+										<td><?php echo $val['fullname'];?></td>
 										<td><?php echo $val['wallet'];?></td>
 										<td><?php echo $val['date'];?></td>
 										<td class="text-center">
@@ -53,6 +55,9 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 										</td>
 										<td class="text-center">
 											<a onclick="del(<?php echo $val['id'];?>);" class="btn btn-danger text-white delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>"><i class="icon-trash-2"></i></a>
+											<?php if($val['userID'] == 0){ ?>
+												<a class="btn btn-info text-white" href="cpanel/wallet/addUserInWallet/<?php echo $val['id'];?>"><i class="icon-edit"></i></a>
+											<?php } ?>
 											<a class="btn btn-info text-white" href="cpanel/wallet/edit	/<?php echo $val['id'];?>"><i class="icon-edit"></i></a>
 										</td>
 									</tr>

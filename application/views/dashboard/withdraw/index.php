@@ -2,6 +2,8 @@
   <form onsubmit="return checkAmount();" action="dashboard/withdraw.html" method="POST">
     <div id="messageAmount" class="text-danger"></div>
     <label style="display: inline-block;">Amount in USD <span class="box__require">(*)</span></label><br />
+    <!-- get cost ETH -OT1 -->
+    <input id="cost_ETH" readonly hidden type="text" value="<?php echo $data_index['cost_ETH'] ?>"  />
     <!-- get amount_min_withdraw AND cost_withdraw AND Cost_ETH - OT1 -->
     <div id="resultWithdraw">
       <!-- ajax -->  
@@ -40,7 +42,7 @@
   $("#withdrawAjax").click(function(){
     $.ajax({
       async: false,
-      url: 'dashboard/get-Eth-AmountMin-CostWithdraw.html',
+      url: 'dashboard/get-AmountMin-CostWithdraw.html',
       type: 'POST',
       dataType: 'html',
       success: function(data) {
