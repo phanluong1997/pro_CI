@@ -870,6 +870,16 @@ a{
     display: block;
     overflow-y: scroll;
     background-image: linear-gradient(90deg, rgb(42, 58, 71), rgb(33, 47, 59));
+    position: relative;
+}
+/* chatting - OT1 */
+#sidebar .content .contain-itemchat{
+    /* chatting */
+    width: 100%;
+    position: absolute;
+    /* background-color: #ccc; */
+    bottom: 0px;
+    
 }
 
 #sidebar .boxInput {
@@ -1076,6 +1086,7 @@ a{
     top: 5px;
     right: 12px;
     display: none;
+    cursor: pointer;
 }
 
 #sidebar .content .itemchat .contentMessage:hover>.icon-hover {
