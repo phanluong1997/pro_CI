@@ -109,6 +109,15 @@ class UserModel extends CI_Model {
 		$result = $this->db->get()->row_array();
 		return $result;
 	}
+	//select_row_max -OT1
+	function select_row_min($table = '', $field_min = '',$where = NULL ){
+		$result = $this->db->select_min($field_min)->from($table);
+		if($where != NULL){
+			$result = $this->db->where($where);
+		}
+		$result = $this->db->get()->row_array();
+		return $result;
+	}
 	//edit user
 	function edit($table = '', $data = NULL, $where = NULL){
 		$this->db->where($where)->update($table, $data);

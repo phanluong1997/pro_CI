@@ -51,28 +51,25 @@ class Dashboard_Controller extends CI_Controller {
 	public function __construct(){
 		error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 		parent::__construct();
-
+		$this->load->model('CoinModel');
 	}
 	//Main Function
 	protected function get_index(){
 		$data['info_user'] = $this->get_user();
+		$data['cost_ETH'] = $this->get_costETH();
 		return $data;
 	}
-
-	//get_user - OT1	
-	// protected function check_StatusUser(){
-	// 	$id_user = $this->Auth->userID();
-	// 	$data = $this->db->select('*')->from('tbl_user')->where(array('id' => $id_user))->get()->row_array();
-	// 	if($data['status'] == 0)
-	// 	{
-	// 		$this->session->unset_userdata('userID');
-	// 	}
-	// }
 
 	//get_user - OT1	
 	protected function get_user(){
 		$id_user = $this->Auth->userID();
 		$data = $this->db->select('*')->from('tbl_user')->where(array('id' => $id_user))->get()->row_array();
 		return $data;
+	}
+
+	//get_cost ETH - OT1
+	protected function get_costETH(){
+		$ETH = $this->CoinModel->getPriceUsd(eth);
+		return $ETH;
 	}
 }

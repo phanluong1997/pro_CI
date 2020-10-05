@@ -15,6 +15,16 @@ $(function() {
 		$('#todays-date').html(momentNow.format('DD MMMM YYYY'));
 	}, 100);
 });
+//DataTable custom
+$(function(){
+	$('#myDataTable').DataTable({
+		'iDisplayLength': 10,
+		"language": {
+			"lengthMenu": "Display _MENU_ Records Per Page",
+			"info": "Showing Page _PAGE_ of _PAGES_",
+		}
+	});
+});
 
 
 

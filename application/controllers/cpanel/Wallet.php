@@ -13,15 +13,21 @@ class Wallet extends Admin_Controller {
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'Wallet Manager',
 			'template' 	=> 	$this->template.'index',
 			'control'	=>  'wallet'
 		);
-		$data['datas'] = $this->walletmodel->select_array('tbl_wallet','*',NULL,'id desc');
-
+		//get fullname - OT1
+		$getWallet = $this->walletmodel->select_array('tbl_wallet','*',NULL,'id desc');
+		foreach ($getWallet as $key => $value) {
+			$getUser = $this->walletmodel->select_row('tbl_user','id,fullname',array('id' =>$value['userID']));
+			if($value['userID'] == $getUser['id']){
+				$getWallet[$key]['fullname']=$getUser['fullname'];
+			}
+		}
+		$data['datas'] = $getWallet;
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//function check duplicate wallet ! - OT2
@@ -81,6 +87,72 @@ class Wallet extends Admin_Controller {
 		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
+	//check_EmailWallet - OT1
+	public function check_EmailWallet()
+	{
+		$email = trim($this->input->post('email'));
+		$getUser = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
+		$getWallet = $this->UserModel->select_row('tbl_wallet', 'userID', array('userID' => $getUser['id']));
+		if($getWallet == NULL){
+			return true;
+		}else{
+			if($getUser['id'] == $getWallet['userID'])
+			{
+				$this->form_validation->set_message(__FUNCTION__,'This account already has a wallet address');
+				return false;
+			}
+		}
+	}
+	//addUserInWallet - OT1
+	public function addUserInWallet($id = 0)
+	{
+		//Check login
+		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
+		//Check validate wallet
+		if($this->input->post()){
+			$this->form_validation->set_rules('email','Email','required|valid_email|min_length[2]|callback_check_EmailWallet');
+			if($this->form_validation->run()){
+				$email = trim($this->input->post('email'));
+				$getUser = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
+				$getWallet = $this->UserModel->select_row('tbl_wallet', 'userID', array('id' => $id));
+				if($getWallet['userID'] == 0){
+					$data_update = array(
+					'userID' 	=> 		$getUser['id']
+					);
+					$result = $this->walletmodel->edit('tbl_wallet', $data_update,array('id' =>$id));
+					if($result>0){
+						$this->session->set_flashdata('message_flashdata', array(
+							'type'		=> 'sucess',
+							'message'	=> 'Update wallet success!!',
+						));
+						redirect('cpanel/wallet/index',$data);
+					}else{
+						$this->session->set_flashdata('message_flashdata', array(
+							'type'		=> 'error',
+							'message'	=> 'Updata wallet unsuccess!!',
+						));
+						redirect('cpanel/wallet/index',$data);
+					}
+				}
+				else
+				{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'This account already has a wallet address',
+					));
+					redirect('cpanel/wallet/addUserInWallet/'.$id);
+				}
+				
+			}	
+		}
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'		=>	'Add User In Wallet',
+			'template' 	=> 	$this->template.'addUserInWallet'
+		);
+
+		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
+	}
 
 	//Edit actions -OT2
 	public function edit($id = 0)
@@ -123,7 +195,6 @@ class Wallet extends Admin_Controller {
 			'template' 	=> 	$this->template.'edit'
 		);
 		$data['datas'] = $this->walletmodel->select_row('tbl_wallet','*',array('id' =>$id));
-
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//delete OT2

@@ -268,23 +268,7 @@ class Auths extends Dashboard_Controller {
 		);
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
-
-	//testTelegram
-	public function testTelegram()
-	{
-		//Sent message into tele
-	    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
-	    $data = [
-	         'chat_id' => '@mt7accountnew',
-	         'text' => 'Verify request for user Hien Nguyen'
-	    ];
-	    	$response = $this->TelegramModels->sendMessageChannel($apiToken, $data);
-	    if($response['ok'] == true){
-	    	echo "ok";
-	    	redirect('/', 'refresh');
-	    }
-	}
-
+	
 	//Upload Identity Card - OT1
 	public function uploadIdentityCard(){
 		//check checkSignin account AND checkStatus  -OT1
@@ -618,7 +602,7 @@ class Auths extends Dashboard_Controller {
 
 	//Update Profile action -OT1
 	public function updateProfile(){
-		$id = $this->session->userdata('userID');
+		$userID = $this->session->userdata('userID');
 		//edit data
 		if($this->input->post()){
 			//validation
@@ -631,20 +615,29 @@ class Auths extends Dashboard_Controller {
 					'status'			=>  1,
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
 				if($result>0){
-					//$id = $result['id_insert'];
-					$this->session->set_flashdata('message_flashdata', array(
-						'type'		=> 'sucess',
-						'message'	=> 'Update profile successful!!',
-					));
-					redirect(base_url().'dashboard/update-referent.html');
-				}else{
-					$this->session->set_flashdata('message_flashdata', array(
-						'type'		=> 'error',
-						'message'	=> 'Update profile error!!',
-					));
-					redirect(base_url().'dashboard/update-referent.html');
+					$minID = $this->UserModel->select_row_min('tbl_wallet', 'id', array('userID' => 0));
+					$data_update = array(
+						'userID' 			=> 	$userID,
+					);
+					$getUserIDWallet = $this->UserModel->select_row('tbl_wallet', 'userID', array('userID' => $userID));
+					if($getUserIDWallet['userID'] != $userID){
+						$updateWallet = $this->UserModel->edit('tbl_wallet', $data_update, array('id' => $minID['id']));
+					}
+					if($updateWallet>0){
+						$this->session->set_flashdata('message_flashdata', array(
+							'type'		=> 'sucess',
+							'message'	=> 'Update profile successful!!',
+						));
+						redirect(base_url().'dashboard/update-referent.html');
+					}else{
+						$this->session->set_flashdata('message_flashdata', array(
+							'type'		=> 'error',
+							'message'	=> 'Update profile error!!',
+						));
+						redirect(base_url().'dashboard/update-referent.html');
+					}
 				}
 			}
 		}
@@ -653,7 +646,7 @@ class Auths extends Dashboard_Controller {
 			'title'			=>	'Profile',
 			'template' 		=> 	'dashboard/auth/profile'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
+		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 

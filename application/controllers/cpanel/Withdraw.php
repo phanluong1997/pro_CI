@@ -14,25 +14,27 @@ class Withdraw extends Admin_Controller {
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 
-		$data = array(
-			'data_index'	=> $this->get_index(),
-			'title'		=>	'Withdraw Manager',
-			'template' 	=> 	$this->template.'index',
-			'control'	=> 'withdraw'
-		);
+		
 		//get data 
-		$data['datas']= $this->withdrawmodel->select_array('tbl_withdraw','*',NULL,'id desc');
+		$datas= $this->withdrawmodel->select_array('tbl_withdraw','*',NULL,'id desc');
 		//get fullname in table tbl_user
-		if($data['datas'] != NULL){
-			foreach ($data['datas'] as $key => $val) {
+		if($datas != NULL){
+			foreach ($datas as $key => $val) {
 				$user_name = '';
 				$infouser = $this->withdrawmodel->select_row('tbl_user', 'fullname', array('id' => $val['userID']));
 				if($infouser != NULL){
 					$user_name = $infouser['fullname'];
 				}
-				$data['datas'][$key]['user_name'] = $user_name;
+				$datas[$key]['user_name'] = $user_name;	
 			}
 		}
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'		=>	'Withdraw Manager',
+			'template' 	=> 	$this->template.'index',
+			'control'	=> 'withdraw',
+			'datas'			=> $datas
+		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//change status -- OT2

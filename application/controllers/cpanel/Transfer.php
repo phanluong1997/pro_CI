@@ -12,17 +12,11 @@ class Transfer extends Admin_Controller {
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-
-		$data = array(
-			'data_index'	=> $this->get_index(),
-			'title'		=>	'Transfer Manager',
-			'template' 	=> 	$this->template.'index'
-		);
 		//get data
-		$data['datas']= $this->transfermodel->select_array('tbl_transfer','*',NULL,'id desc');
+		$datas= $this->transfermodel->select_array('tbl_transfer','*',NULL,'id desc');
 		//get fullname in table tbl_user
-		if($data['datas'] != NULL){
-			foreach ($data['datas'] as $key => $val) {
+		if($datas != NULL){
+			foreach ($datas as $key => $val) {
 				$user_nameSender = '';
 				$infouserSender = $this->transfermodel->select_row('tbl_user', 'fullname', array('id' => $val['userID_sender']));
 
@@ -33,11 +27,16 @@ class Transfer extends Admin_Controller {
 					$user_nameSender = $infouserSender['fullname'];
 					$user_nameReceived = $infouserReceived['fullname'];
 				}
-				$data['datas'][$key]['user_nameSender'] = $user_nameSender;
-				$data['datas'][$key]['user_nameReceived'] = $user_nameReceived;
+				$datas[$key]['user_nameSender'] = $user_nameSender;
+				$datas[$key]['user_nameReceived'] = $user_nameReceived;
 			}
 		}
-
+		$data = array(
+			'data_index'	=> $this->get_index(),
+			'title'		=>	'Transfer Manager',
+			'template' 	=> 	$this->template.'index',
+			'datas'		=> $datas
+		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 }

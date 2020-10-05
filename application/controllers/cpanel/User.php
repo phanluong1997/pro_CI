@@ -20,6 +20,19 @@ class User extends Admin_Controller {
 		$totalRow = $config['total_rows'] = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
 		//get limit
 		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', 0, 5);
+		//getWallet  - OT1
+		foreach ($datas as $key => $value) {
+			$getWallet = $this->UserModel->select_row('tbl_wallet', 'userID,wallet', array('userID' => $value['id']));
+			if($getWallet != NULL){
+				if($getWallet['userID'] == $value['id']){
+					$datas[$key]['wallet'] = $getWallet['wallet'];
+				}
+			}
+			else
+			{
+				$datas[$key]['wallet'] = '';
+			}
+		}
 		//get total page
 		$countPage = ceil(count($totalRow) / 5);
 		$data = array(

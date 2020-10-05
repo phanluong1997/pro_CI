@@ -51,6 +51,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 										<tr>
 											<td>
 												<p><?php echo $val['fullname'];?></p>
+												<p><i class="icon-vpn_key"></i>Wallet: <?php echo $val['wallet'];?> </p>
 											</td>
 											<td>
 												<p><?php echo $val['email'];?></p>
@@ -63,8 +64,8 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 												<div class="custom-control custom-switch">
 													<input onclick="checkActive(<?php echo $val['id'];?>)"
 													<?php if($val['active'] == 1){ ?> checked <?php } ?>
-													type="checkbox" class="custom-control-input" id="active<?php echo $val['id'];?>" 
-													data-control="<?php echo $control;?>">
+														type="checkbox" class="custom-control-input" id="active<?php echo $val['id'];?>" 
+														data-control="<?php echo $control;?>">
 
 													<label class="custom-control-label" for="active<?php echo $val['id'];?>">Active</label>
 												</div>

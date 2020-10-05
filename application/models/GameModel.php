@@ -1,11 +1,11 @@
 <?php 
-class WalletModel extends CI_Model {
+class GameModel extends CI_Model {
 	
 	function __construct()
 	{
 		parent::__construct();
 	}
-	//add model - OT2
+	//add game -OT2
 	public function add($table='',$data = NULL){
 		$this->db->insert($table, $data);
 		$flag = $this->db->affected_rows(); 
@@ -25,44 +25,30 @@ class WalletModel extends CI_Model {
 			);
 		}
 	}
-	//edit model-OT2
+	//edit game --OT2
 	function edit($table = '', $data = NULL, $where = NULL){
 		$this->db->where($where)->update($table, $data);
 		$flag = $this->db->affected_rows();
 		if($flag > 0){
 			return array(
+				'id_insert'	=> $insert_id,
 				'type'		=> 'successful',
-				'message'	=> 'Update data success!',
+				'message'	=> 'Update success!',
 			);
 		}
 		else
 		{
 			return array(
 				'type'		=> 'error',
-				'message'	=> 'Update data unsuccess!',
+				'message'	=> 'Update error!',
 			);
 		}
 	}
-	//delete model-OT2
+	//delete -ot2
 	function del($table = '', $where = NULL){
 		$this->db->delete($table, $where);
-		$flag = $this->db->affected_rows();
-		if($flag > 0){
-			return array(
-				'type'		=> 'successful',
-				'message'	=> 'Delete data success!',
-			);
-		}
-		else
-		{
-			return array(
-				'type'		=> 'error',
-				'message'	=> 'Delete data unsuccess!',
-			);
-		}
-
 	}
-	//select arr - in Table wallet.-OT2
+	//select arr - in Table tbl_game.-OT2
 	function select_array($table = '', $data = NULL, $where = NULL, $order = 'id desc', $start = '', $limit = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -89,19 +75,7 @@ class WalletModel extends CI_Model {
 		$result = $this->db->get()->row_array();
 		return $result;
 	}
-	//check validate field wallet - OT2
-	function check_exists($where = array())
-	{
-		$this->db->where($where);
-		$query = $this->db->get('tbl_wallet');
-		if($query->num_rows() > 0)
-		{
-			return TRUE;
-		}
-		else {
-			return FALSE;
-		}
-	}
-}
 
-?>
+
+}
+?>	
