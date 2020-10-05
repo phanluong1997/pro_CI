@@ -51,6 +51,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 										<tr>
 											<td>
 												<p><?php echo $val['fullname'];?></p>
+												<p><i class="icon-vpn_key"></i>Wallet: <?php echo $val['wallet'];?> </p>
 											</td>
 											<td>
 												<p><?php echo $val['email'];?></p>

@@ -5,6 +5,7 @@
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('transfermodel');
+			$this->load->model('TelegramModels');
 		}	
 		//index data --OT2
 		public function index(){
@@ -22,7 +23,7 @@
 				//get id user sender and user received.
 				$userID_sender = $this->session->userdata('userID');
 				$transfer = $_POST['transfer'];
-				$emailTransfer = $this->transfermodel->select_row('tbl_user', 'id,email,type', array('email'=>$transfer));
+				$emailTransfer = $this->transfermodel->select_row('tbl_user', 'id,fullname,email,type', array('email'=>$transfer));
 				$userID_received = $emailTransfer['id'];
 			 	// echo $userID_sender."-----------".$userID_received; die;
 				
@@ -35,35 +36,44 @@
 				);
 
 				$result = $this->transfermodel->add('tbl_transfer', $data_insert);
-					
-					if($result>0){
-						//minus userSender
-						$Query_WalletS = $this->transfermodel->select_row('tbl_user', 'walletUSD', array('id' => $userID_sender));
-						$New_WalletUserSender = $Query_WalletS['walletUSD'] - trim($this->input->post('amount'));
-						$data_update = array(
-							'walletUSD' 		=> $New_WalletUserSender
-						);
-						$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_sender));
-						// //Plus userReceived
-						$Query_WalletR = $this->transfermodel->select_row('tbl_user', 'walletUSD', array('id' => $userID_received));
-						$New_WalletUserReceived = $Query_WalletR['walletUSD'] + trim($this->input->post('amount'));
-						$data_update = array(
-							'walletUSD' 		=> $New_WalletUserReceived
-						);
-						$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_received));
+				if($result>0){
+					//minus userSender
+					$Query_WalletS = $this->transfermodel->select_row('tbl_user', 'fullname,walletUSD', array('id' => $userID_sender));
+					$New_WalletUserSender = $Query_WalletS['walletUSD'] - trim($this->input->post('amount'));
+					$data_update = array(
+						'walletUSD' 		=> $New_WalletUserSender
+					);
+					$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_sender));
+					// //Plus userReceived
+					$Query_WalletR = $this->transfermodel->select_row('tbl_user', 'walletUSD', array('id' => $userID_received));
+					$New_WalletUserReceived = $Query_WalletR['walletUSD'] + trim($this->input->post('amount'));
+					$data_update = array(
+						'walletUSD' 		=> $New_WalletUserReceived
+					);
+					$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_received));
+					//Sent message into tele -OT1
+				    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
+				    $data = [
+				        'chat_id' => '@mt7accountnew',
 
+				        'text' => 'User <b>'.$Query_WalletS['fullname'].'</b> transfers  $<b>'.number_format(trim($this->input->post('amount')),2).'</b> '.'to user <b>'.$emailTransfer['fullname'].'</b> at <b>'.gmdate('Y-m-d H:i:s', time()+7*3600).'</b>' 
+				    ];
+				    $response = $this->TelegramModels->sendMessageChannel($apiToken, $data);
+				    if($response['ok'] == true){
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'sucess',
 							'message'	=> 'Transfer to success!!',
 						));
 						redirect('dashboard/transfer/notifyTransfer');
-					}else{
+					}
+					else{
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'error',
 							'message'	=> 'Transfer to unsuccess!!',
 						));
 						redirect('dashboard');
-					}	
+					}
+				}	
 			}
 			$data = array(
 				'data_index'	=> $this->get_index()
