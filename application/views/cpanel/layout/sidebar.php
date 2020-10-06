@@ -54,6 +54,9 @@
 						<li>
 							<a href="cpanel/game">Game List</a>
 						</li>
+						<li>
+							<a href="cpanel/robots">Robots List</a>
+						</li>
 					</ul>
 				</div>
 			</li>
