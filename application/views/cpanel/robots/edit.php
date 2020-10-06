@@ -14,12 +14,15 @@
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
-				<form action="" data-toggle="validator" novalidate="true" method="POST" >
+				<form action="" data-toggle="validator" novalidate="true" method="POST" enctype="multipart/form-data" >
 					<div class="card-body">
 						<div class="form-group">
 							<label for="inputName">FullName</label>
 							<input type="text" required  name="fullname" class="form-control" id="inputName" value="<?php if(isset($datas['fullname']) && $datas['fullname']!=''){ echo $datas['fullname']; }?>">
-							<div class="has-error"><?php echo form_error('fullname') ?></div>
+						</div>
+						<div class="form-group">
+							<label for="input-file-now">Avatar (width: 400 x height: 240)</label>
+							<input type="file"  data-default-file="<?php echo $path_dir_thumb;?><?php echo $datas['thumb'];?>" name="avatar" id="avatar" class="dropify"/>
 						</div>
 						<div class="custom-control custom-switch">
 							<input 

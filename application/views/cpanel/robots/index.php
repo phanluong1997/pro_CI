@@ -32,6 +32,7 @@
 						<thead>
 							<tr>
 								<th>FullName</th>
+								<th>Avatar</th>
 								<th>Date</th>
 								<th>Status</th>
 								<th>Tools</th>
@@ -42,6 +43,7 @@
 								<?php foreach ($datas as $key => $val) { ?>
 									<tr>
 										<td><?php echo $val['fullname'];?></td>
+										<td class="text-center"><img src="<?php echo $path_dir_thumb;?><?php echo $val['thumb'];?>" alt="" width="60"></td>
 										<td><?php echo date('d/m/Y',strtotime($val['created_at']));?></td>
 										<td>
 											<div class="custom-control custom-switch">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 06, 2020 lúc 04:07 AM
+-- Thời gian đã tạo: Th10 06, 2020 lúc 05:21 AM
 -- Phiên bản máy phục vụ: 10.1.32-MariaDB
 -- Phiên bản PHP: 5.6.36
 
@@ -31,6 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `tbl_robots` (
   `id` int(11) NOT NULL,
   `fullname` text COLLATE utf8_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `thumb` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `publish` tinyint(4) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -40,8 +42,8 @@ CREATE TABLE `tbl_robots` (
 -- Đang đổ dữ liệu cho bảng `tbl_robots`
 --
 
-INSERT INTO `tbl_robots` (`id`, `fullname`, `publish`, `created_at`, `updated_at`) VALUES
-(3, 'Nhu', 1, '2020-10-06 08:49:29', '2020-10-06 08:49:29');
+INSERT INTO `tbl_robots` (`id`, `fullname`, `avatar`, `thumb`, `publish`, `created_at`, `updated_at`) VALUES
+(8, 'Nhu1', 'photo_2020-10-01_16-22-271.jpg', 'photo_2020-10-01_16-22-271_thumb.jpg', 1, '2020-10-06 10:20:13', '2020-10-06 10:20:13');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -61,7 +63,7 @@ ALTER TABLE `tbl_robots`
 -- AUTO_INCREMENT cho bảng `tbl_robots`
 --
 ALTER TABLE `tbl_robots`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
