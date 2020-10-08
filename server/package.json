@@ -9,7 +9,9 @@
     "http": "0.0.1-security",
     "init": "^0.1.2",
     "mysql": "^2.18.1",
-    "socket.io": "^2.3.0"
+    "sharp": "^0.26.1",
+    "socket.io": "^2.3.0",
+    "socketio-file-upload": "^0.7.2"
   },
   "devDependencies": {},
   "scripts": {

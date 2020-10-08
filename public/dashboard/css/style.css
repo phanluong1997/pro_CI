@@ -1071,6 +1071,7 @@ a{
     padding: 6px;
     border-radius: 5px;
     position: relative;
+    cursor: pointer;
 }
 
 #sidebar .content .itemchat .contentMessage .message {

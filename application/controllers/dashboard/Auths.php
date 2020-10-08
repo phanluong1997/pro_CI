@@ -15,7 +15,7 @@ class Auths extends Dashboard_Controller {
 	//check email, password before login - OT1
 	public function checklogin()
 	{
-		$email = $_POST['email'];
+		$email = trim($_POST['email']);
 		$password = $_POST['password'];
 		$type = 'user';
 		$login_array = array($email, $password, $type);
@@ -37,7 +37,7 @@ class Auths extends Dashboard_Controller {
 	public function login()
 	{
 		if($this->input->post()){
-			$email = $this->input->post('email');
+			$email = trim($this->input->post('email'));
 			$password = $this->input->post('password');
 			$type = 'user';
 			$login_array = array($email, $password, $type);
