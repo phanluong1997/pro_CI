@@ -870,16 +870,12 @@ a{
     display: block;
     overflow-y: scroll;
     background-image: linear-gradient(90deg, rgb(42, 58, 71), rgb(33, 47, 59));
-    position: relative;
+    /* position: relative; */
 }
 /* chatting - OT1 */
 #sidebar .content .contain-itemchat{
     /* chatting */
     width: 100%;
-    position: absolute;
-    /* background-color: #ccc; */
-    bottom: 0px;
-    
 }
 
 #sidebar .boxInput {
@@ -1058,6 +1054,7 @@ a{
     padding-left: 3px;
     font-size: 12px;
     align-self: flex-end;
+    color: rgb(161, 187, 206);
 }
 
 #sidebar .content .itemchat .head {

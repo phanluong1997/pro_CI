@@ -28,45 +28,21 @@
 		  </div>
 		  <div style="clear:both"></div>
 		</div> -->
-		<!-- <div class="itemchat">
-		  <div class="head">
-		    <div class="avatar" style="background-image: url(public/images/avatar03.jpg)"></div>
-		    <div class="level">
-		      <span class="fa fa-star checked"></span>
-		      <span class="fa fa-star checked"></span>
-		      <span class="fa fa-star checked"></span>
-		      <span class="fa fa-star checked"></span>
-		      <span class="fa fa-star checked"></span>
-		    </div>
-		  </div>
-		  <div class="contentMessage">
-		    <a href="#">
-		      <div id="usernameMess" class="name">David Low</div>
-		    </a>
-		    <div class="message">
-		      <div class="boxMessage">
-		        Hello everybody!!! <br> We sould follow me. I will show everyone how to win the game. Hurry
-		        up, hurry upppp
-		      </div>
-		      <div class="timeMessage">11:48</div>
-		    </div>
-		    <div class="icon-hover" id="TagName" ><i class="fas fa-at"></i><i class="fas fa-user-plus"></i></div>
-		  </div>
-		  <div style="clear:both"></div>
-		</div> -->
 	</div>
 </div>
 <script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <script src="http://localhost:3000/siofu/client.js"></script>
 <script>
 	var io = io("http://localhost:3000");
+
+	const chatMessages = document.querySelector('.content');
+
 	//get API message in database - OT1
 	$(document).ready(function(){
 		var adminID  = $("#adminID").val();
-		
 		$.ajax({
 			url:"http://localhost:3000/get_messages",
-			method: "get",
+			method: "post",
 			success: function(response){
 				var messages = JSON.parse(response);
 				var html = '';
@@ -77,9 +53,11 @@
 					{ 
 						var iconDelete = ''
 					}
-					html += '<div class="itemchat"><div class="head"><div class="avatar" style="background-image: url(public/images/avatar01.jpg)"></div><div class="level"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div><div class="contentMessage" ><div ><div id="usernameMess" class="name">' + messages[a].fullname + '</div></div><div class="message"><div class="boxMessage" id ="message-'+ messages[a].id +'" >' + messages[a].message + '<img src="'+ messages[a].image +'"alt=""></div><div class="timeMessage">10:53</div></div><div class="icon-hover" ><i class="fas fa-at" id="TagName" tagFullname = "'+ messages[a].fullname +'"></i>' + iconDelete + '</div></div><div style="clear:both"></div></div>';
+					html += '<div class="itemchat"><div class="head"><div class="avatar" style="background-image: url(public/images/avatar01.jpg)"></div><div class="level"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div><div class="contentMessage" ><div ><div id="usernameMess" class="name">' + messages[a].fullname + '</div></div><div class="message"><div class="boxMessage" id ="message-'+ messages[a].id +'" >' + messages[a].message + '<img src="'+ messages[a].image +'"alt=""></div><div class="timeMessage">10:53</div></div><div class="icon-hover" id ="removeIcon-'+ messages[a].id +'"  ><i class="fas fa-at" id="TagName" tagFullname = "'+ messages[a].fullname +'"></i>' + iconDelete + '</div></div><div style="clear:both"></div></div>';
 				}
 				document.getElementById("showMessages").innerHTML =document.getElementById("showMessages").innerHTML + html;
+				//scrollDonw 
+				chatMessages.scrollTop = chatMessages.scrollHeight;
 			}
 		});
 	});	
@@ -125,9 +103,12 @@
 		{ 
 			var iconDelete = ''
 		}
-		var html = '<div class="itemchat"><div class="head"><div class="avatar" style="background-image: url(public/images/avatar01.jpg)"></div><div class="level"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div><div class="contentMessage"><div ><div id="usernameMess" class="name">' + data.fullname + '</div></div><div class="message"><div class="boxMessage" id ="message-'+ data.id +'"  >' + data.message + '<img src="'+ data.image +'" alt=""></div><div class="timeMessage">10:53</div></div><div class="icon-hover" ><i class="fas fa-at" id="TagName" tagFullname = "'+ data.fullname +'" ></i>'+ iconDelete +'</div></div><div style="clear:both"></div></div>';
+
+		var html = '<div class="itemchat"><div class="head"><div class="avatar" style="background-image: url(public/images/avatar01.jpg)"></div><div class="level"><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span></div></div><div class="contentMessage"><div ><div id="usernameMess" class="name">' + data.fullname + '</div></div><div class="message"><div class="boxMessage" id ="message-'+ data.id +'"  >' + data.message + '<img src="'+ data.image +'" alt=""></div><div class="timeMessage">'+ data.time +'</div></div><div class="icon-hover" id ="removeIcon-'+ data.id +'"   ><i class="fas fa-at" id="TagName" tagFullname = "'+ data.fullname +'" ></i>'+ iconDelete +'</div></div><div style="clear:both"></div></div>';
 
 		document.getElementById("showMessages").innerHTML =   document.getElementById("showMessages").innerHTML + html;
+		//scrollDonw 
+		chatMessages.scrollTop = chatMessages.scrollHeight;
 	});
 
 	// listen from server - OT1  Error Only upload images .jpg, .png, .jpeg
@@ -137,10 +118,10 @@
 
 	// 'listen from server - OT1 (sever_sendDeleteMessageUser)
 	io.on("sever_sendDeleteMessageUser", function(id) {
-		var node = document.getElementById("message-" + id);
-		node.innerHTML = "This message has been deleted";
-		// $("#TagName").removeAttr("class");
-		// $("#deleteMessage").removeAttr("class");
+		var message = document.getElementById("message-" + id);
+		var removeIcon = document.getElementById("removeIcon-" + id);
+		message.innerHTML = "This message has been deleted";
+		removeIcon.style.display = "none";
 	});
 
 
@@ -151,18 +132,13 @@
 	    // Initialize instances:
 	    var socket = io.connect("http://localhost:3000/");
 	    var siofu = new SocketIOFileUpload(socket);
-	    console.log(siofu);
-	   	// siofu.chunkSize = 1024 * 10
+	   	// siofu.chunkSize = 1024 * 10 
 		var userID = $("#userID").val();
 		if(userID != ''){
 			// Configure the three ways that SocketIOFileUpload can read files:
 	    	document.getElementById("upload_btn").addEventListener("click",siofu.prompt, false);
 		}
-
-		siofu.addEventListener("start", function(event){
-		    console.log(siofu);
-
-		});
+		// 
 
 	    // Do something when a file is uploaded:
 	    siofu.addEventListener("complete", function(event){
