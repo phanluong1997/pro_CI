@@ -9,6 +9,7 @@ class UserModels extends MY_Model {
 		parent::__construct();
 	}
 
+	
 	//checkValidate_Email - Ot1
 	function check_exists($where = array()){
 		$this->db->where($where);
