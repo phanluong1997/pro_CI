@@ -205,7 +205,7 @@ class Wallets extends Admin_Controller {
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// processed delete.
 		$id = $_POST['id'];
-		$this->walletmodels->delete( $id);
+		$this->walletmodels->delete($id);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
