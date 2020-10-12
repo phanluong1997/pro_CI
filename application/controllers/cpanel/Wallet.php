@@ -6,7 +6,7 @@ class Wallet extends Admin_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('walletmodel');
+		$this->load->model('walletmodels');
 	}
 	//List action - OT2
 	public function index()
@@ -15,9 +15,9 @@ class Wallet extends Admin_Controller {
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 		
 		//get fullname - OT1
-		$getWallet = $this->walletmodel->select_array('tbl_wallet','*',NULL,'id desc');
+		$getWallet = $this->walletmodels->getAll();
 		foreach ($getWallet as $key => $value) {
-			$getUser = $this->walletmodel->select_row('tbl_user','id,fullname',array('id' =>$value['userID']));
+			$getUser = $this->walletmodels->select_row('tbl_user','id,fullname',array('id' =>$value['userID']));
 			if($value['userID'] == $getUser['id']){
 				$getWallet[$key]['fullname']=$getUser['fullname'];
 			}
@@ -36,7 +36,7 @@ class Wallet extends Admin_Controller {
 		$wallet = $this->input->post('wallet');
 		$where = array('wallet' => $wallet);
 		//check exists
-		if($this->walletmodel->check_exists($where))
+		if($this->walletmodels->check_exists($where))
 		{
 			//infor bug
 			$this->form_validation->set_message(__FUNCTION__,' Wallet is Exist ');
@@ -64,7 +64,7 @@ class Wallet extends Admin_Controller {
 					'update_at'	=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 
-				$result = $this->walletmodel->add('tbl_wallet', $data_insert);
+				$result = $this->walletmodels->add($data_insert);
 			
 					if($result>0){
 						$this->session->set_flashdata('message_flashdata', array(
@@ -120,19 +120,19 @@ class Wallet extends Admin_Controller {
 					$data_update = array(
 					'userID' 	=> 		$getUser['id']
 					);
-					$result = $this->walletmodel->edit('tbl_wallet', $data_update,array('id' =>$id));
+					$result = $this->walletmodels->edit('tbl_wallet', $data_update,array('id' =>$id));
 					if($result>0){
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'sucess',
 							'message'	=> 'Update wallet success!!',
 						));
-						redirect('cpanel/wallet/index',$data);
+						redirect('cpanel/wallets/index',$data);
 					}else{
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'error',
 							'message'	=> 'Updata wallet unsuccess!!',
 						));
-						redirect('cpanel/wallet/index',$data);
+						redirect('cpanel/wallets/index',$data);
 					}
 				}
 				else
@@ -141,7 +141,7 @@ class Wallet extends Admin_Controller {
 						'type'		=> 'error',
 						'message'	=> 'This account already has a wallet address',
 					));
-					redirect('cpanel/wallet/addUserInWallet/'.$id);
+					redirect('cpanel/wallets/addUserInWallet/'.$id);
 				}
 				
 			}	
@@ -156,7 +156,7 @@ class Wallet extends Admin_Controller {
 	}
 
 	//Edit actions -OT2
-	public function edit($id = 0)
+	public function edit($id)
 	{
 		//Check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
@@ -174,7 +174,7 @@ class Wallet extends Admin_Controller {
 					'create_at'	=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 					'update_at'	=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->walletmodel->edit('tbl_wallet', $data_update,array('id' =>$id));
+				$result = $this->walletmodels->edit($data_update,$id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -195,7 +195,7 @@ class Wallet extends Admin_Controller {
 			'title'		=>	'Edit Wallet',
 			'template' 	=> 	$this->template.'edit'
 		);
-		$data['datas'] = $this->walletmodel->select_row('tbl_wallet','*',array('id' =>$id));
+		$data['datas'] = $this->walletmodels->find($id);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//delete OT2
@@ -205,7 +205,7 @@ class Wallet extends Admin_Controller {
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// processed delete.
 		$id = $_POST['id'];
-		$this->walletmodel->del('tbl_wallet',array('id' => $id));
+		$this->walletmodels->delete( $id);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 

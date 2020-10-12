@@ -5,7 +5,7 @@ class Admin extends Admin_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('UserModel');
+		$this->load->model('UserModels');
 	}
 	public function __destruct(){
 	}
@@ -22,14 +22,14 @@ class Admin extends Admin_Controller {
 			'control'		=>	'admin',
 			'template' 		=> 	'cpanel/admin/index'
 		);
-		$data['datas'] = $this->UserModel->getAll('tbl_user','*',array('type' => 'admin'),'id desc');
+		$data['datas'] = $this->UserModels->findWhere(array('type' => 'admin'));
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//check_Email - Ot1
 	public function check_Email(){
 		$Email = $this->input->post('email');
 		$where = array('email' => $Email);
-		if($this->UserModel->check_exists($where)){
+		if($this->UserModels->check_exists($where)){
 			$this->form_validation->set_message(__FUNCTION__,'Email already exists !');
 			return false;
 		}
@@ -69,7 +69,7 @@ class Admin extends Admin_Controller {
 					'created_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->add('tbl_user', $data_insert);
+				$result = $this->UserModels->add($data_insert);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -93,7 +93,7 @@ class Admin extends Admin_Controller {
 		);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
-	public function edit($id=0){
+	public function edit($id){
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		//edit data
@@ -114,7 +114,7 @@ class Admin extends Admin_Controller {
 					'active'			=>	$active,
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update,$id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -136,7 +136,7 @@ class Admin extends Admin_Controller {
 			'template' 	=> 	'cpanel/admin/edit',
 			'path_url'  =>  'cpanel/admin'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
+		$data['datas'] = $this->UserModels->find($id);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
@@ -148,7 +148,7 @@ class Admin extends Admin_Controller {
 		$id = $_POST['id'];
 		$active = $_POST['active'];
 		$data_update['active'] = $active;
-		$this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+		$this->UserModels->edit($data_update, $id);
 	}
 
 	//delete user admin
@@ -157,12 +157,12 @@ class Admin extends Admin_Controller {
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$id = $_POST['id'];
-		$this->UserModel->del('tbl_user',array('id' => $id));
+		$this->UserModels->delete($id);
 
 	}
 
 	//ChangePassword - Ot1
-	public function changepass($id=0)
+	public function changepass($id)
 	{
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
@@ -176,7 +176,7 @@ class Admin extends Admin_Controller {
 				'salt' 				=>  $rand_salt,
 				'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+			$result = $this->UserModels->edit($data_update, $id);
 			if($result>0){
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'sucess',

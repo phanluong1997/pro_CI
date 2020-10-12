@@ -3,7 +3,7 @@ class Auth extends CI_Model {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('UserModel');
+		$this->load->model('UserModels');
 	}
 	//Login admin
 	function process_login($login_array_input = NULL){
@@ -35,7 +35,7 @@ class Auth extends CI_Model {
 		return ($this->check_logged())?$this->session->userdata('logged_user'):'';
 	}
 	function logged_info(){
-		return $this->UserModel->getAdmin('tbl_user', '*', array('id' => $this->session->userdata('logged_user')));
+		return $this->UserModels->find($this->session->userdata('logged_user'));
 	}
 
 
@@ -88,7 +88,7 @@ class Auth extends CI_Model {
 	}
 	function checkStatus(){
 		if($this->session->userdata('userID')){
-			$result = $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
+			$result = $this->UserModels->find($this->session->userdata('userID'));
 			if($result != NULL){
 				if($result['status'] == 0)
 				{
@@ -110,6 +110,6 @@ class Auth extends CI_Model {
 		return ($this->checkSignin())?$this->session->userdata('userID'):'';
 	}
 	function getInfoUser(){
-		return $this->UserModel->getUser('tbl_user', '*', array('id' => $this->session->userdata('userID')));
+		return $this->UserModels->find($this->session->userdata('userID'));
 	}
 }
