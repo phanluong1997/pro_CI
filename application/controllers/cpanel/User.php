@@ -6,7 +6,7 @@ class User extends Admin_Controller {
 	public $control = 'user';
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('UserModel');
+		$this->load->model('UserModels');
 		
 	}
 	//List action - OT2
@@ -17,12 +17,12 @@ class User extends Admin_Controller {
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// $this->load->library('pagination');
 		//get all
-		$totalRow = $config['total_rows'] = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc');
+		$totalRow = $config['total_rows'] = $this->UserModels->getAll();
 		//get limit
-		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', 0, 5);
+		$datas = $this->UserModels->findWhere(array('type'=>'user'),'','', 0, 5);
 		//getWallet  - OT1
 		foreach ($datas as $key => $value) {
-			$getWallet = $this->UserModel->select_row('tbl_wallet', 'userID,wallet', array('userID' => $value['id']));
+			$getWallet = $this->UserModels->select_row('tbl_wallet', 'userID,wallet', array('userID' => $value['id']));
 			if($getWallet != NULL){
 				if($getWallet['userID'] == $value['id']){
 					$datas[$key]['wallet'] = $getWallet['wallet'];
@@ -46,7 +46,7 @@ class User extends Admin_Controller {
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//Edit action -OT2
-	public function edit($id=0){
+	public function edit($id){
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		//edit data
@@ -62,7 +62,7 @@ class User extends Admin_Controller {
 					'phone' 			=> 	trim($this->input->post('phone')),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update,$id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -84,7 +84,7 @@ class User extends Admin_Controller {
 			'template' 	=> 	'cpanel/user/edit',
 			'path_url'  =>  'cpanel/user'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
+		$data['datas'] = $this->UserModels->find($id);
 
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);	
 	}
@@ -97,7 +97,7 @@ class User extends Admin_Controller {
 		$active = $_POST['active'];
 
 		$data_update['active'] = $active;
-		$this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+		$this->UserModels->edit($data_update,$id);
 	}
 	//Change Verify -OT2
 	public function verify()
@@ -107,7 +107,7 @@ class User extends Admin_Controller {
 		$id = $_POST['id'];
 		$verify = $_POST['verify'];
 		$data_update['verify'] = $verify;
-		$this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+		$this->UserModels->edit($data_update,$id);
 	}
 	//delete user -OT2
 	public function delete()
@@ -115,7 +115,7 @@ class User extends Admin_Controller {
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$id = $_POST['id'];
-		$this->UserModel->del('tbl_user',array('id' => $id));
+		$this->UserModels->delete( $id);
 
 	}
 	//ChangePassword - OT2
@@ -133,7 +133,7 @@ class User extends Admin_Controller {
 				'salt' 				=>  $rand_salt,
 				'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+			$result = $this->UserModels->edit($data_update,$id);
 			if($result>0){
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'sucess',
@@ -155,7 +155,7 @@ class User extends Admin_Controller {
 			'template' 		=> 	'cpanel/user/changepassword',
 			'path_url'  	=>  'cpanel/user'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id));
+		$data['datas'] = $this->UserModels->find($id);
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	// ajax search search data -OT2
@@ -167,9 +167,9 @@ class User extends Admin_Controller {
 		if($this->input->post('query')){
 			$query = $this->input->post('query');
 		}
-		//get data as an Array in UserModel - function getSearch().
+		//get data as an Array in UserModels - function getSearch().
 		if($query != ''){
-			$datas = $this->UserModel->getSearch($query);
+			$datas = $this->UserModels->getSearch($query);
 		}
 		$output ='<table id="employeeList" class="table custom-table">
 					<thead>
@@ -229,7 +229,7 @@ class User extends Admin_Controller {
 		$page = $_POST['i'];
 		$start = ($page - 1) * $number;
 		$limit = $number;
-		$datas = $this->UserModel->getAll('tbl_user', '*', array('type'=>'user'),'id desc', $start, $limit);
+		$datas = $this->UserModels->findWhere(array('type'=>'user'),'','', $start, $limit);
 		$output = '' ;	
 				foreach($datas as $row){
 					$activeChecked = '';
@@ -276,7 +276,7 @@ class User extends Admin_Controller {
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$userID = $_POST['userID'];
-		$user = $this->UserModel->select_row('tbl_user', 'fullname, avatar, card_front, card_back', array('id' => $userID));
+		$user = $this->UserModels->find($userID,'fullname, avatar, card_front, card_back');
 		echo json_encode(array('user' => $user));
 	}	
 }
