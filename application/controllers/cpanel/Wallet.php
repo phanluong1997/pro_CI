@@ -90,27 +90,6 @@ class Wallet extends Admin_Controller {
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 
-	public function testModel ()
-	{
-		$email = 'phucthaoáđá14@gmail.com';
-		$getUser = $this->UserModels->find($email, '', 'email');
-		$getWallet = $this->walletmodels->find($getUser['id'], '*', 'userID');
-		if($getUser == NULL){
-			$this->form_validation->set_message(__FUNCTION__,'Email does not exist');
-			echo "false1";
-		}else{
-			if($getWallet == NULL){
-				echo "true";
-			}else{
-				if($getUser['id'] == $getWallet['userID'])
-				{
-					$this->form_validation->set_message(__FUNCTION__,'This account already has a wallet address');
-					echo "false2";
-				}
-			}
-		}
-	}
-
 	//check_EmailWallet - OT1
 	public function check_EmailWallet()
 	{
@@ -148,7 +127,7 @@ class Wallet extends Admin_Controller {
 					$data_update = array(
 					'userID' 	=> 		$getUser['id']
 					);
-					$result = $this->walletmodels->edit('tbl_wallet', $data_update,array('id' =>$id));
+					$result = $this->walletmodels->edit($data_update,$id);
 					if($result['type'] == 'successful'){
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'sucess',
