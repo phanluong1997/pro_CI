@@ -7,6 +7,9 @@ class Withdraw extends Dashboard_Controller {
 		parent::__construct();
 		$this->load->model('WithdrawModel');
 		$this->load->model('TelegramModels');
+		//new
+		$this->load->model('WithdrawModels');
+		$this->load->model('UserModels');
 	}
 	//checkAmount<100 - OT1
 	public function checkAmount()
@@ -63,14 +66,14 @@ class Withdraw extends Dashboard_Controller {
 				'status' 				=>  0,
 				'date'					=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->WithdrawModel->add('tbl_withdraw', $data_insert);
+			$result = $this->WithdrawModels->add($data_insert);
 			if($result>0){
-				$Query_Wallet = $this->WithdrawModel->select_row('tbl_user', 'fullname,email,walletUSD', array('id' => $userID));
+				$Query_Wallet = $this->UserModels->find($userID, 'fullname,email,walletUSD');
 				$New_Wallet = $Query_Wallet['walletUSD']-trim($this->input->post('Amount'));
 				$data_update = array(
 					'walletUSD' 		=> $New_Wallet
 				);
-				$editWallet = $this->WithdrawModel->edit('tbl_user', $data_update, array('id' => $userID));
+				$editWallet = $this->UserModels->edit($data_update, $userID);
 				//send email
 				$this->load->library('email');
 
@@ -128,7 +131,7 @@ class Withdraw extends Dashboard_Controller {
 		$encode = base64_decode($token);
 		$string = explode("*", $encode);
 		$id = $string[7];
-		$result = $this->WithdrawModel->edit('tbl_withdraw', array('status' => 1), array('id' => $id));
+		$result = $this->WithdrawModels->edit(array('status' => 1), $id);
 		redirect(base_url().'dashboard/trans-to-pending-success.html');
 	}
 

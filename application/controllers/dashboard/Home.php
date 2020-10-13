@@ -7,10 +7,8 @@ class Home extends Dashboard_Controller {
 	 */
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('UserModel');
-		$this->load->model('transfermodel');
-		$this->load->model('WithdrawModel');
-		$this->load->model('GameModel');
+		$this->load->model('UserModels');
+		$this->load->model('GameModels');
 	}
 	//Main action
 	public function index()
@@ -25,10 +23,12 @@ class Home extends Dashboard_Controller {
 		//START - OT1
 		$data['referentID'] = $this->get_referentID();
 		$userID = $this->session->userdata('userID');
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID));
+		if($userID != ''){
+			$data['datas'] = $this->UserModels->find($userID);
+		}
 		//END START - OT1 
 		//START - OT2
-		$data['getGame'] = $this->GameModel->select_array('tbl_game','*',array('publish'=>1),'id desc');
+		$data['getGame'] = $this->GameModels->findWhere(array('publish'=>1));
 		//END START -OT2
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
@@ -36,9 +36,11 @@ class Home extends Dashboard_Controller {
 	public function get_referentID()
 	{
 		$userID = $this->session->userdata('userID');
-		$referentID = $this->WithdrawModel->select_row('tbl_user','id,referentID',array('id' =>$userID));
-		$get_User = $this->WithdrawModel->select_row('tbl_user','*',array('id' =>$referentID['referentID']));
-		$referentID['fullname'] = $get_User['fullname'];
+		if($userID != ''){
+			$referentID = $this->UserModels->find($userID,'id,referentID');
+			$get_User = $this->UserModels->find($referentID['referentID']);
+			$referentID['fullname'] = $get_User['fullname'];
+		}
 		return $referentID;
 	}  
 	

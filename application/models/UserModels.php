@@ -9,19 +9,6 @@ class UserModels extends MY_Model {
 		parent::__construct();
 	}
 
-	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
-		$result = $this->db->select($data)->from($table);
-		if($where != NULL){
-			$result = $this->db->where($where);
-		}
-		if($order!=''){
-			$result = $this->db->order_by($order);
-		}
-		$result = $this->db->get()->row_array();
-		return $result;
-	}
-
-	
 	//checkValidate_Email - Ot1
 	function check_exists($where = array()){
 		$this->db->where($where);
