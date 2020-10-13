@@ -10,14 +10,15 @@ class Game extends Admin_Controller {
 	public $control = 'game';
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('GameModel');
+		$this->load->model('GameModels');
+
 	}
 	//List action - OT2
 	public function index()
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-		$datas = $this->GameModel->select_array('tbl_game','*',NULL,'id desc');
+		$datas = $this->GameModels->getAll();
 		
 		$data = array(
 			'data_index'	=> $this->get_index(),
@@ -80,7 +81,7 @@ class Game extends Admin_Controller {
 				'updated_at'		=> gmdate('Y-m-d H:i:s', time()+7*3600)
 
 			);
-			$result = $this->GameModel->add($this->table, $data_insert);
+			$result = $this->GameModels->add($data_insert);
 			if($result>0){
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'sucess',
@@ -105,8 +106,8 @@ class Game extends Admin_Controller {
 		$this->load->view('cpanel/default/index',isset($data)?$data:NULL);
 	}
 	//edit game -OT2
-	public function edit($id =0){
-			$datas = $this->GameModel->select_row($this->table, '*', array('id' => $id));
+	public function edit($id){
+			$datas = $this->GameModels->find($id);
 			if($this->input->post()){
 				if($_FILES["image"]["name"]){
 					$file_image = $this->path_dir.$datas['image'];
@@ -155,7 +156,7 @@ class Game extends Admin_Controller {
 					'updated_at'		=> gmdate('Y-m-d H:i:s', time()+7*3600)
 
 				);
-				$result = $this->GameModel->edit($this->table, $data_update, array('id' => $id));
+				$result = $this->GameModels->edit($data_update,$id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -184,13 +185,13 @@ class Game extends Admin_Controller {
 	public function delete()
 	{
 		$id = $_POST['id'];
-		$datas = $this->GameModel->select_row($this->table, '*', array('id' => $id));
+		$datas = $this->GameModels->find($id);
 		$file_image = $this->path_dir.$datas['image'];
 		$file_thumb = $this->path_dir_thumb.$datas['thumb'];
 		if($datas['image'] != ''){ unlink($file_image); }
 		if($datas['thumb'] != ''){ unlink($file_thumb); }
 
-		$this->GameModel->del($this->table,array('id' => $id));	 
+		$this->GameModels->delete($id);	 
 	}
 	//Change publish OT2
 	public function publish()
@@ -198,7 +199,7 @@ class Game extends Admin_Controller {
 		$id = $_POST['id'];
 		$publish = $_POST['publish'];
 		$data_update['publish'] = $publish;
-		$this->GameModel->edit('tbl_game', $data_update, array('id' => $id));
+		$this->GameModels->edit($data_update,$id);
 	}
 }
 ?>

@@ -9,14 +9,14 @@ class Robots extends Admin_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('RobotsModel');
+		$this->load->model('RobotsModels');
 	}
 
 	public function index(){
 
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 
-		$datas = $this->RobotsModel->select_array('tbl_robots','*',NULL,'id desc');
+		$datas = $this->RobotsModels->getAll();
 		
 		$data = array(
 			'data_index'	=> $this->get_index(),
@@ -34,7 +34,7 @@ class Robots extends Admin_Controller {
 		$fullname = $this->input->post('fullname');
 		$where = array('fullname' => $fullname);
 		//check exists
-		if($this->RobotsModel->check_exists($where))
+		if($this->RobotsModels->check_exists($where))
 		{
 			//infor bug
 			$this->form_validation->set_message(__FUNCTION__,' Fullname is Exist ');
@@ -98,7 +98,7 @@ class Robots extends Admin_Controller {
 					'updated_at'	=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 
-				$result = $this->RobotsModel->add('tbl_robots', $data_insert);
+				$result = $this->RobotsModels->add($data_insert);
 			
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
@@ -125,11 +125,11 @@ class Robots extends Admin_Controller {
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//Edit actions -OT2
-	public function edit($id = 0)
+	public function edit($id)
 	{
 		//Check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
-		$datas = $this->RobotsModel->select_row('tbl_robots','*',array('id' =>$id));
+		$datas = $this->RobotsModels->find($id,'*');
 		//Check validate robots
 	
 		if($this->input->post()){
@@ -176,7 +176,7 @@ class Robots extends Admin_Controller {
 				'created_at'=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 				'updated_at'=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->RobotsModel->edit('tbl_robots', $data_update,array('id' =>$id));
+			$result = $this->RobotsModels->edit($data_update,$id);
 			if($result>0){
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'success',
@@ -206,13 +206,13 @@ class Robots extends Admin_Controller {
 	public function delete()
 	{
 		$id = $_POST['id'];
-		$datas = $this->RobotsModel->select_row('tbl_robots', '*', array('id' => $id));
+		$datas = $this->RobotsModels->find($id);
 		$file_image = $this->path_dir.$datas['avatar'];
 		$file_thumb = $this->path_dir_thumb.$datas['thumb'];
 		if($datas['avatar'] != ''){ unlink($file_image); }
 		if($datas['thumb'] != ''){ unlink($file_thumb); }
 
-		$this->RobotsModel->del('tbl_robots',array('id' => $id));	 
+		$this->RobotsModels->delete($id);	 
 	}
 
 
@@ -222,7 +222,7 @@ class Robots extends Admin_Controller {
 		$id = $_POST['id'];
 		$publish = $_POST['publish'];
 		$data_update['publish'] = $publish;
-		$this->RobotsModel->edit('tbl_robots', $data_update, array('id' => $id));
+		$this->RobotsModels->edit($data_update,$id);
 	}
 
 }

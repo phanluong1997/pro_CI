@@ -6,22 +6,21 @@ class Withdraw extends Admin_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('withdrawmodel');
+		$this->load->model('WithdrawModels');
+		$this->load->model('UserModels');
 	}
 	//List action - OT2
 	public function index()
 	{
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
-
-		
 		//get data 
-		$datas= $this->withdrawmodel->select_array('tbl_withdraw','*',NULL,'id desc');
+		$datas= $this->WithdrawModels->getAll();
 		//get fullname in table tbl_user
 		if($datas != NULL){
 			foreach ($datas as $key => $val) {
 				$user_name = '';
-				$infouser = $this->withdrawmodel->select_row('tbl_user', 'fullname', array('id' => $val['userID']));
+				$infouser = $this->UserModels->find($val['userID'],'fullname');
 				if($infouser != NULL){
 					$user_name = $infouser['fullname'];
 				}
@@ -44,10 +43,11 @@ class Withdraw extends Admin_Controller {
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 		//get data modal in file index.php
 		$id = $_POST['id'];
+		
 		$status = $_POST['status'];
 		$note = $_POST['note'];	
 		//get data
-		$data['datas']=$this->withdrawmodel->select_row('tbl_withdraw','*',array('id' => $id));
+		$data['datas']=$this->WithdrawModels->find($id);
 		
 		if($this->input->post()){
 			$data_update = array(
@@ -55,7 +55,7 @@ class Withdraw extends Admin_Controller {
 				'status'	=>	$status,
 				'note'		=>	$note
 			);
-			$result = $this->withdrawmodel->edit('tbl_withdraw', $data_update, array('id' => $id));
+			$result = $this->WithdrawModels->edit($data_update,$id);
 			if($result>0){
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'sucess',

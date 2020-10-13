@@ -5,7 +5,8 @@ class Transfer extends Admin_Controller {
 	public $template = 'cpanel/transfer/';
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('transfermodel');
+		$this->load->model('TransferModels');
+		$this->load->model('UserModels');
 	}
 	//List action -OT2
 	public function index()
@@ -13,15 +14,15 @@ class Transfer extends Admin_Controller {
 		// Check login
 		if($this->Auth->check_logged()===false){redirect(base_url().'cpanel/login.html');}
 		//get data
-		$datas= $this->transfermodel->select_array('tbl_transfer','*',NULL,'id desc');
+		$datas= $this->TransferModels->getAll();
 		//get fullname in table tbl_user
 		if($datas != NULL){
 			foreach ($datas as $key => $val) {
 				$user_nameSender = '';
-				$infouserSender = $this->transfermodel->select_row('tbl_user', 'fullname', array('id' => $val['userID_sender']));
+				$infouserSender = $this->UserModels->find($val['userID_sender'],'fullname');
 
 				$user_nameReceived = '';
-				$infouserReceived = $this->transfermodel->select_row('tbl_user', 'fullname', array('id' => $val['userID_received']));
+				$infouserReceived = $this->UserModels->find($val['userID_received'],'fullname');
 
 				if($infouserSender && $infouserReceived != NULL){
 					$user_nameSender = $infouserSender['fullname'];

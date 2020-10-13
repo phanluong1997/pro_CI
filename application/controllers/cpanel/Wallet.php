@@ -7,6 +7,7 @@ class Wallet extends Admin_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('walletmodels');
+		$this->load->model('UserModels');
 	}
 	//List action - OT2
 	public function index()
@@ -126,13 +127,13 @@ class Wallet extends Admin_Controller {
 							'type'		=> 'sucess',
 							'message'	=> 'Update wallet success!!',
 						));
-						redirect('cpanel/wallets/index',$data);
+						redirect('cpanel/wallet/index',$data);
 					}else{
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'error',
 							'message'	=> 'Updata wallet unsuccess!!',
 						));
-						redirect('cpanel/wallets/index',$data);
+						redirect('cpanel/wallet/index',$data);
 					}
 				}
 				else
@@ -141,7 +142,7 @@ class Wallet extends Admin_Controller {
 						'type'		=> 'error',
 						'message'	=> 'This account already has a wallet address',
 					));
-					redirect('cpanel/wallets/addUserInWallet/'.$id);
+					redirect('cpanel/wallet/addUserInWallet/'.$id);
 				}
 				
 			}	
