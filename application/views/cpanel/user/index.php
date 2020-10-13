@@ -168,7 +168,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		}
 		
 	}
-	//del - OT1
+	//del - OT2
 	function del(id) {
 		swal({title: "Are you sure?",showCancelButton: true, }
 		, function(isConfirm){
@@ -225,7 +225,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 					$('#test').html(result);
 				}
 			});
-		}	
+		}
 	}
 	//pagination  -- OTMain
 	function showIdentity(id){

@@ -4,7 +4,8 @@
 	class Transfer extends Dashboard_Controller {
 		public function __construct(){
 			parent::__construct();
-			$this->load->model('transfermodel');
+			$this->load->model('TransferModels');
+			$this->load->model('UserModels');
 			$this->load->model('TelegramModels');
 		}	
 		//index data --OT2
@@ -23,8 +24,12 @@
 				//get id user sender and user received.
 				$userID_sender = $this->session->userdata('userID');
 				$transfer = $_POST['transfer'];
-				$emailTransfer = $this->transfermodel->select_row('tbl_user', 'id,fullname,email,type', array('email'=>$transfer));
+				$emailTransfer = $this->UserModels->find($transfer,'id,fullname,email,type', 'email');
+				// var_dump($emailTransfer);
+				// die;
 				$userID_received = $emailTransfer['id'];
+				// var_dump($userID_sender);
+				// die;
 			 	// echo $userID_sender."-----------".$userID_received; die;
 				
 				$data_insert = array(
@@ -35,22 +40,23 @@
 					'status' 		=> 	 1
 				);
 
-				$result = $this->transfermodel->add('tbl_transfer', $data_insert);
+				$result = $this->TransferModels->add($data_insert);
 				if($result>0){
 					//minus userSender
-					$Query_WalletS = $this->transfermodel->select_row('tbl_user', 'fullname,walletUSD', array('id' => $userID_sender));
+					$Query_WalletS = $this->UserModels->find($userID_sender,'fullname,walletUSD');
 					$New_WalletUserSender = $Query_WalletS['walletUSD'] - trim($this->input->post('amount'));
 					$data_update = array(
 						'walletUSD' 		=> $New_WalletUserSender
 					);
-					$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_sender));
+					$editWallet = $this->UserModels->edit($data_update,$userID_sender);
 					// //Plus userReceived
-					$Query_WalletR = $this->transfermodel->select_row('tbl_user', 'walletUSD', array('id' => $userID_received));
+					$Query_WalletR = $this->UserModels->find($userID_received, 'walletUSD');
 					$New_WalletUserReceived = $Query_WalletR['walletUSD'] + trim($this->input->post('amount'));
 					$data_update = array(
 						'walletUSD' 		=> $New_WalletUserReceived
 					);
-					$editWallet = $this->transfermodel->edit('tbl_user', $data_update, array('id' => $userID_received));
+					$editWallet = $this->UserModels->edit($data_update,$userID_received);
+
 					//Sent message into tele -OT1
 				    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
 				    $data = [
@@ -98,9 +104,10 @@
 			$google_auth_code = $_POST['google_2fa'];
 			$type = 'user';
 			$userID = $this->session->userdata('userID');
-			$result = $this->transfermodel->select_row('tbl_user', 'email,walletUSD', array('id' => $userID));
-			$emailTransfer = $this->transfermodel->select_row('tbl_user', 'email,type,status,active', array('email'=>$transfer));
-
+			$result = $this->UserModels->find($userID,'email,walletUSD');
+			$emailTransfer = $this->UserModels->find($transfer, 'email,type,status,active','email');
+			// var_dump($emailTransfer);
+			// die();
 			//load library Google 2FA
 			$this->load->library('GoogleAuthenticator');
 			//get info current user
@@ -139,3 +146,7 @@
 		}
 	}
 ?>
+
+
+
+

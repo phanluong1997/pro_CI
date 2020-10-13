@@ -3,7 +3,7 @@
 	class Transfer extends Dashboard_Controller {
 		public function __construct(){
 			parent::__construct();
-			$this->load->model('depositmodel');
+			$this->load->model('DepositModels');
 		}	
 	}	
 

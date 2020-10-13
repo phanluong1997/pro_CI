@@ -115,7 +115,7 @@ class User extends Admin_Controller {
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$id = $_POST['id'];
-		$this->UserModels->delete( $id);
+		$this->UserModels->delete($id);
 
 	}
 	//ChangePassword - OT2
