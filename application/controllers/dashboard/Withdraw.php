@@ -5,7 +5,6 @@ class Withdraw extends Dashboard_Controller {
 	
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('WithdrawModel');
 		$this->load->model('TelegramModels');
 		//new
 		$this->load->model('WithdrawModels');
