@@ -8,7 +8,6 @@ class UserModels extends MY_Model {
 	{
 		parent::__construct();
 	}
-
 	//checkValidate_Email - Ot1
 	function check_exists($where = array()){
 		$this->db->where($where);
@@ -19,7 +18,6 @@ class UserModels extends MY_Model {
 			return FALSE;
 		}
 	}
-
 	//checkEmail - Login Google - Ot1
 	function check_exists_google($where = array()){
 		$this->db->where($where);
@@ -36,7 +34,6 @@ class UserModels extends MY_Model {
 			);
 		}
 	}
-
 	//select_row_max -OT1
 	function select_row_min($table = '', $field_min = '',$where = NULL ){
 		$result = $this->db->select_min($field_min)->from($table);
@@ -46,8 +43,6 @@ class UserModels extends MY_Model {
 		$result = $this->db->get()->row_array();
 		return $result;
 	}
-	
-	
 	//total (Dashboarr/Auths) -OT1
 	function total($table,$where = NULL){
 		$result = $this->db->from($table);
@@ -59,7 +54,6 @@ class UserModels extends MY_Model {
 	}
 	// Search data users -OT2
 	function getSearch($query){ 
-		
 		$sql = $this->db->query("SELECT * FROM `tbl_user` WHERE type = 'user' AND  (email LIKE '%$query%' or phone LIKE '%$query%')");
 		$query = $sql->result_array();				
 		return $query;

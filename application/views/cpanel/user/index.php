@@ -80,7 +80,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 												</div>
 											</td>
 											<td class="text-center">
-												<a onclick="del(<?php echo $val['id'];?>);" id="delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+												<!-- <a onclick="del(<?php echo $val['id'];?>);" id="delete<?php echo $val['id'];?>" data-control="<?php echo $control;?>" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a> -->
 												<a href="cpanel/user/edit/<?php echo $val['id'];?>" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
 												<a href="cpanel/user/changepassword/<?php echo $val['id'];?>" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 											</td>
@@ -167,31 +167,6 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 			});
 		}
 		
-	}
-	//del - OT2
-	function del(id) {
-		swal({title: "Are you sure?",showCancelButton: true, }
-		, function(isConfirm){
-			if (isConfirm) {
-				$('#delete'+id).parent().parent().fadeOut();
-				var control = $('#delete'+id).attr('data-control');
-				if(id != '')  
-				{ 
-					$.ajax
-					({
-						method: "POST",
-						url: "cpanel/"+control+"/delete",
-						data: { id:id},
-						success : function (result){
-							$('#test').html(result);
-						}
-					});
-				}
-			}
-			else{
-				swal("Dữ liệu của bạn đã không bị xóa!");
-			}
-		});
 	}
 	//search user -OT2
 	$(document).ready(function(){

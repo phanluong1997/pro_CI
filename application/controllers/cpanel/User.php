@@ -8,19 +8,17 @@ class User extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('UserModels');
 		$this->load->model('WalletModels');
-		
 	}
 	//List action - OT2
 	public function index()
 	{	
-
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// $this->load->library('pagination');
 		//get all
 		$totalRow = $config['total_rows'] = $this->UserModels->getAll();
 		//get limit
-		$datas = $this->UserModels->findWhere(array('type'=>'user'),'','', 0, 5);
+		$datas = $this->UserModels->findWhere(array('type'=>'user'),'','id desc', 0, 5);
 		//getWallet  - OT1
 		foreach ($datas as $key => $value) {
 			$getWallet = $this->WalletModels->find($value['id'], 'userID,wallet', 'userID');
@@ -96,7 +94,6 @@ class User extends Admin_Controller {
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		$id = $_POST['id'];
 		$active = $_POST['active'];
-
 		$data_update['active'] = $active;
 		$this->UserModels->edit($data_update,$id);
 	}
@@ -109,14 +106,6 @@ class User extends Admin_Controller {
 		$verify = $_POST['verify'];
 		$data_update['verify'] = $verify;
 		$this->UserModels->edit($data_update,$id);
-	}
-	//delete user -OT2
-	public function delete()
-	{
-		//check login
-		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
-		$id = $_POST['id'];
-		$this->UserModels->delete($id);
 	}
 	//ChangePassword - OT2
 	public function changepassword($id)
@@ -213,12 +202,11 @@ class User extends Admin_Controller {
 										</label>
 									</div>
 								</td>
-								<td><a onclick="del('.$row['id'].');" id="delete'.$row['id'].'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+								<td>
 									<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
 									<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 								</td>
 							</tr>';
-
 			}	
 		}
 		echo $output;
@@ -261,13 +249,12 @@ class User extends Admin_Controller {
 										</label>
 									</div>
 								</td>
-								<td><a onclick="del('.$row['id'].');" id="delete'.$row['id'].'" data-control="'.$control.'" class="btn btn-danger text-white"><i class="icon-trash-2"></i></a>
+								<td>
 									<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
 									<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
 								</td>
 							</tr>';
-
-				}	
+			}	
 		echo $output;
 	}
 	//Change Verify -OT2

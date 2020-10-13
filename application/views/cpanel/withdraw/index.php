@@ -56,7 +56,8 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 													<span class="text-success">Apprive</span>
 											<?php } ?>
 											<?php if($val['status'] == 3){ ?>	
-													<span class="text-danger">Destroy</span>	
+													<span class="text-danger">Destroy</span>
+														
 											<?php } ?>	
 										</td>
 									</tr>
