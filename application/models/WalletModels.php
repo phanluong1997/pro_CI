@@ -32,24 +32,24 @@ class WalletModels extends MY_Model {
 		}
 	}
 
-	function edit($table = '', $data = NULL, $where = NULL){
-		$this->db->where($where)->update($table, $data);
-		$flag = $this->db->affected_rows();
-		if($flag > 0){
-			return array(
-				'id_insert'	=> $insert_id,
-				'type'		=> 'successful',
-				'message'	=> 'Update success!',
-			);
-		}
-		else
-		{
-			return array(
-				'type'		=> 'error',
-				'message'	=> 'Update error!',
-			);
-		}
-	}
+	// function edit($table = '', $data = NULL, $where = NULL){
+	// 	$this->db->where($where)->update($table, $data);
+	// 	$flag = $this->db->affected_rows();
+	// 	if($flag > 0){
+	// 		return array(
+	// 			'id_insert'	=> $insert_id,
+	// 			'type'		=> 'successful',
+	// 			'message'	=> 'Update success!',
+	// 		);
+	// 	}
+	// 	else
+	// 	{
+	// 		return array(
+	// 			'type'		=> 'error',
+	// 			'message'	=> 'Update error!',
+	// 		);
+	// 	}
+	// }
 
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);

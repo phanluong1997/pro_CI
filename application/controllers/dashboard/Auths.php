@@ -8,8 +8,9 @@ class Auths extends Dashboard_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('UserModel');
 		$this->load->model('TelegramModels');
+		$this->load->model('UserModels');
+		$this->load->model('WalletModels');
 	}
 
 	//check email, password before login - OT1
@@ -25,7 +26,7 @@ class Auths extends Dashboard_Controller {
 		}
 		else
 		{
-			$result = $this->UserModel->select_row('tbl_user', 'active', array('email' => $email));
+			$result = $this->UserModels->find($email, 'active', 'email');
 			if($result['active'] == 0)
 			{
 				echo json_encode(array('message' => 'Account not activated, please check your email!'));
@@ -44,7 +45,7 @@ class Auths extends Dashboard_Controller {
 			if($this->Auth->signUser($login_array) === true)
 			{ 
 				$id = $this->session->userdata('userID');
-				$result = $this->UserModel->select_row('tbl_user', 'status', array('id' => $id));
+				$result = $this->UserModels->find($id, 'status');
 				if($result['status'] == 0)
 				{
 					redirect(base_url().'dashboard/update-profile.html/');
@@ -75,7 +76,7 @@ class Auths extends Dashboard_Controller {
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$id = $this->session->userdata('userID');
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update,$id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -105,7 +106,7 @@ class Auths extends Dashboard_Controller {
 	{
 		$email = $_POST['email'];
 		$fullname = $_POST['fullname'];
-		$check = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
+		$check = $this->UserModels->find($email, 'id', 'email');
 		if($check == NULL)
 		{
 			$data_insert = array(
@@ -118,7 +119,7 @@ class Auths extends Dashboard_Controller {
 				'created_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 				'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->UserModel->add('tbl_user', $data_insert);
+			$result = $this->UserModels->add($data_insert);
 			$this->random_code($result['id_insert']);
 			if($result>0)
 			{
@@ -136,7 +137,7 @@ class Auths extends Dashboard_Controller {
 	//checkemail(ajax) - SignUp - Ot1
 	public function checkEmail(){
 		$email = $_POST['email'];
-		$result = $this->UserModel->total('tbl_user', array('email' =>$email));
+		$result = $this->UserModels->total('tbl_user', array('email' =>$email));
 		if($result >=1){
 			echo "Email already exists !";
 		}
@@ -147,7 +148,7 @@ class Auths extends Dashboard_Controller {
 	public function check_Email(){
 		$Email = $this->input->post('email');
 		$where = array('email' => $Email);
-		if($this->UserModel->check_exists($where)){
+		if($this->UserModels->check_exists($where)){
 			//return message error
 			$this->form_validation->set_message(__FUNCTION__,'Email already exists !');
 			return false;
@@ -160,26 +161,26 @@ class Auths extends Dashboard_Controller {
 		$min = 10000000;
 		$max = 99999999;
 		$rand_code = mt_rand($min,$max);
-		$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $rand_code));
+		$result = $this->UserModels->find($rand_code, 'code', 'code');
 		if($result == NULL)
 		{
 			$data_update = array(
 				'code' 		=> 	$rand_code
 			);
-			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+			$result = $this->UserModels->edit($data_update, $id);
 		}
 		else
 		{
 			do{
 				$new_rand_code = mt_rand($min,$max);
-				$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $new_rand_code));
+				$result = $this->UserModels->find($new_rand_code, 'code', 'code');
 				$max = $max + 1;
 			}
 			while($result['code'] == $new_rand_code);
 			$data_update = array(
 				'code' 		=> 	$new_rand_code
 			);
-			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+			$result = $this->UserModels->edit($data_update, $id);
 		}
 	}
 
@@ -205,7 +206,7 @@ class Auths extends Dashboard_Controller {
 					'created_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->add('tbl_user', $data_insert);
+				$result = $this->UserModels->add($data_insert);
 				$this->random_code($result['id_insert']);
 				if($result>0){
 					//send mail (to active account) -OT1
@@ -224,8 +225,7 @@ class Auths extends Dashboard_Controller {
 							Password:".trim($this->input->post('password'))."<br/>
 							Activate link:<a href='".base_url()."dashboard/active-account.html/".$token."'>
 							http://mt7.com?active=0KthjnNavRKKoMkG2oTpDIZpVTuCIZW7</a><br/>
-							&nbsp;</p>
-					";
+							&nbsp;</p>";
 					$result = $this->email
 					    ->from('sentemail.optech@gmail.com')
 					    ->reply_to('')    
@@ -275,7 +275,7 @@ class Auths extends Dashboard_Controller {
 		if($this->Auth->checkSignin() === false){redirect(base_url().'dashboard');}
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		$userID = $this->session->userdata('userID');
-		$getInfo = $this->UserModel->select_row('tbl_user','fullname,verify,avatar,card_front,card_back', array('id' => $userID));
+		$getInfo = $this->UserModels->find($userID,'fullname,verify,avatar,card_front,card_back');
 		if($getInfo['verify']==1){redirect(base_url().'dashboard');}
 		if($this->input->post()){
 			//avatar
@@ -375,7 +375,7 @@ class Auths extends Dashboard_Controller {
 				'card_back' 			=> 	$name_card_back_thumb,
 				'updated_at'			=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 			);
-			$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
+			$result = $this->UserModels->edit($data_update, $userID);
 			if($result>0){
 				//Sent message into tele
 			    $apiToken = "1271846341:AAEfv5L20KkwfmHjzDDprNWAVqm0qvmTQ_Q";
@@ -415,9 +415,9 @@ class Auths extends Dashboard_Controller {
 	public function check_ReferentCode()
 	{
 		$code = trim($this->input->post('code'));
-		$result = $this->UserModel->select_row('tbl_user', 'code', array('code' => $code));
+		$result = $this->UserModels->find($code, 'code', 'code');
 		$userID = $this->session->userdata('userID');
-		$myCode = $this->UserModel->select_row('tbl_user', 'code', array('id' => $userID));
+		$myCode = $this->UserModels->find($userID, 'code');
 		if($result == NULL)
 		{
 			$this->form_validation->set_message(__FUNCTION__,'This code does not exist');
@@ -469,7 +469,7 @@ class Auths extends Dashboard_Controller {
 				'google_auth_code' 		=> 	$jsonData2FA,
 				'is_enabled_2fa' 		=> 	1,
 			);
-			$rsResult = $this->UserModel->edit('tbl_user', $data_update, array('id' => $user['id']));
+			$rsResult = $this->UserModels->edit($data_update, $user['id']);
 			if ($rsResult > 0) {
 				$this->session->set_flashdata('security_success', 'Enabled Google Authenticator Successful!');
 				redirect('dashboard/google-authenticator.html');
@@ -517,7 +517,7 @@ class Auths extends Dashboard_Controller {
 			$data_update = array(
 				'is_enabled_2fa' 		=> 	0,
 			);
-			$rsResult = $this->UserModel->edit('tbl_user', $data_update, array('id' => $user['id']));
+			$rsResult = $this->UserModels->edit($data_update, $user['id']);
 			if ($rsResult > 0) {
 				$this->session->set_flashdata('security_success', 'Disabled Google Authenticator Successful!');
 				redirect('dashboard/google-authenticator.html');
@@ -535,20 +535,20 @@ class Auths extends Dashboard_Controller {
 		if($this->Auth->checkStatus() === true){redirect(base_url().'dashboard/update-profile.html');}
 		//check 
 		$userID = $this->session->userdata('userID');
-		$check_referentID = $this->UserModel->select_row('tbl_user','fullname,referentID', array('id' => $userID));
+		$check_referentID = $this->UserModels->find($userID,'fullname,referentID','id');
 		if($check_referentID['referentID']!=0){redirect(base_url().'dashboard');}
 		if($this->input->post()){
 			//validation
 			$this->form_validation->set_rules('code','Referent Code','required|min_length[8]|callback_check_ReferentCode');
 			if($this->form_validation->run()){
 				$code = $this->input->post('code');
-				$get_User = $this->UserModel->select_row('tbl_user', 'id,code', array('code' => $code));
+				$get_User = $this->UserModels->find($code, 'id,code', 'code');
 				$data_update = array(
 					'referentID'		=>	$get_User['id'],
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$userID = $this->session->userdata('userID');
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
+				$result = $this->UserModels->edit($data_update, $userID);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -578,7 +578,7 @@ class Auths extends Dashboard_Controller {
 		$encode = base64_decode($token);
 		$string = explode("*", $encode);
 		$id = $string[7];
-		$result = $this->UserModel->edit('tbl_user', array('active' => 1), array('id' => $id));
+		$result = $this->UserModels->edit(array('active' => 1), $id);
 		redirect(base_url().'dashboard/active-notify.html');
 	}
 
@@ -615,15 +615,15 @@ class Auths extends Dashboard_Controller {
 					'status'			=>  1,
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $userID));
+				$result = $this->UserModels->edit($data_update, $userID);
 				if($result>0){
-					$minID = $this->UserModel->select_row_min('tbl_wallet', 'id', array('userID' => 0));
+					$minID = $this->UserModels->select_row_min('tbl_wallet', 'id', array('userID' => 0));
 					$data_update = array(
 						'userID' 			=> 	$userID,
 					);
-					$getUserIDWallet = $this->UserModel->select_row('tbl_wallet', 'userID', array('userID' => $userID));
+					$getUserIDWallet = $this->WalletModels->find($userID, 'userID', 'userID');
 					if($getUserIDWallet['userID'] != $userID){
-						$updateWallet = $this->UserModel->edit('tbl_wallet', $data_update, array('id' => $minID['id']));
+						$updateWallet = $this->WalletModels->edit($data_update, $minID['id']);
 					}
 					if($updateWallet>0){
 						$this->session->set_flashdata('message_flashdata', array(
@@ -646,7 +646,7 @@ class Auths extends Dashboard_Controller {
 			'title'			=>	'Profile',
 			'template' 		=> 	'dashboard/auth/profile'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $userID)); 
+		$data['datas'] = $this->UserModels->find($userID); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 
@@ -654,7 +654,7 @@ class Auths extends Dashboard_Controller {
 	public function check_EmailForget()
 	{
 		$email = $this->input->post('email');
-		$result = $this->UserModel->select_row('tbl_user', 'email,type', array('email' => $email));
+		$result = $this->UserModels->find($email, 'email,type', 'email');
 		if($result == NULL)
 		{
 			$this->form_validation->set_message(__FUNCTION__,'This email is not in the system!');
@@ -687,7 +687,7 @@ class Auths extends Dashboard_Controller {
 				$subject = 'mt7.com';
 				$message = 'Message';
 				$email = $this->input->post('email');
-				$result = $this->UserModel->select_row('tbl_user', 'id', array('email' => $email));
+				$result = $this->UserModels->find($email, 'id', 'email');
 				$id =$result['id'];
 				$token = "pdq*42*grer*45*dfih*fhs*oa1*".$id."*sdf*481*156*hsd*f";
 				$token = rtrim( strtr( base64_encode( $token ), '+/', '-_'), '=');
@@ -751,7 +751,7 @@ class Auths extends Dashboard_Controller {
 					'salt' 				=>  $rand_salt,
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update, $id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -781,7 +781,7 @@ class Auths extends Dashboard_Controller {
 	public function check_OldPassword(){
 		$id = $this->session->userdata('userID');
 		$where = array('email' => $Email);
-		$result = $this->UserModel->select_row('tbl_user', 'salt,password', array('id' => $id));
+		$result = $this->UserModels->find($id, 'salt,password');
 		$rand_salt_old = $result['salt'];
 		$oldpassword   = $result['password'];
 		$oldpassword_post = $this->Encrypts->encryptUserPwd( $this->input->post('oldpassword'),$rand_salt_old);
@@ -818,7 +818,7 @@ class Auths extends Dashboard_Controller {
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$id = $this->session->userdata('userID');
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update, $id);
 				if($result>0){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
@@ -861,7 +861,7 @@ class Auths extends Dashboard_Controller {
 					'phone' 			=> 	trim($this->input->post('phone')),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$result = $this->UserModel->edit('tbl_user', $data_update, array('id' => $id));
+				$result = $this->UserModels->edit($data_update, $id);
 				if($result>0){
 					//$id = $result['id_insert'];
 					$this->session->set_flashdata('message_flashdata', array(
@@ -883,7 +883,7 @@ class Auths extends Dashboard_Controller {
 			'title'			=>	'Profile',
 			'template' 		=> 	'dashboard/auth/profile'
 		);
-		$data['datas'] = $this->UserModel->select_row('tbl_user', '*', array('id' => $id)); 
+		$data['datas'] = $this->UserModels->find($id); 
 		$this->load->view('dashboard/default/index', isset($data)?$data:NULL);
 	}
 	

@@ -61,7 +61,7 @@ class UserModels extends MY_Model {
 	}
 	
 	
-
+	//total (Dashboarr/Auths) -OT1
 	function total($table,$where = NULL){
 		$result = $this->db->from($table);
 		if($where != NULL){
