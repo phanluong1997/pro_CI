@@ -8,6 +8,7 @@ class UserModels extends MY_Model {
 	{
 		parent::__construct();
 	}
+
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
