@@ -8,6 +8,7 @@ class UserModels extends MY_Model {
 	{
 		parent::__construct();
 	}
+
 	function select_row($table = '', $data = NULL, $where = NULL, $order = ''){
 		$result = $this->db->select($data)->from($table);
 		if($where != NULL){
@@ -20,6 +21,7 @@ class UserModels extends MY_Model {
 		return $result;
 	}
 
+	
 	//checkValidate_Email - Ot1
 	function check_exists($where = array()){
 		$this->db->where($where);

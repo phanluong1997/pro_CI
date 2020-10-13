@@ -25,11 +25,11 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 	<div class="row gutters justify-content-center">
 		<div class="col-4">
 			<div class="card">
-				<form action="" method="POST" class="form" data-toggle="validator" novalidate="true">
+				<form action="" method="POST" class="form" data-toggle="validator">
 					<div class="card-body">
 						<div class="form-group" >
 							<label for="wallet">Email</label>
-							<input type="email" class="form-control" name="email" >
+							<input type="email" required="" class="form-control" name="email" >
 							<div class= "clear error text-danger" name="name_error"><?php echo form_error('email') ?></div>
 						</div>
 						<div class="row gutters justify-content-center">
