@@ -4,9 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Ajax extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('transfermodel');
-		$this->load->model('depositmodel');
-		$this->load->model('WithdrawModel');
+		//get
+		$this->load->model('TransferModels');
+		$this->load->model('UserModels');
+		$this->load->model('WithdrawModels');
 	}
 	//get data table tbl_transfer--OT2
 	public function historyTransfer(){
@@ -17,8 +18,8 @@ class Ajax extends Dashboard_Controller {
 		foreach ($dataTransfer as $key => $val) {
 			$user_nameSender = '';
 			$user_nameReceived='';
-			$resultSender = $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_sender']));
-			$resultReceived =  $this->transfermodel->select_row('tbl_user','id,fullname', array('id' => $val['userID_received']));
+			$resultSender = $this->UserModels->find($val['userID_sender'],'id,fullname');
+			$resultReceived =  $this->UserModels->find($val['userID_received'],'id,fullname');
 			if($val['userID_sender'] == $resultSender['id']  ){
 				$dataTransfer[$key]['user_nameSender'] = $resultSender['fullname'];
 				if($val['userID_received']== $resultReceived['id']){
@@ -53,7 +54,7 @@ class Ajax extends Dashboard_Controller {
 		$dataDeposite = $this->db->select('*')->from('tbl_deposit')->where(array('userID' => $userID))->get()->result_array();
 		foreach ($dataDeposite as $key => $val) {
 			$user_nameDeposite = '';
-			$result = $this->depositmodel->select_row('tbl_user','id,fullname', array('id' => $val['userID']));
+			$result = $this->UserModels->find($val['userID'],'id,fullname');
 			if($val['userID'] == $result['id']  ){
 				$dataDeposite[$key]['user_nameDeposite'] = $result['fullname'];
 			}
@@ -77,10 +78,9 @@ class Ajax extends Dashboard_Controller {
 	{
 		//get_history Withdraw
 		$userID = $this->session->userdata('userID');
-		$Withdraw = $this->WithdrawModel->getAll('tbl_withdraw','*',array('userID' =>$userID),'id desc');
-		$userID = $this->session->userdata('userID');
+		$Withdraw = $this->WithdrawModels->findWhere(array('userID' =>$userID));
 		foreach ($Withdraw as $key => $value) {
-			$result = $this->WithdrawModel->select_row('tbl_user', 'id,fullname', array('id' => $userID));
+			$result = $this->UserModels->find($userID, 'id,fullname');
 			if($value['userID'] == $result['id']){
 				$Withdraw[$key]['fullname'] = $result['fullname'];
 			}

@@ -5,7 +5,7 @@
 	</ol>
 	<ul class="app-actions">
 		<li>
-			<a href="cpanel/wallet/add">
+			<a href="cpanel/user/">
 				<i class="icon-export"></i> Export
 			</a>
 		</li>

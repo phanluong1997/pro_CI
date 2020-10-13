@@ -25,13 +25,7 @@
 				$userID_sender = $this->session->userdata('userID');
 				$transfer = $_POST['transfer'];
 				$emailTransfer = $this->UserModels->find($transfer,'id,fullname,email,type', 'email');
-				// var_dump($emailTransfer);
-				// die;
 				$userID_received = $emailTransfer['id'];
-				// var_dump($userID_sender);
-				// die;
-			 	// echo $userID_sender."-----------".$userID_received; die;
-				
 				$data_insert = array(
 					'userID_sender' => 	 $userID_sender,
 					'userID_received'=>  $userID_received,
@@ -39,7 +33,6 @@
 					'date'			=> 	 gmdate('Y-m-d H:i:s', time()+7*3600),
 					'status' 		=> 	 1
 				);
-
 				$result = $this->TransferModels->add($data_insert);
 				if($result>0){
 					//minus userSender
@@ -106,8 +99,6 @@
 			$userID = $this->session->userdata('userID');
 			$result = $this->UserModels->find($userID,'email,walletUSD');
 			$emailTransfer = $this->UserModels->find($transfer, 'email,type,status,active','email');
-			// var_dump($emailTransfer);
-			// die();
 			//load library Google 2FA
 			$this->load->library('GoogleAuthenticator');
 			//get info current user
