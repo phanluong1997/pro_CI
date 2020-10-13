@@ -173,13 +173,24 @@ class User extends Admin_Controller {
 						</tr>';
 		if($datas != NULL ){
 			foreach($datas as $row){
+				$getWallet = $this->WalletModels->find($row['id'], 'userID,wallet', 'userID');
+				if($getWallet != NULL){
+					$wallet= $getWallet['wallet'];	
+				}
+				else
+				{
+					$wallet= '';	
+				}
 				$activeChecked = '';
 				$verifyChecked = '';
 				$control = $this->control;
 				if($row['active'] == 1){ $activeChecked = 'checked'; }	
 				if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
 				$output .= '<tr>
-								<td>'.$row['fullname'].'</td>
+								<td>
+									<p>'.$row['fullname'].'</p>
+									<p><i class="icon-vpn_key"></i>Wallet: '.$wallet.' </p>
+								</td>
 								<td>
 									<p>'.$row['email'].'</p>
 									<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>
@@ -219,14 +230,26 @@ class User extends Admin_Controller {
 		$limit = $number;
 		$datas = $this->UserModels->findWhere(array('type'=>'user'),'*','id desc', $start, $limit);
 		$output = '' ;	
-			foreach($datas as $row){
+			foreach($datas as $key => $row){
+				$getWallet = $this->WalletModels->find($row['id'], 'userID,wallet', 'userID');
+				if($getWallet != NULL){
+					$wallet= $getWallet['wallet'];	
+				}
+				else
+				{
+					$wallet= '';	
+				}
 				$activeChecked = '';
 				$verifyChecked = '';
 				$control = $this->control;
+
 				if($row['active'] == 1){ $activeChecked = 'checked'; }	
 				if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
 				$output .= '<tr>
-								<td>'.$row['fullname'].'</td>
+								<td>
+									<p>'.$row['fullname'].'</p>
+									<p><i class="icon-vpn_key"></i>Wallet: '.$wallet.' </p>
+								</td>
 								<td>
 									<p>'.$row['email'].'</p>
 									<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>

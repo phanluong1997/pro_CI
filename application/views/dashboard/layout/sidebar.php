@@ -1,7 +1,7 @@
 <div class="topsidebar"></div>
 <div  class="content">
 	<!-- Items about message of someone! -->
-	<div class="contain-itemchat" id="showMessages">
+	<div  id="showMessages">
 		<!-- <div class="itemchat">
 		  <div class="head">
 		    <div class="avatar" style="background-image: url(public/images/avatar02.jpg)"></div>

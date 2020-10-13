@@ -1,6 +1,6 @@
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><?php echo $title;?></li>
+		<li class="breadcrumb-item"><?php echo $title;?> <div id="test">123153131231641854156</div></li>
 	</ol>
 </div>
 <!-- Info Submit -->
@@ -50,14 +50,14 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 											<?php } ?>
 											<?php if($val['status'] == 1){ ?>
 												<a onclick="changeStatus(<?php echo $val['id']; ?>,2)" class="btn btn-success btn-rounded text-white">Apprive</a>
-												<a onclick="changeStatus(<?php echo $val['id']; ?>,3)" class="btn btn-danger btn-rounded text-white">Destroy</a>
+												<a onclick="changeStatus(<?php echo $val['id']; ?>,3 ,<?php echo $val['amount']; ?>)" class="btn btn-danger btn-rounded text-white">Destroy</a>
 											<?php } ?>
 											<?php if($val['status'] == 2){ ?>	
-													<span class="text-success">Apprive</span>
+												<span class="text-success">Apprive</span>
 											<?php } ?>
 											<?php if($val['status'] == 3){ ?>	
-													<span class="text-danger">Destroy</span>
-														
+												<span class="text-danger">Destroy</span>
+
 											<?php } ?>	
 										</td>
 									</tr>
@@ -96,11 +96,25 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 <!-- END model for change status -->
 
 <script type="text/javascript">
-	function changeStatus(id, status){
+	function changeStatus(id, status, amount ){
 		//open modal
 		$("#myModalChangeStatus").modal('show');
 		//	
 		$('#divID').val(id);
+		
 		$('#divStatus').val(status);
+		if(status == 3){
+			$.ajax
+			({
+				type: "POST",
+				url: "cpanel/withdraw/returnAmount",
+				data: { id:id,amount:amount},
+				dataType: "html",
+				success : function (result){
+					$('#test').html(result);
+				}
+			});
+		}
 	}
+
 </script>

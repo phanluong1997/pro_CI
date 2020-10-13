@@ -8,6 +8,7 @@ class Ajax extends Dashboard_Controller {
 		$this->load->model('TransferModels');
 		$this->load->model('UserModels');
 		$this->load->model('WithdrawModels');
+		$this->load->model('SettingModels');
 	}
 	//get data table tbl_transfer--OT2
 	public function historyTransfer(){
@@ -118,7 +119,7 @@ class Ajax extends Dashboard_Controller {
 	public function get_AmountMin_CostWithdraw()
 	{
 		//get Amount Min (Withdraw) and Cost Withdraw (%) in config - OT1
-		$result = $this->WithdrawModel->select_row('tbl_config', 'content', array('key' => 'wallet'));
+		$result = $this->SettingModels->find('wallet', 'content', 'key');
 		$wallet = json_decode($result['content'], true);
 		echo '<input id="amount_min_withdraw" readonly hidden type="text" value="'.$wallet['amount_min_withdraw'].'"  />';
 		echo '<input id="cost_withdraw" readonly hidden type="text" value="'.$wallet['cost_withdraw'].'"  />';

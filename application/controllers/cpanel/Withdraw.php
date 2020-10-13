@@ -73,4 +73,20 @@ class Withdraw extends Admin_Controller {
 		}
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}	
+	public function returnAmount(){
+		$id = $_POST['id'];
+		$amount = $_POST['amount'];
+		echo $id.'---'.$amount.'asfdadsfasdf';
+		
+		// $getUser= $this->UserModels->find($id,'walletUSD');
+		// $returnAmount = $getUser['walletUSD'] + $amount;
+
+
+
+		// $result = $this->WithdrawModels->edit(array('walletUSD' => $returnAmount),$id);
+
+		
+
+
+	}
 }
