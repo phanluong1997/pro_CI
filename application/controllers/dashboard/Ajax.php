@@ -4,13 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Ajax extends Dashboard_Controller {
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('transfermodel');
-		$this->load->model('depositmodel');
-		$this->load->model('WithdrawModel');
 		//get
 		$this->load->model('TransferModels');
 		$this->load->model('UserModels');
-		$this->load->model('depositmodel');
 		$this->load->model('WithdrawModels');
 	}
 	//get data table tbl_transfer--OT2

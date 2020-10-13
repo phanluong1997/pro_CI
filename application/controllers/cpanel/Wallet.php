@@ -148,7 +148,7 @@ class Wallet extends Admin_Controller {
 					$data_update = array(
 					'userID' 	=> 		$getUser['id']
 					);
-					$result = $this->walletmodels->edit('tbl_wallet', $data_update,array('id' =>$id));
+					$result = $this->walletmodels->edit($data_update,$id);
 					if($result['type'] == 'successful'){
 						$this->session->set_flashdata('message_flashdata', array(
 							'type'		=> 'sucess',
