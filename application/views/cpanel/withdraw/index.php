@@ -1,8 +1,9 @@
 <div class="page-header">
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><?php echo $title;?> <div id="test">123153131231641854156</div></li>
+		<li class="breadcrumb-item"><?php echo $title;?></li>
 	</ol>
 </div>
+
 <!-- Info Submit -->
 <?php $message_flashdata = $this->session->flashdata('message_flashdata');
 if(isset($message_flashdata) && count($message_flashdata)){ ?>
@@ -82,7 +83,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 						<textarea class="form-control" name="note" id="note" rows="3"></textarea>
 						<input type="hidden" id="divID" name="id" value="">
 						<input type="hidden" id="divStatus" name="status" value="">
-						<!-- <input type="hidden" id="divStatus" name="name" value="ok"> -->
+						<input type="hidden" id="divDestroy" name="amount" value="">
 					</div>
 				</div>
 				<div class="modal-footer justify-content-center">
@@ -103,18 +104,6 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 		$('#divID').val(id);
 		
 		$('#divStatus').val(status);
-		if(status == 3){
-			$.ajax
-			({
-				type: "POST",
-				url: "cpanel/withdraw/returnAmount",
-				data: { id:id,amount:amount},
-				dataType: "html",
-				success : function (result){
-					$('#test').html(result);
-				}
-			});
-		}
+		$('#divDestroy').val(amount);
 	}
-
 </script>

@@ -46,6 +46,7 @@ class Withdraw extends Admin_Controller {
 		
 		$status = $_POST['status'];
 		$note = $_POST['note'];	
+		$amount = $_POST['amount'];
 		//get data
 		$data['datas']=$this->WithdrawModels->find($id);
 		
@@ -57,6 +58,14 @@ class Withdraw extends Admin_Controller {
 			);
 			$result = $this->WithdrawModels->edit($data_update,$id);
 			if($result>0){
+				//return amount to wallet if destroyed -OT2
+				if($status == 3)
+				{
+					$userID = $this->session->userdata('userID');
+					$getUser = $this->UserModels->find($userID);
+					$AmountUSD = $getUser['walletUSD'] + $amount;
+					$returnWallet = $this->UserModels->edit(array('walletUSD' => $AmountUSD),$userID);
+				}
 				$this->session->set_flashdata('message_flashdata', array(
 					'type'		=> 'sucess',
 					'message'	=> 'Update Success!!',
@@ -73,20 +82,4 @@ class Withdraw extends Admin_Controller {
 		}
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}	
-	public function returnAmount(){
-		$id = $_POST['id'];
-		$amount = $_POST['amount'];
-		echo $id.'---'.$amount.'asfdadsfasdf';
-		
-		// $getUser= $this->UserModels->find($id,'walletUSD');
-		// $returnAmount = $getUser['walletUSD'] + $amount;
-
-
-
-		// $result = $this->WithdrawModels->edit(array('walletUSD' => $returnAmount),$id);
-
-		
-
-
-	}
 }
