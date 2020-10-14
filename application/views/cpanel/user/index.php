@@ -90,11 +90,13 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 							<?php } ?>
 						</table>	
     					<ul class ="pagination pagination-sm" id =ajax>
+							<li class="page-item"><a class="page-link" tabindex="-1">Previous</a></li>
 							<?php for($i = 1; $i <= $countPage; $i++){ ?>
 								<li >
 									<a  onclick="loadPage(<?php echo $i;?>)" data-control="<?php echo $control;?>" id="pagination<?php echo $i;?>" class="btn btn-info text-white" ><i class="icon-trash-1"></i><?php echo $i;?></a>
 								</li>
 							<?php } ?>
+							<li class="page-item"><a class="page-link">Next</a></li>
 						</ul>
 					</div>		
 			</div>
