@@ -72,7 +72,7 @@
             </div>
             <div class="social">
               <a class="fb"><img src="public/dashboard/images/ic-facebook.png" alt="Facebook"></a>
-              <a class="google"><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
+              <a class="google" id="googleSignIn" ><img src="public/dashboard/images/ic-google.png" alt="Google"></a>
             </div>
           </form>
         </div>
