@@ -94,12 +94,17 @@ class Wallet extends Admin_Controller {
 	public function check_EmailWallet()
 	{
 		$email = trim($this->input->post('email'));
-		$getUser = $this->UserModels->find($email, 'id', 'email');
+		$getUser = $this->UserModels->find($email, 'id,type', 'email');
 		if($getUser == NULL){
 			$this->form_validation->set_message(__FUNCTION__,'Email does not exist');
 			return false;
 		}else{
 			$getWallet = $this->walletmodels->find($getUser['id'], 'userID', 'userID');
+			if($getUser['type'] == 'admin')
+			{
+				$this->form_validation->set_message(__FUNCTION__,"This admin's account");
+				return false;
+			}
 			if($getWallet == NULL){
 				return true;
 			}else{

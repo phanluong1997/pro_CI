@@ -88,10 +88,18 @@ class Ajax extends Dashboard_Controller {
 			
 		}
 		foreach ($Withdraw as $key => $val) {
+			if($val['status'] == 3){
+				$amount = "<td class='currency text-success'>"."+ $".$val['amount']."</td>";
+			}elseif($val['status'] == 2){
+				$amount = "<td class='currency text-danger'>"."- $".$val['amount']."</td>";
+			}
+			else{
+				$amount = "<td class='currency'>"."$".$val['amount']."</td>";
+			}
 			echo "
 				<tr>
 			        <td>".$val['fullname']."</td>
-			        <td class='currency'>".$val['amount']."</td>
+			        ".$amount."
 			        <td>".$val['date']."</td>";
 					$status = $val['status'];
 					switch ($status)
