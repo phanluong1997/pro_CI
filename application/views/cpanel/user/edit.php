@@ -26,6 +26,11 @@
 							<input type="text" name="phone" class="form-control" id="inputName" value="<?php echo $datas['phone'];?>" >
 							<div class="has-error"><?php echo form_error('phone') ?></div>
 						</div>
+						<div class="form-group">
+							<label for="inputName">walletUSD</label>
+							<input type="text" name="walletUSD" class="form-control" id="inputName" value="<?php echo number_format($datas['walletUSD'],2);?>" >
+							<div class="has-error"><?php echo form_error('walletUSD') ?></div>
+						</div>
 						<div class="row gutters justify-content-center">
 							<button type="submit" class="btn btn-success btn-rounded">Save</button>
 							<button type="reset" class="btn btn-primary btn-rounded">Reset</button>

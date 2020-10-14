@@ -542,14 +542,17 @@ class Auths extends Dashboard_Controller {
 			$this->form_validation->set_rules('code','Referent Code','required|min_length[8]|callback_check_ReferentCode');
 			if($this->form_validation->run()){
 				$code = $this->input->post('code');
-				$get_User = $this->UserModels->find($code, 'id,code', 'code');
-				$data_update = array(
+				if($code != '')
+				{
+					$get_User = $this->UserModels->find($code, 'id,code', 'code');
+				}
+				$data_updates = array(
 					'referentID'		=>	$get_User['id'],
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
-				$userID = $this->session->userdata('userID');
-				$result = $this->UserModels->edit($data_update, $userID);
-				if($result>0){
+				$result = $this->UserModels->edit($data_updates, $userID, 'id');
+				
+				if($result['type'] == 'successful'){
 					$this->session->set_flashdata('message_flashdata', array(
 						'type'		=> 'sucess',
 						'message'	=> 'Update referent successful!!',
@@ -616,7 +619,7 @@ class Auths extends Dashboard_Controller {
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$result = $this->UserModels->edit($data_update, $userID);
-				if($result>0){
+				if($result['type'] == 'successful'){
 					$minID = $this->UserModels->select_row_min('tbl_wallet', 'id', array('userID' => 0));
 					$data_update = array(
 						'userID' 			=> 	$userID,
@@ -625,19 +628,19 @@ class Auths extends Dashboard_Controller {
 					if($getUserIDWallet['userID'] != $userID){
 						$updateWallet = $this->WalletModels->edit($data_update, $minID['id']);
 					}
-					if($updateWallet>0){
-						$this->session->set_flashdata('message_flashdata', array(
-							'type'		=> 'sucess',
-							'message'	=> 'Update profile successful!!',
-						));
-						redirect(base_url().'dashboard/update-referent.html');
-					}else{
-						$this->session->set_flashdata('message_flashdata', array(
-							'type'		=> 'error',
-							'message'	=> 'Update profile error!!',
-						));
-						redirect(base_url().'dashboard/update-referent.html');
-					}
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'sucess',
+						'message'	=> 'Update profile successful!!',
+					));
+					redirect(base_url().'dashboard/update-referent.html');
+				}
+				else
+				{
+					$this->session->set_flashdata('message_flashdata', array(
+						'type'		=> 'error',
+						'message'	=> 'Update profile error!!',
+					));
+					redirect(base_url().'dashboard/update-referent.html');
 				}
 			}
 		}

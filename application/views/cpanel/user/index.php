@@ -58,7 +58,7 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 												<p><i class="icon-vpn_key"></i>Pass: <?php echo $val['text_pass'];?></p>
 											</td>
 											<td><?php echo $val['phone'];?></td>
-											<td class="text-right">$<?php echo $val['walletUSD'];?></td>
+											<td class="text-right">$<?php echo number_format($val['walletUSD'],2);?></td>
 											<td class="text-center"><?php echo date('d/m/Y',strtotime($val['created_at']));?></td>
 											<td>
 												<div class="custom-control custom-switch">

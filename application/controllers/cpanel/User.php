@@ -59,6 +59,7 @@ class User extends Admin_Controller {
 				$data_update = array(
 					'fullname' 			=> 	trim($this->input->post('fullname')),
 					'phone' 			=> 	trim($this->input->post('phone')),
+					'walletUSD' 		=> 	trim($this->input->post('walletUSD')),
 					'updated_at'		=>	gmdate('Y-m-d H:i:s', time()+7*3600)
 				);
 				$result = $this->UserModels->edit($data_update,$id);
