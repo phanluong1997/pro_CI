@@ -89,15 +89,12 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 								</tbody>
 							<?php } ?>
 						</table>	
-    					<ul class ="pagination pagination-sm" id =ajax>
-							<li class="page-item"><a class="page-link" tabindex="-1">Previous</a></li>
+    					<!-- <ul class ="pagination pagination-sm" id =ajax>
 							<?php for($i = 1; $i <= $countPage; $i++){ ?>
-								<li >
-									<a  onclick="loadPage(<?php echo $i;?>)" data-control="<?php echo $control;?>" id="pagination<?php echo $i;?>" class="btn btn-info text-white" ><i class="icon-trash-1"></i><?php echo $i;?></a>
-								</li>
+									<li ><a  onclick="loadPage(<?php echo $i;?>)" data-control="<?php echo $control;?>" id="pagination<?php echo $i;?>" class="btn btn-info text-white" ><i class="icon-trash-1"></i><?php echo $i;?></a></li>
 							<?php } ?>
-							<li class="page-item"><a class="page-link">Next</a></li>
-						</ul>
+						</ul> -->
+						<div class="btn btn-primary"><?php echo isset($list_pagination)?$list_pagination:''; ?></div>
 					</div>		
 			</div>
 		</div>
@@ -188,22 +185,22 @@ if(isset($message_flashdata) && count($message_flashdata)){ ?>
 
 	});	
 	//pagination  -- OT2
-	function loadPage(i){
-		var control = $('#pagination'+i).attr('data-control');
-		if(i != '')
-		{
-			$.ajax
-			({
-				url: "cpanel/"+control+"/pagination" ,
-				type: "POST",
-				dataType:'html',
-				data: {i:i},
-				success : function (result){
-					$('#test').html(result);
-				}
-			});
-		}
-	}
+	// function loadPage(i){
+	// 	var control = $('#pagination'+i).attr('data-control');
+	// 	if(i != 0)
+	// 	{
+	// 		$.ajax
+	// 		({
+	// 			url: "cpanel/"+control+"/pagination" ,
+	// 			type: "POST",
+	// 			dataType:'html',
+	// 			data: {i:i},
+	// 			success : function (result){
+	// 				$('#test').html(result);
+	// 			}
+	// 		});
+	// 	}
+	// }
 	//pagination  -- OTMain
 	function showIdentity(id){
 		if(id){

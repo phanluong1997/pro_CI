@@ -8,6 +8,8 @@ class User extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('UserModels');
 		$this->load->model('WalletModels');
+		$this->load->library('pagination');
+		$this->load->helper('url');
 	}
 	//List action - OT2
 	public function index()
@@ -15,25 +17,33 @@ class User extends Admin_Controller {
 		//check login
 		if($this->Auth->check_logged() === false){redirect(base_url().'cpanel/login.html');}
 		// $this->load->library('pagination');
-		//get all
-		$totalRow = $config['total_rows'] = $this->UserModels->getAll();
+		// //get all
+		// $totalRow = $config['total_rows'] = $this->UserModels->getAll();
 		//get limit
-		$datas = $this->UserModels->findWhere(array('type'=>'user'),'','id desc', 0, 5);
-		//getWallet  - OT1
-		foreach ($datas as $key => $value) {
-			$getWallet = $this->WalletModels->find($value['id'], 'userID,wallet', 'userID');
-			if($getWallet != NULL){
-				if($getWallet['userID'] == $value['id']){
-					$datas[$key]['wallet'] = $getWallet['wallet'];
-				}
-			}
-			else
-			{
-				$datas[$key]['wallet'] = '';
-			}
-		}
-		//get total page
-		$countPage = ceil(count($totalRow) / 5);
+		// $datas = $this->UserModels->findWhere(array('type'=>'user'),'','id desc', 0, 5);
+		// //getWallet  - OT1
+		// foreach ($datas as $key => $value) {
+		// 	$getWallet = $this->WalletModels->find($value['id'], 'userID,wallet', 'userID');
+		// 	if($getWallet != NULL){
+		// 		if($getWallet['userID'] == $value['id']){
+		// 			$datas[$key]['wallet'] = $getWallet['wallet'];
+		// 		}
+		// 	}
+		// 	else
+		// 	{
+		// 		$datas[$key]['wallet'] = '';
+		// 	}
+		// }
+		// $config['total_rows'] = $this->UserModels->getAll();
+		$config['total_rows'] = $this->UserModels->total_where_in('tbl_user',array('type'=>'user'));
+		$config['base_url'] = base_url().'cpanel/user/index';
+		$config['per_page'] = 5;	
+		// // $countPage = ceil(count($totalRow) / 5);
+		$this->pagination->initialize($config);
+		$start = $this->uri->segment(4);
+
+		$datas= $this->UserModels->findWhere(array('type'=>'user'),'','id asc', $start,$config['per_page']);
+		
 		$data = array(
 			'data_index'	=> $this->get_index(),
 			'title'		=>	'User Manager',
@@ -42,6 +52,7 @@ class User extends Admin_Controller {
 			'countPage'		=>	$countPage,
 			'template' 	=> 	$this->template.'index'
 		);
+		$data['list_pagination'] = $this->pagination->create_links();
 		$this->load->view('cpanel/default/index', isset($data)?$data:NULL);
 	}
 	//Edit action -OT2
@@ -224,63 +235,63 @@ class User extends Admin_Controller {
 		echo $output;
 	}	
 	//Pagination --OT2
-	public function pagination(){
-		$number = 5;
-		$page = $_POST['i'];
-		$start = ($page - 1) * $number;
-		$limit = $number;
-		$datas = $this->UserModels->findWhere(array('type'=>'user'),'*','id desc', $start, $limit);
-		$output = '' ;	
-			foreach($datas as $key => $row){
-				$getWallet = $this->WalletModels->find($row['id'], 'userID,wallet', 'userID');
-				if($getWallet != NULL){
-					$wallet= $getWallet['wallet'];	
-				}
-				else
-				{
-					$wallet= '';	
-				}
-				$activeChecked = '';
-				$verifyChecked = '';
-				$control = $this->control;
+	// public function pagination(){
+	// 	$number = 5;
+	// 	$page = $_POST['i'];
+	// 	$start = ($page - 1) * $number;
+	// 	$limit = $number;
+	// 	$datas = $this->UserModels->findWhere(array('type'=>'user'),'*','id desc', $start, $limit);
+	// 	$output = '' ;	
+	// 		foreach($datas as $key => $row){
+	// 			$getWallet = $this->WalletModels->find($row['id'], 'userID,wallet', 'userID');
+	// 			if($getWallet != NULL){
+	// 				$wallet= $getWallet['wallet'];	
+	// 			}
+	// 			else
+	// 			{
+	// 				$wallet= '';	
+	// 			}
+	// 			$activeChecked = '';
+	// 			$verifyChecked = '';
+	// 			$control = $this->control;
 
-				if($row['active'] == 1){ $activeChecked = 'checked'; }	
-				if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
-				$output .= '<tr>
-								<td>
-									<p>'.$row['fullname'].'</p>
-									<p><i class="icon-vpn_key"></i>Wallet: '.$wallet.' </p>
-								</td>
-								<td>
-									<p>'.$row['email'].'</p>
-									<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>
-								</td>
-								<td>'.$row['phone'].'</td>
-								<td>'.$row['walletUSD'].'</td>
-								<td>'.$row['created_at'].'</td>
-								<td>
-									<div class="custom-control custom-switch">
-										<input onclick="checkActive('.$row['id'].')" '.$activeChecked.'
-										type="checkbox" class="custom-control-input" id="active'.$row['id'].'" 
-										data-control="'.$control.'">
-										<label class="custom-control-label" for="active'.$row['id'].'">Active</label>
-									</div>
-									<div class="custom-control custom-switch">
-										<input onclick="checkVerify('.$row['id'].')" '.$verifyChecked.'
-										type="checkbox" class="custom-control-input" id="verify'.$row['id'].'" data-control="'.$control.'">
-										<label class="custom-control-label" for="verify'.$row['id'].'">
-											Verify (<a href="" class="text-success">View Detail</a>)
-										</label>
-									</div>
-								</td>
-								<td>
-									<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
-									<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
-								</td>
-							</tr>';
-			}	
-		echo $output;
-	}
+	// 			if($row['active'] == 1){ $activeChecked = 'checked'; }	
+	// 			if($row['verify'] == 1){ $verifyChecked = 'checked'; }	
+	// 			$output .= '<tr>
+	// 							<td>
+	// 								<p>'.$row['fullname'].'</p>
+	// 								<p><i class="icon-vpn_key"></i>Wallet: '.$wallet.' </p>
+	// 							</td>
+	// 							<td>
+	// 								<p>'.$row['email'].'</p>
+	// 								<p><i class="icon-vpn_key"></i>Pass: '.$row['text_pass'].'</p>
+	// 							</td>
+	// 							<td>'.$row['phone'].'</td>
+	// 							<td>'.$row['walletUSD'].'</td>
+	// 							<td>'.$row['created_at'].'</td>
+	// 							<td>
+	// 								<div class="custom-control custom-switch">
+	// 									<input onclick="checkActive('.$row['id'].')" '.$activeChecked.'
+	// 									type="checkbox" class="custom-control-input" id="active'.$row['id'].'" 
+	// 									data-control="'.$control.'">
+	// 									<label class="custom-control-label" for="active'.$row['id'].'">Active</label>
+	// 								</div>
+	// 								<div class="custom-control custom-switch">
+	// 									<input onclick="checkVerify('.$row['id'].')" '.$verifyChecked.'
+	// 									type="checkbox" class="custom-control-input" id="verify'.$row['id'].'" data-control="'.$control.'">
+	// 									<label class="custom-control-label" for="verify'.$row['id'].'">
+	// 										Verify (<a href="" class="text-success">View Detail</a>)
+	// 									</label>
+	// 								</div>
+	// 							</td>
+	// 							<td>
+	// 								<a href="cpanel/user/edit/'.$row['id'].'" class="btn btn-info text-white"><i class="icon-border_color"></i></a>
+	// 								<a href="cpanel/user/changepassword/'.$row['id'].'" class="btn btn-warning text-white"><i class="icon-vpn_key"></i></a>
+	// 							</td>
+	// 						</tr>';
+	// 		}	
+	// 	echo $output;
+	// }
 	//Change Verify -OT2
 	public function showIdentity()
 	{
